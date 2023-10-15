@@ -4,6 +4,22 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
+    <Version>1.0.0</Version>
+    <Company>Aaron Amberman</Company>
+    <Description>A custom control library for WPF with custom look-less control templates.</Description>
+    <Copyright>© Aaron Amberman 2023</Copyright>
+    <PackageProjectUrl>https://github.com/AaronAmberman/WPF.AA.CustomControls</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AaronAmberman/WPF.AA.CustomControls</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>WPF custom controls;WPF look-less control templates;WPF UI;WatermarkTextBox;Warermakr TextBox; Watermark Text Box</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
