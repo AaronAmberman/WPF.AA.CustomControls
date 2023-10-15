@@ -4,9 +4,260 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Testing"
+        xmlns:cc="clr-namespace:WPF.AA.CustomControls;assembly=WPF.AA.CustomControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="768" Width="1024" WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
+    <Grid x:Name="rootGrid" Background="#FF1F1F1F">
+        <!--<cc:WatermarkTextBox Watermark="My watermark text" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="200" />
+        <cc:RoundableButton Content="ABC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5" />
+        <cc:PopupExpander HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0"
+                          ExpandDirection="Right" PopupStaysOpen="False">
+            <cc:PopupExpander.Header>
+                <TextBlock Text="Expander w/ Popup">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </cc:PopupExpander.Header>
+            <Border Background="#FFDDDDDD" BorderBrush="#FF707070" BorderThickness="1">
+                <Grid Margin="5">
+                    <TextBlock Text="Some simple content" />
+                </Grid>
+            </Border>
+        </cc:PopupExpander>
+        <cc:ZoomableListBox x:Name="ZoomableListView" Margin="50,200,50,50" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
+            <ListBoxItem>
+                One
+            </ListBoxItem>
+            <ListBoxItem>
+                Two
+            </ListBoxItem>
+            <ListBoxItem>
+                Three
+            </ListBoxItem>
+        </cc:ZoomableListBox>-->
+        <!--<cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                          Header="Popup" PopupContentPadding="25,0,25,25"
+                                          Margin="25,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
 
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Center" VerticalAlignment="Top" Header="Popup"
+                                          PopupContentPadding="25,0,25,25">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" GridSplitterShowsPreview="True"
+                                          HorizontalAlignment="Right" VerticalAlignment="Top" Header="Popup"
+                                          Margin="0,0,25,0" Height="40" PopupContentPadding="25,0,25,25">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+                
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Right" VerticalAlignment="Top"
+                                          Margin="0,45,0,0" PopupContentPadding="25,25,0,25" Width="40" ExpandDirection="Left">
+            <cc:GridSplitterPopupExpander.Header>
+                <TextBlock Text="Popup">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </cc:GridSplitterPopupExpander.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                          PopupContentPadding="25,25,0,25" ExpandDirection="Left">
+            <cc:GridSplitterPopupExpander.Header>
+                <TextBlock Text="Popup">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </cc:GridSplitterPopupExpander.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                          Margin="0,0,0,25" PopupContentPadding="25,25,0,25" ExpandDirection="Left">
+            <cc:GridSplitterPopupExpander.Header>
+                <TextBlock Text="Popup">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </cc:GridSplitterPopupExpander.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Bottom" Header="Popup"
+                                          Margin="25,0,0,0" PopupContentPadding="25,25,25,0" ExpandDirection="Up">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Center" VerticalAlignment="Bottom" Header="Popup" 
+                                          PopupContentPadding="25,25,25,0" ExpandDirection="Up">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Right" VerticalAlignment="Bottom" Header="Popup" 
+                                          Margin="0,0,25,0" Height="40" PopupContentPadding="25,25,25,0" ExpandDirection="Up">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" GridSplitterShowsPreview="True"
+                                          HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                          Margin="0,25,0,0" PopupContentPadding="0,25,25,25" Width="40" ExpandDirection="Right">
+            <cc:GridSplitterPopupExpander.Header>
+                <TextBlock Text="Popup">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </cc:GridSplitterPopupExpander.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          PopupContentPadding="0,25,25,25" ExpandDirection="Right">
+            <cc:GridSplitterPopupExpander.Header>
+                <TextBlock Text="Popup">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </cc:GridSplitterPopupExpander.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>
+        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                                          Margin="0,0,0,25" PopupContentPadding="0,25,25,25" ExpandDirection="Right">
+            <cc:GridSplitterPopupExpander.Header>
+                <TextBlock Text="Popup">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </cc:GridSplitterPopupExpander.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Title" Background="LightBlue" />
+                <ListView Grid.Row="1">
+
+                </ListView>
+            </Grid>
+        </cc:GridSplitterPopupExpander>-->
+
+        <!--<cc:NumericUpDown x:Name="nud" Width="100" ValueType="Integer"
+                        Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="53" />
+        <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Integer"
+                          Margin="150,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding Value}" />-->
+
+        <cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5" Watermark="testing" />
     </Grid>
 </Window>

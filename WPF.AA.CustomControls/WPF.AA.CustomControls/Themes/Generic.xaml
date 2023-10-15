@@ -417,6 +417,13 @@
         <Setter Property="Foreground" Value="#FF000000" />
         <Setter Property="BorderThickness" Value="1,1,0,1" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="WatermarkTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ContentControl Content="{Binding}" Foreground="Gray" Focusable="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ShowHidePasswordBox}">
