@@ -14,9 +14,14 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>WPF custom controls;WPF look-less control templates;WPF UI;WatermarkTextBox;Warermakr TextBox; Watermark Text Box</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
