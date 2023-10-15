@@ -39,18 +39,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:WatermarkTextBox}">
                     <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                        BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                            BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
                         <Grid>
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" Margin="-1,0"
-                                      HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                             <ContentPresenter x:Name="watermark"
-                                          Content="{TemplateBinding Watermark}"
-                                          ContentTemplate="{TemplateBinding WatermarkTemplate}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          IsHitTestVisible="False"
-                                          Margin="{TemplateBinding Padding}"
-                                          Visibility="Collapsed" />
+                                              Content="{TemplateBinding Watermark}"
+                                              ContentTemplate="{TemplateBinding WatermarkTemplate}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              IsHitTestVisible="False"
+                                              Margin="{TemplateBinding Padding}"
+                                              Visibility="Collapsed" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -98,7 +98,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ZoomableListBox}">
                     <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                        BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
@@ -106,12 +106,12 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <ScrollViewer Grid.Row="0" Focusable="False" Padding="{TemplateBinding Padding}" 
-                                      CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}">
+                                          CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}">
                                 <ItemsPresenter x:Name="PART_ItemsPresenter" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                             </ScrollViewer>
                             <Border Grid.Row="1" SnapsToDevicePixels="true" Height="1"
-                                Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" />
+                                    Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}" />
                             <Grid Grid.Row="2" Margin="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -121,10 +121,10 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="1" Text="{TemplateBinding ZoomFactor, Converter={StaticResource ZoomFactorConverter}}" />
                                 <Slider Grid.Column="2" Width="100" Margin="5,0" 
-                                    Minimum="{TemplateBinding ZoomMin}" Maximum="{TemplateBinding ZoomMax}"
-                                    Value="{Binding ZoomFactor, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        Minimum="{TemplateBinding ZoomMin}" Maximum="{TemplateBinding ZoomMax}"
+                                        Value="{Binding ZoomFactor, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
                                 <Button x:Name="PART_ResetZoom" Grid.Column="3" Background="Transparent" BorderBrush="Transparent"
-                                    ToolTip="Reset Zoom">
+                                        ToolTip="Reset Zoom">
                                     <Button.Content>
                                         <Rectangle Width="16" Height="16">
                                             <Rectangle.Fill>
@@ -179,11 +179,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:RoundableButton}">
                     <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                        BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
-                        SnapsToDevicePixels="true">
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                            SnapsToDevicePixels="true">
                         <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                      Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsDefaulted" Value="True">
@@ -221,11 +221,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:RoundableToggleButton}">
                     <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                        BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
-                        SnapsToDevicePixels="true">
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                            SnapsToDevicePixels="true">
                         <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                      Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -266,27 +266,27 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:PopupExpander}">
                     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
-                        SnapsToDevicePixels="True">
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                            SnapsToDevicePixels="True">
                         <Grid>
                             <local:RoundableToggleButton x:Name="HeaderSite" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                                                     BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding HeaderTemplate}" 
-                                                     Content="{TemplateBinding Header}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
-                                                     FontStretch="{TemplateBinding FontStretch}" Foreground="{TemplateBinding Foreground}" 
-                                                     FontStyle="{TemplateBinding FontStyle}" FontFamily="{TemplateBinding FontFamily}" 
-                                                     FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" 
-                                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                     IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
-                                                     Margin="0" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}"
-                                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                     CornerRadius="{TemplateBinding CornerRadius}" />
+                                                         BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                                         Content="{TemplateBinding Header}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
+                                                         FontStretch="{TemplateBinding FontStretch}" Foreground="{TemplateBinding Foreground}" 
+                                                         FontStyle="{TemplateBinding FontStyle}" FontFamily="{TemplateBinding FontFamily}" 
+                                                         FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" 
+                                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                         IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                                         Margin="0" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}"
+                                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                         CornerRadius="{TemplateBinding CornerRadius}" />
                             <Popup x:Name="ContentPopup" AllowDrop="True" AllowsTransparency="True" Placement="Bottom" 
-                               PlacementRectangle="{TemplateBinding PopupPlacementRectangle}"
-                               PlacementTarget="{Binding ElementName=HeaderSite}" StaysOpen="{TemplateBinding PopupStaysOpen}"
-                               HorizontalOffset="{TemplateBinding PopupHorizontalOffset}" VerticalOffset="{TemplateBinding PopupVerticalOffset}"
-                               IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                   PlacementRectangle="{TemplateBinding PopupPlacementRectangle}"
+                                   PlacementTarget="{Binding ElementName=HeaderSite}" StaysOpen="{TemplateBinding PopupStaysOpen}"
+                                   HorizontalOffset="{TemplateBinding PopupHorizontalOffset}" VerticalOffset="{TemplateBinding PopupVerticalOffset}"
+                                   IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                 <ContentPresenter x:Name="ExpandSite" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Popup>
                         </Grid>
                     </Border>
@@ -338,19 +338,19 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:GridSplitterPopupExpander}">
                     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
-                        SnapsToDevicePixels="True">
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                            SnapsToDevicePixels="True">
                         <local:RoundableToggleButton x:Name="HeaderSite" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                                                 BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding HeaderTemplate}" 
-                                                 Content="{TemplateBinding Header}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
-                                                 FontStretch="{TemplateBinding FontStretch}" Foreground="{TemplateBinding Foreground}" 
-                                                 FontStyle="{TemplateBinding FontStyle}" FontFamily="{TemplateBinding FontFamily}" 
-                                                 FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" 
-                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                 IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
-                                                 Margin="0" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}"
-                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                 CornerRadius="{TemplateBinding CornerRadius}" />
+                                                     BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                                     Content="{TemplateBinding Header}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
+                                                     FontStretch="{TemplateBinding FontStretch}" Foreground="{TemplateBinding Foreground}" 
+                                                     FontStyle="{TemplateBinding FontStyle}" FontFamily="{TemplateBinding FontFamily}" 
+                                                     FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" 
+                                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                     IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                                     Margin="0" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}"
+                                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                     CornerRadius="{TemplateBinding CornerRadius}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
@@ -369,9 +369,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NumericUpDown}">
                     <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        Padding="{TemplateBinding Padding}"
-                        SnapsToDevicePixels="True">
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -382,7 +382,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBox x:Name="PART_NumericDisplay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
-                                 IsReadOnly="{TemplateBinding IsReadOnly}" />
+                                     IsReadOnly="{TemplateBinding IsReadOnly}" />
                             <RepeatButton x:Name="PART_UpIncrement" Grid.Column="1" Grid.Row="0">
                                 <Path x:Name="upPath" Fill="Black" Data="M 0 4 L 8 4 L 4 0 Z" />
                             </RepeatButton>
@@ -422,20 +422,20 @@
                 <ControlTemplate TargetType="{x:Type local:ShowHidePasswordBox}">
                     <Grid x:Name="grid" SnapsToDevicePixels="True">
                         <TextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" Margin="0,0,23,0"
-                             Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" 
-                             Background="{TemplateBinding Background}" 
-                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
+                                 Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" 
+                                 Background="{TemplateBinding Background}" 
+                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
                         <PasswordBox x:Name="PART_PasswordBox" Padding="{TemplateBinding Padding}" Margin="0,0,23,0"
-                                 Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                                 BorderThickness="{TemplateBinding BorderThickness}" />
+                                     Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
+                                     BorderThickness="{TemplateBinding BorderThickness}" />
                         <ContentPresenter x:Name="watermark" IsHitTestVisible="False"
-                                      Content="{TemplateBinding Watermark}"
-                                      ContentTemplate="{TemplateBinding WatermarkTemplate}"                                          
-                                      Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessConverter},
-                                                       ConverterParameter=L:+3|T:+1}"
-                                      Visibility="Collapsed" />
+                                          Content="{TemplateBinding Watermark}"
+                                          ContentTemplate="{TemplateBinding WatermarkTemplate}"                                          
+                                          Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessConverter},
+                                                           ConverterParameter=L:+3|T:+1}"
+                                          Visibility="Collapsed" />
                         <Button x:Name="PART_ShowTextButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                                BorderThickness="0,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Stretch">
                             <Rectangle Width="20" Height="13" Margin="0,0,0,3">
                                 <Rectangle.Fill>
                                     <DrawingBrush>
@@ -453,7 +453,7 @@
                             </Rectangle>
                         </Button>
                         <Button x:Name="PART_HideTextButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                                BorderThickness="0,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Stretch">
                             <Rectangle Width="20" Height="15" Margin="0,0,0,1">
                                 <Rectangle.Fill>
                                     <DrawingBrush>
