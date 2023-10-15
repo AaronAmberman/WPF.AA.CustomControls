@@ -12,7 +12,7 @@ A custom control library for WPF with custom look-less control templates.
 - ZoomableListBox
 
 # GridSplitterPopupExpander Example
-Behaves like the AvalonDock side auto popup window, except that it cannot be ripped out.
+Behaves like the AvalonDock side auto popup window, except that it cannot be ripped out or pinned.
 
 Check out my [MainWindow](https://github.com/AaronAmberman/VTOLVR-MissionAssistant/blob/main/VTOLVR-MissionAssistant/VTOLVR-MissionAssistant/MainWindow.xaml) in my [VTOL VR Mission Assitant](https://github.com/AaronAmberman/VTOLVR-MissionAssistant) for an example.
 
