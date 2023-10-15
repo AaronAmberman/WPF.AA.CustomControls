@@ -41,14 +41,14 @@ namespace WPF.AA.CustomControls
             DependencyProperty.Register("ExpandDirection", typeof(ExpandDirection), typeof(GridSplitterPopupExpander), new PropertyMetadata(ExpandDirection.Down));
 
         /// <summary>Gets or sets the background for the GridSplitter.</summary>
-        public SolidColorBrush GridSplitterBackground
+        public Brush GridSplitterBackground
         {
-            get { return (SolidColorBrush)GetValue(GridSplitterBackgroundProperty); }
+            get { return (Brush)GetValue(GridSplitterBackgroundProperty); }
             set { SetValue(GridSplitterBackgroundProperty, value); }
         }
 
         public static readonly DependencyProperty GridSplitterBackgroundProperty =
-            DependencyProperty.Register("GridSplitterBackground", typeof(SolidColorBrush), typeof(GridSplitterPopupExpander), new PropertyMetadata(Brushes.Black));
+            DependencyProperty.Register("GridSplitterBackground", typeof(Brush), typeof(GridSplitterPopupExpander), new PropertyMetadata(Brushes.Black));
 
         /// <summary>Gets or sets whether or not the GridSplitter updates the column or row size as the user drags the control. Default is false.</summary>
         /// <see cref="GridSplitter.ShowsPreview" />
