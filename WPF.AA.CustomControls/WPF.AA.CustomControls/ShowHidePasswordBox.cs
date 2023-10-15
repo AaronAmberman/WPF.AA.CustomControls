@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace WPF.AA.CustomControls
 {
     /// <summary>A custom PasswordBox control that can show and hide the plain text entered by the user.</summary>
-    [TemplatePart(Name = "PART_WatermarkTextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_TextBox", Type = typeof(TextBox))]
     [TemplatePart(Name = "PART_PasswordBox", Type = typeof(PasswordBox))]
     [TemplatePart(Name = "PART_ShowTextButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_HideTextButton", Type = typeof(Button))]
