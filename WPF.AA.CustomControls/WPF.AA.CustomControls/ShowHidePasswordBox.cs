@@ -113,9 +113,8 @@ namespace WPF.AA.CustomControls
 
             if (instance == null) return;
             if (instance.passwordBox == null) return;
-            if (instance.passwordBox.Password == null) return;
 
-            if (!instance.passwordBox.Password.Equals(instance.Text))
+            if (string.IsNullOrWhiteSpace(instance.passwordBox.Password) || !instance.passwordBox.Password.Equals(instance.Text))
                 instance.passwordBox.Password = instance.Text;
         }
 
