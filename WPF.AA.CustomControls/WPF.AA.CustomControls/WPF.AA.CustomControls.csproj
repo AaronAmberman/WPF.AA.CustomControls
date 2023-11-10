@@ -4,7 +4,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Company>Aaron Amberman</Company>
     <Description>A custom control library for WPF with custom look-less control templates.</Description>
     <Copyright>© Aaron Amberman 2023</Copyright>
