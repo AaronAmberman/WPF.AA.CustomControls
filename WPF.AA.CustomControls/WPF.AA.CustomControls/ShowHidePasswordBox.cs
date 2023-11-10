@@ -92,6 +92,7 @@ namespace WPF.AA.CustomControls
                 showTextButton.Click += ShowTextClick;
 
             // if we have text in our Text property prior to having our template applied then we need to set that text on the pasword box
+            // this will more than likely occur when their is a Binding to the Text property
             if (!string.IsNullOrEmpty(Text))
                 passwordBox.Password = Text;
 
