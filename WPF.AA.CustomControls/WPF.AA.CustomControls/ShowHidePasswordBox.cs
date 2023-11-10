@@ -112,6 +112,8 @@ namespace WPF.AA.CustomControls
             ShowHidePasswordBox instance = d as ShowHidePasswordBox;
 
             if (instance == null) return;
+            if (instance.passwordBox == null) return;
+            if (instance.passwordBox.Password == null) return;
 
             if (!instance.passwordBox.Password.Equals(instance.Text))
                 instance.passwordBox.Password = instance.Text;
