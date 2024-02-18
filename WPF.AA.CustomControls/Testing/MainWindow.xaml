@@ -10,9 +10,7 @@
         Loaded="Window_Loaded"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
     <Grid x:Name="rootGrid" Background="#FF1F1F1F">
-        <!--<cc:WatermarkTextBox Watermark="My watermark text" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="200" />
-        <cc:RoundableButton Content="ABC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5" />
-        <cc:PopupExpander HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0"
+        <!--<cc:PopupExpander HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0"
                           ExpandDirection="Right" PopupStaysOpen="False">
             <cc:PopupExpander.Header>
                 <TextBlock Text="Expander w/ Popup">
@@ -253,11 +251,15 @@
             </Grid>
         </cc:GridSplitterPopupExpander>-->
 
-        <!--<cc:NumericUpDown x:Name="nud" Width="100" ValueType="Integer"
-                        Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="53" />
-        <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Integer"
-                          Margin="150,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding Value}" />-->
+        <cc:WatermarkTextBox Watermark="My watermark text" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="200" Foreground="Red" />
 
-        <cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5" Watermark="testing" />
+        <!--<cc:RoundableButton Content="ABC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5" />-->
+
+        <cc:NumericUpDown x:Name="nud" Width="100" ValueType="Integer" Foreground="Red"
+                        Margin="5,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="53" />
+        <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Integer" Foreground="Red"
+                          Margin="5,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding Value}" />
+
+        <cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Foreground="Red" />
     </Grid>
 </Window>

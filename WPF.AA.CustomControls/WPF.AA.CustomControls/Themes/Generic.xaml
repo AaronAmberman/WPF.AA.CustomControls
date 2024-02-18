@@ -365,6 +365,7 @@
     <Style TargetType="{x:Type local:NumericUpDown}">
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="#FF000000"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NumericUpDown}">
@@ -382,7 +383,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBox x:Name="PART_NumericDisplay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
-                                     IsReadOnly="{TemplateBinding IsReadOnly}" />
+                                     Foreground="{TemplateBinding Foreground}" IsReadOnly="{TemplateBinding IsReadOnly}" />
                             <RepeatButton x:Name="PART_UpIncrement" Grid.Column="1" Grid.Row="0">
                                 <Path x:Name="upPath" Fill="Black" Data="M 0 4 L 8 4 L 4 0 Z" />
                             </RepeatButton>
@@ -431,7 +432,8 @@
                         <TextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" Margin="0,0,23,0"
                                  Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" 
                                  Background="{TemplateBinding Background}" 
-                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
+                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                 Foreground="{TemplateBinding Foreground}" />
                         <PasswordBox x:Name="PART_PasswordBox" Padding="{TemplateBinding Padding}" Margin="0,0,23,0"
                                      Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
                                      BorderThickness="{TemplateBinding BorderThickness}" />
@@ -501,6 +503,23 @@
                             <Setter Property="Visibility" Value="Visible" TargetName="watermark" />
                         </Trigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:ColorPicker}">
+        <Setter Property="Background" Value="#FFDDDDDD"/>
+        <Setter Property="BorderBrush" Value="#FF707070"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="#FF000000"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ColorPicker}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}">
+                        
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -45,11 +45,6 @@ namespace WPF.AA.CustomControls
 
         #region Methods
 
-        //public override void OnApplyTemplate()
-        //{
-        //    base.OnApplyTemplate();
-        //}
-
         #endregion
     }
 }
