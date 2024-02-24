@@ -363,7 +363,8 @@
     </Style>
 
     <Style TargetType="{x:Type local:NumericUpDown}">
-        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="Background" Value="#FFFFFFFF" />
+        <Setter Property="BorderBrush" Value="#FF000000" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="#FF000000"/>
         <Setter Property="Template">
@@ -383,12 +384,13 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBox x:Name="PART_NumericDisplay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
+                                     Background="{TemplateBinding Background}"
                                      Foreground="{TemplateBinding Foreground}" IsReadOnly="{TemplateBinding IsReadOnly}" />
                             <RepeatButton x:Name="PART_UpIncrement" Grid.Column="1" Grid.Row="0">
-                                <Path x:Name="upPath" Fill="Black" Data="M 0 4 L 8 4 L 4 0 Z" />
+                                <Path x:Name="upPath" Fill="#FF000000" Data="M 0 4 L 8 4 L 4 0 Z" />
                             </RepeatButton>
                             <RepeatButton x:Name="PART_DownIncrement" Grid.Column="1" Grid.Row="1">
-                                <Path x:Name="downPath" Fill="Black" Data="M 0 0 L 4 4 L 8 0 Z" />
+                                <Path x:Name="downPath" Fill="#FF000000" Data="M 0 0 L 4 4 L 8 0 Z" />
                             </RepeatButton>
                         </Grid>
                     </Border>
@@ -428,61 +430,62 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ShowHidePasswordBox}">
-                    <Grid x:Name="grid" SnapsToDevicePixels="True">
-                        <TextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" Margin="0,0,23,0"
-                                 Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" 
-                                 Background="{TemplateBinding Background}" 
-                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                 Foreground="{TemplateBinding Foreground}" />
-                        <PasswordBox x:Name="PART_PasswordBox" Padding="{TemplateBinding Padding}" Margin="0,0,23,0"
-                                     Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                                     BorderThickness="{TemplateBinding BorderThickness}" />
-                        <ContentPresenter x:Name="watermark" IsHitTestVisible="False"
-                                          Content="{TemplateBinding Watermark}"
-                                          ContentTemplate="{TemplateBinding WatermarkTemplate}"                                          
-                                          Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessConverter},
-                                                           ConverterParameter=L:+3|T:+1}"
-                                          Visibility="Collapsed" />
-                        <Button x:Name="PART_ShowTextButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="0,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Stretch">
-                            <Rectangle Width="20" Height="13" Margin="0,0,0,3">
-                                <Rectangle.Fill>
-                                    <DrawingBrush>
-                                        <DrawingBrush.Drawing>
-                                            <DrawingGroup>
-                                                <DrawingGroup.Children>
-                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M128,95L0,95 0,0 128,0z" />
-                                                    <GeometryDrawing Brush="#FF000000" Geometry="M565 764 c-11 -2 -45 -9 -75 -15 -128 -25 -308 -144 -370 -245 l-22 -35 42 -55 c72 -96 211 -184 345 -219 76 -19 221 -19 305 1 101 23 202 78 283 154 40 37 80 81 89 97 17 29 17 29 -27 84 -109 137 -281 224 -462 234 -48 2 -97 2 -108 -1z m158 -77 c90 -38 141 -117 141 -218 0 -53 -5 -74 -28 -113 -93 -159 -325 -148 -406 20 -32 65 -25 154 16 220 54 88 183 130 277 91z" />
-                                                    <GeometryDrawing Brush="#FF000000" Geometry="M575 645 c-142 -50 -164 -245 -36 -326 117 -75 268 -1 279 137 l5 55 -34 -6 c-48 -9 -89 23 -89 70 0 19 5 37 10 40 18 11 11 23 -21 34 -41 14 -65 13 -114 -4z" />
-                                                </DrawingGroup.Children>
-                                            </DrawingGroup>
-                                        </DrawingBrush.Drawing>
-                                    </DrawingBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button>
-                        <Button x:Name="PART_HideTextButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="0,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Stretch">
-                            <Rectangle Width="20" Height="15" Margin="0,0,0,1">
-                                <Rectangle.Fill>
-                                    <DrawingBrush>
-                                        <DrawingBrush.Drawing>
-                                            <DrawingGroup>
-                                                <DrawingGroup.Children>
-                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M128,95L0,95 0,0 128,0z" />
-                                                    <GeometryDrawing Brush="#FF000000" Geometry="M615 490 c-388 -388 -389 -389 -370 -410 l19 -21 393 393 c369 369 391 393 376 410 -9 10 -19 18 -22 18 -3 0 -181 -175 -396 -390z" />
-                                                    <GeometryDrawing Brush="#FF000000" Geometry="M545 764 c-137 -21 -255 -83 -362 -191 -46 -45 -83 -87 -83 -94 0 -36 115 -152 213 -214 l28 -18 50 49 50 50 -16 37 c-61 146 50 317 207 317 32 0 75 -7 95 -15 37 -16 37 -16 71 19 l35 34 -39 12 c-43 12 -202 21 -249 14z" />
-                                                    <GeometryDrawing Brush="#FF000000" Geometry="M883 647 c-49 -50 -51 -53 -38 -77 55 -99 3 -247 -108 -307 -43 -23 -151 -23 -193 -1 -31 17 -31 17 -64 -17 -19 -19 -32 -36 -29 -38 15 -13 111 -27 186 -27 141 0 257 37 376 119 44 30 139 128 157 160 17 32 -95 152 -210 225 -26 15 -27 15 -77 -37z" />
-                                                    <GeometryDrawing Brush="#FF000000" Geometry="M578 649 c-26 -10 -26 -11 -10 -38 13 -24 14 -33 3 -59 -16 -38 -60 -59 -90 -43 -18 10 -21 8 -27 -15 -7 -27 11 -104 24 -104 4 0 63 56 131 124 l124 124 -39 11 c-47 13 -80 13 -116 0z" />
-                                                    <GeometryDrawing Brush="#FF000000" Geometry="M671 436 l-125 -125 30 -11 c16 -7 53 -10 82 -8 60 5 113 41 143 98 22 40 25 127 7 153 -12 15 -27 4 -137 -107z" />
-                                                </DrawingGroup.Children>
-                                            </DrawingGroup>
-                                        </DrawingBrush.Drawing>
-                                    </DrawingBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button>
-                    </Grid>
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid x:Name="grid" SnapsToDevicePixels="True">
+                            <TextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" Margin="0,0,23,0"
+                                     Background="{TemplateBinding Background}" BorderBrush="Transparent"
+                                     Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" 
+                                     Foreground="{TemplateBinding Foreground}" />
+                            <PasswordBox x:Name="PART_PasswordBox" Padding="{TemplateBinding Padding}" Margin="0,0,23,0" 
+                                         Background="{TemplateBinding Background}" BorderBrush="Transparent" />
+                            <ContentPresenter x:Name="watermark" IsHitTestVisible="False"
+                                              Content="{TemplateBinding Watermark}"
+                                              ContentTemplate="{TemplateBinding WatermarkTemplate}"                                          
+                                              Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessConverter},
+                                                               ConverterParameter=L:+3|T:+1}"
+                                              Visibility="Collapsed" />
+                            <Button x:Name="PART_ShowTextButton" Background="{TemplateBinding Background}"
+                                    BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                                <Rectangle Width="20" Height="13" Margin="0,0,0,3">
+                                    <Rectangle.Fill>
+                                        <DrawingBrush>
+                                            <DrawingBrush.Drawing>
+                                                <DrawingGroup>
+                                                    <DrawingGroup.Children>
+                                                        <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M128,95L0,95 0,0 128,0z" />
+                                                        <GeometryDrawing Brush="#FF000000" Geometry="M565 764 c-11 -2 -45 -9 -75 -15 -128 -25 -308 -144 -370 -245 l-22 -35 42 -55 c72 -96 211 -184 345 -219 76 -19 221 -19 305 1 101 23 202 78 283 154 40 37 80 81 89 97 17 29 17 29 -27 84 -109 137 -281 224 -462 234 -48 2 -97 2 -108 -1z m158 -77 c90 -38 141 -117 141 -218 0 -53 -5 -74 -28 -113 -93 -159 -325 -148 -406 20 -32 65 -25 154 16 220 54 88 183 130 277 91z" />
+                                                        <GeometryDrawing Brush="#FF000000" Geometry="M575 645 c-142 -50 -164 -245 -36 -326 117 -75 268 -1 279 137 l5 55 -34 -6 c-48 -9 -89 23 -89 70 0 19 5 37 10 40 18 11 11 23 -21 34 -41 14 -65 13 -114 -4z" />
+                                                    </DrawingGroup.Children>
+                                                </DrawingGroup>
+                                            </DrawingBrush.Drawing>
+                                        </DrawingBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Button>
+                            <Button x:Name="PART_HideTextButton" Background="{TemplateBinding Background}"
+                                    BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                                <Rectangle Width="20" Height="15" Margin="0,0,0,1">
+                                    <Rectangle.Fill>
+                                        <DrawingBrush>
+                                            <DrawingBrush.Drawing>
+                                                <DrawingGroup>
+                                                    <DrawingGroup.Children>
+                                                        <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M128,95L0,95 0,0 128,0z" />
+                                                        <GeometryDrawing Brush="#FF000000" Geometry="M615 490 c-388 -388 -389 -389 -370 -410 l19 -21 393 393 c369 369 391 393 376 410 -9 10 -19 18 -22 18 -3 0 -181 -175 -396 -390z" />
+                                                        <GeometryDrawing Brush="#FF000000" Geometry="M545 764 c-137 -21 -255 -83 -362 -191 -46 -45 -83 -87 -83 -94 0 -36 115 -152 213 -214 l28 -18 50 49 50 50 -16 37 c-61 146 50 317 207 317 32 0 75 -7 95 -15 37 -16 37 -16 71 19 l35 34 -39 12 c-43 12 -202 21 -249 14z" />
+                                                        <GeometryDrawing Brush="#FF000000" Geometry="M883 647 c-49 -50 -51 -53 -38 -77 55 -99 3 -247 -108 -307 -43 -23 -151 -23 -193 -1 -31 17 -31 17 -64 -17 -19 -19 -32 -36 -29 -38 15 -13 111 -27 186 -27 141 0 257 37 376 119 44 30 139 128 157 160 17 32 -95 152 -210 225 -26 15 -27 15 -77 -37z" />
+                                                        <GeometryDrawing Brush="#FF000000" Geometry="M578 649 c-26 -10 -26 -11 -10 -38 13 -24 14 -33 3 -59 -16 -38 -60 -59 -90 -43 -18 10 -21 8 -27 -15 -7 -27 11 -104 24 -104 4 0 63 56 131 124 l124 124 -39 11 c-47 13 -80 13 -116 0z" />
+                                                        <GeometryDrawing Brush="#FF000000" Geometry="M671 436 l-125 -125 30 -11 c16 -7 53 -10 82 -8 60 5 113 41 143 98 22 40 25 127 7 153 -12 15 -27 4 -137 -107z" />
+                                                    </DrawingGroup.Children>
+                                                </DrawingGroup>
+                                            </DrawingBrush.Drawing>
+                                        </DrawingBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Button>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Opacity" TargetName="grid" Value="0.56"/>
@@ -510,6 +513,20 @@
 
     <!-- Change this to any pure hue i.e. no more than 2 rgb components set and at least 1 set to FF -->
     <Color x:Key="CurrentColor">#FF0000</Color>
+
+    <Style x:Key="ColorPickerRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="{x:Type local:ColorPicker}">
         <Setter Property="Background" Value="#FFDDDDDD"/>
@@ -558,28 +575,39 @@
                                     </Rectangle>
                                 </Border>
                                 <Border Grid.Column="1" Margin="5,0">
-                                    <Grid>
-                                        <!-- 
-                                            there needs to be some kind of value mechanism here, like a slider or something
-                                        -->
-                                        <Rectangle SnapsToDevicePixels="True"
-                                                   Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
-                                                   Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}">
-                                            <Rectangle.Fill>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="#FF0000" Offset="0" />
-                                                        <GradientStop Color="#FFFF00" Offset="0.167" />
-                                                        <GradientStop Color="#00FF00" Offset="0.333" />
-                                                        <GradientStop Color="#00FFFF" Offset="0.5" />
-                                                        <GradientStop Color="#0000FF" Offset="0.667" />
-                                                        <GradientStop Color="#FF00FF" Offset="0.833" />
-                                                        <GradientStop Color="#FF0000" Offset="1" />
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                    </Grid>
+                                    <Slider x:Name="PART_ColorSlider" Orientation="Vertical" Minimum="0" Maximum="1000" SmallChange="1" LargeChange="5">
+                                        <Slider.Style>
+                                            <Style TargetType="{x:Type Slider}">
+                                                <Setter Property="IsSelectionRangeEnabled" Value="False" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Slider}">
+                                                            <Border>
+                                                                <Border.Background>
+                                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                        <LinearGradientBrush.GradientStops>
+                                                                            <GradientStop Color="#FF0000" Offset="0" />
+                                                                            <GradientStop Color="#FFFF00" Offset="0.167" />
+                                                                            <GradientStop Color="#00FF00" Offset="0.333" />
+                                                                            <GradientStop Color="#00FFFF" Offset="0.5" />
+                                                                            <GradientStop Color="#0000FF" Offset="0.667" />
+                                                                            <GradientStop Color="#FF00FF" Offset="0.833" />
+                                                                            <GradientStop Color="#FF0000" Offset="1" />
+                                                                        </LinearGradientBrush.GradientStops>
+                                                                    </LinearGradientBrush>
+                                                                </Border.Background>
+                                                                <Track x:Name="PART_Track" Orientation="Vertical" Minimum="0" Maximum="1000">
+                                                                    <Track.Thumb>
+                                                                        <Thumb />
+                                                                    </Track.Thumb>
+                                                                </Track>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Slider.Style>
+                                    </Slider>
                                 </Border>
                                 <Grid Grid.Column="2">
                                     <Grid.RowDefinitions>

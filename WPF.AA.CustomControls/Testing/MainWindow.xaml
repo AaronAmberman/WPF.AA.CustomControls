@@ -251,16 +251,19 @@
             </Grid>
         </cc:GridSplitterPopupExpander>-->
 
-        <!--<cc:WatermarkTextBox Watermark="My watermark text" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="200" Foreground="Red" />-->
+        <!--<cc:WatermarkTextBox Watermark="My watermark text" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="200" Foreground="Red" Background="Blue"
+                             BorderBrush="Red" BorderThickness="2" />-->
 
-        <!--<cc:RoundableButton Content="ABC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5" />-->
+        <!--<cc:RoundableButton Content="ABC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5" Background="Purple"
+                            BorderBrush="Pink" BorderThickness="2"/>-->
 
-        <!--<cc:NumericUpDown x:Name="nud" Width="100" ValueType="Integer" Foreground="Red"
+        <!--<cc:NumericUpDown x:Name="nud" Width="100" ValueType="Integer" Foreground="Red" BorderBrush="Purple" BorderThickness="2"
                         Margin="5,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="53" />
-        <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Integer" Foreground="Red"
+        <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Integer" Foreground="Red" Background="LightBlue" BorderBrush="Pink" BorderThickness="2"
                           Margin="5,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding Value}" />-->
 
-        <!--<cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Foreground="Red" />-->
+        <!--<cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Foreground="Red" Background="LightGreen"
+                                BorderBrush="Purple" BorderThickness="3"/>-->
 
         <cc:ColorPicker />
     </Grid>
