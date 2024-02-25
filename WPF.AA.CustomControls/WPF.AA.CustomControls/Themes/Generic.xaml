@@ -514,6 +514,115 @@
     <!-- Change this to any pure hue i.e. no more than 2 rgb components set and at least 1 set to FF -->
     <Color x:Key="CurrentColor">#FF0000</Color>
 
+    <Style TargetType="{x:Type local:ColorSlider}">
+        <Setter Property="IsSelectionRangeEnabled" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ColorSlider}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Grid>
+                            <Border x:Name="PART_ColorGradient" Margin="10,5">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Color="#FF0000" Offset="0" />
+                                            <GradientStop Color="#FFFF00" Offset="0.167" />
+                                            <GradientStop Color="#00FF00" Offset="0.333" />
+                                            <GradientStop Color="#00FFFF" Offset="0.5" />
+                                            <GradientStop Color="#0000FF" Offset="0.667" />
+                                            <GradientStop Color="#FF00FF" Offset="0.833" />
+                                            <GradientStop Color="#FF0000" Offset="1" />
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <Track x:Name="PART_Track" Orientation="Vertical">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="Slider.DecreaseLarge">
+                                        <RepeatButton.Style>
+                                            <Style TargetType="{x:Type RepeatButton}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                            <Border Background="Transparent" />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </RepeatButton.Style>
+                                    </RepeatButton>
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Style>
+                                            <Style TargetType="{x:Type Thumb}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Thumb}">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Rectangle Grid.Column="0" Height="10" Width="10">
+                                                                    <Rectangle.Fill>
+                                                                        <DrawingBrush>
+                                                                            <DrawingBrush.Drawing>
+                                                                                <DrawingGroup>
+                                                                                    <DrawingGroup.Children>
+                                                                                        <GeometryDrawing Brush="#FF000000" Geometry="F1M0,0L0,10 10,5Z" />
+                                                                                    </DrawingGroup.Children>
+                                                                                </DrawingGroup>
+                                                                            </DrawingBrush.Drawing>
+                                                                        </DrawingBrush>
+                                                                    </Rectangle.Fill>
+                                                                </Rectangle>
+                                                                <Rectangle Grid.Column="2" Height="10" Width="10">
+                                                                    <Rectangle.Fill>
+                                                                        <DrawingBrush>
+                                                                            <DrawingBrush.Drawing>
+                                                                                <DrawingGroup>
+                                                                                    <DrawingGroup.Children>
+                                                                                        <GeometryDrawing Brush="#FF000000" Geometry="F1M0,5L10,0 10,10Z" />
+                                                                                    </DrawingGroup.Children>
+                                                                                </DrawingGroup>
+                                                                            </DrawingBrush.Drawing>
+                                                                        </DrawingBrush>
+                                                                    </Rectangle.Fill>
+                                                                </Rectangle>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Thumb.Style>
+                                    </Thumb>
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="Slider.IncreaseLarge">
+                                        <RepeatButton.Style>
+                                            <Style TargetType="{x:Type RepeatButton}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                            <Border Background="Transparent" />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </RepeatButton.Style>
+                                    </RepeatButton>
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="{x:Type local:ColorPicker}">
         <Setter Property="Background" Value="#FFDDDDDD"/>
         <Setter Property="BorderBrush" Value="#FF707070"/>
@@ -563,115 +672,8 @@
                                     </Rectangle>
                                 </Border>
                                 <Border Grid.Column="1" Margin="5">
-                                    <Slider x:Name="PART_ColorSlider" Orientation="Vertical" Minimum="0" Maximum="1000" SmallChange="1" LargeChange="5" Value="1000">
-                                        <Slider.Style>
-                                            <Style TargetType="{x:Type Slider}">
-                                                <Setter Property="IsSelectionRangeEnabled" Value="False" />
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate TargetType="{x:Type Slider}">
-                                                            <Grid>
-                                                                <Border Margin="10,5">
-                                                                    <Border.Background>
-                                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                            <LinearGradientBrush.GradientStops>
-                                                                                <GradientStop Color="#FF0000" Offset="0" />
-                                                                                <GradientStop Color="#FFFF00" Offset="0.167" />
-                                                                                <GradientStop Color="#00FF00" Offset="0.333" />
-                                                                                <GradientStop Color="#00FFFF" Offset="0.5" />
-                                                                                <GradientStop Color="#0000FF" Offset="0.667" />
-                                                                                <GradientStop Color="#FF00FF" Offset="0.833" />
-                                                                                <GradientStop Color="#FF0000" Offset="1" />
-                                                                            </LinearGradientBrush.GradientStops>
-                                                                        </LinearGradientBrush>
-                                                                    </Border.Background>
-                                                                </Border>
-                                                                <Track x:Name="PART_Track" Orientation="Vertical">
-                                                                    <Track.DecreaseRepeatButton>
-                                                                        <RepeatButton Command="Slider.DecreaseLarge">
-                                                                            <RepeatButton.Style>
-                                                                                <Style TargetType="{x:Type RepeatButton}">
-                                                                                    <Setter Property="Template">
-                                                                                        <Setter.Value>
-                                                                                            <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                                                                                <Border Background="Transparent" />
-                                                                                            </ControlTemplate>
-                                                                                        </Setter.Value>
-                                                                                    </Setter>
-                                                                                </Style>
-                                                                            </RepeatButton.Style>
-                                                                        </RepeatButton>
-                                                                    </Track.DecreaseRepeatButton>
-                                                                    <Track.Thumb>
-                                                                        <Thumb>
-                                                                            <Thumb.Style>
-                                                                                <Style TargetType="{x:Type Thumb}">
-                                                                                    <Setter Property="Template">
-                                                                                        <Setter.Value>
-                                                                                            <ControlTemplate TargetType="{x:Type Thumb}">
-                                                                                                <Grid>
-                                                                                                    <Grid.ColumnDefinitions>
-                                                                                                        <ColumnDefinition Width="Auto" />
-                                                                                                        <ColumnDefinition Width="*" />
-                                                                                                        <ColumnDefinition Width="Auto" />
-                                                                                                    </Grid.ColumnDefinitions>
-                                                                                                    <Rectangle Grid.Column="0" Height="10" Width="10">
-                                                                                                        <Rectangle.Fill>
-                                                                                                            <DrawingBrush>
-                                                                                                                <DrawingBrush.Drawing>
-                                                                                                                    <DrawingGroup>
-                                                                                                                        <DrawingGroup.Children>
-                                                                                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1M0,0L0,10 10,5Z" />
-                                                                                                                        </DrawingGroup.Children>
-                                                                                                                    </DrawingGroup>
-                                                                                                                </DrawingBrush.Drawing>
-                                                                                                            </DrawingBrush>
-                                                                                                        </Rectangle.Fill>
-                                                                                                    </Rectangle>
-                                                                                                    <Rectangle Grid.Column="2" Height="10" Width="10">
-                                                                                                        <Rectangle.Fill>
-                                                                                                            <DrawingBrush>
-                                                                                                                <DrawingBrush.Drawing>
-                                                                                                                    <DrawingGroup>
-                                                                                                                        <DrawingGroup.Children>
-                                                                                                                            <GeometryDrawing Brush="#FF000000" Geometry="F1M0,5L10,0 10,10Z" />
-                                                                                                                        </DrawingGroup.Children>
-                                                                                                                    </DrawingGroup>
-                                                                                                                </DrawingBrush.Drawing>
-                                                                                                            </DrawingBrush>
-                                                                                                        </Rectangle.Fill>
-                                                                                                    </Rectangle>
-                                                                                                </Grid>
-                                                                                            </ControlTemplate>
-                                                                                        </Setter.Value>
-                                                                                    </Setter>
-                                                                                </Style>
-                                                                            </Thumb.Style>
-                                                                        </Thumb>
-                                                                    </Track.Thumb>
-                                                                    <Track.IncreaseRepeatButton>
-                                                                        <RepeatButton Command="Slider.IncreaseLarge">
-                                                                            <RepeatButton.Style>
-                                                                                <Style TargetType="{x:Type RepeatButton}">
-                                                                                    <Setter Property="Template">
-                                                                                        <Setter.Value>
-                                                                                            <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                                                                                <Border Background="Transparent" />
-                                                                                            </ControlTemplate>
-                                                                                        </Setter.Value>
-                                                                                    </Setter>
-                                                                                </Style>
-                                                                            </RepeatButton.Style>
-                                                                        </RepeatButton>
-                                                                    </Track.IncreaseRepeatButton>
-                                                                </Track>
-                                                            </Grid>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </Slider.Style>
-                                    </Slider>
+                                    <local:ColorSlider x:Name="PART_ColorSlider" Orientation="Vertical" Minimum="0" Maximum="1000" 
+                                                       SmallChange="1" LargeChange="5" Value="1000" SelectedColor="Purple" />
                                 </Border>
                                 <Grid Grid.Column="2" Margin="0,25,10,25">
                                     <Grid.RowDefinitions>
@@ -681,8 +683,10 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Text="New" />
-                                    <Border Grid.Row="1" Background="LightSkyBlue" BorderBrush="#FF000000" BorderThickness="1,1,1,0" SnapsToDevicePixels="True" UseLayoutRounding="True" />
-                                    <Border Grid.Row="2" Background="LightCoral" BorderBrush="#FF000000" BorderThickness="1,0,1,1" SnapsToDevicePixels="True" UseLayoutRounding="True" />
+                                    <Border Grid.Row="1" Background="LightSkyBlue" BorderBrush="#FF000000" BorderThickness="1,1,1,0" 
+                                            SnapsToDevicePixels="True" UseLayoutRounding="True" />
+                                    <Border Grid.Row="2" Background="LightCoral" BorderBrush="#FF000000" BorderThickness="1,0,1,1" 
+                                            SnapsToDevicePixels="True" UseLayoutRounding="True" />
                                     <TextBlock Grid.Row="3" Text="Current" />
                                 </Grid>
                             </Grid>

@@ -1,21 +1,23 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace WPF.AA.CustomControls
 {
     /// <summary>A simple RBG color picker control for WPF.</summary>
-    [TemplatePart(Name = "PART_ColorSlider", Type = typeof(Slider))]
+    [TemplatePart(Name = "PART_ColorSlider", Type = typeof(ColorSlider))]
     public class ColorPicker : Control
     {
         // https://stackoverflow.com/questions/32513387/how-to-create-a-color-canvas-for-color-picker-wpf
         // https://www.codeproject.com/Articles/36802/WPF-Colour-Slider
-            // https://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=36802
+        // https://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=36802
         // https://bootcamp.uxdesign.cc/definitive-guide-to-wpf-colors-color-spaces-color-pickers-and-creating-your-own-colors-for-mere-f480935c6e94
 
         #region Fields
 
-        private Slider colorSlider;
+        //private ColorSlider colorSlider;
 
         #endregion
 
@@ -65,22 +67,11 @@ namespace WPF.AA.CustomControls
 
         #region Methods
 
-        private void CacheVerticalColorBarGradient()
-        {
-
-        }
-
         public override void OnApplyTemplate()
         {
-            colorSlider = GetTemplateChild("PART_ColorSlider") as Slider;
-            colorSlider.ValueChanged += ColorSlider_ValueChanged;
+            //colorSlider = GetTemplateChild("PART_ColorSlider") as ColorSlider;
 
             base.OnApplyTemplate();
-        }
-
-        private void ColorSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            
         }
 
         #endregion
