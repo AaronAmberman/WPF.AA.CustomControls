@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
+using WPF.AA.CustomControls;
 
 namespace Testing
 {

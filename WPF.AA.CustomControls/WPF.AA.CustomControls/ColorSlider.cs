@@ -28,7 +28,31 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Red, SelectedColorChanged));
+            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Red, SelectedColorChangedCallback));
+
+        #endregion
+
+        #region Events
+
+        public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent(
+            "SelectedColorChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ColorSlider));
+
+        /// <summary>Occurs when the selected color changes.</summary>
+        public event RoutedEventHandler SelectedColorChanged
+        {
+            add { AddHandler(SelectedColorChangedEvent, value); }
+            remove { RemoveHandler(SelectedColorChangedEvent, value); }
+        }
+
+        /// <summary>Gets or sets the style for the thumb portion of the control.</summary>
+        public Style ThumbStyle
+        {
+            get { return (Style)GetValue(ThumbStyleProperty); }
+            set { SetValue(ThumbStyleProperty, value); }
+        }
+
+        public static readonly DependencyProperty ThumbStyleProperty =
+            DependencyProperty.Register("ThumbStyle", typeof(Style), typeof(ColorSlider), new PropertyMetadata(null));
 
         #endregion
 
@@ -39,6 +63,7 @@ namespace WPF.AA.CustomControls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorSlider), new FrameworkPropertyMetadata(typeof(ColorSlider)));
         }
 
+        /// <summary>Initializes a new instance of the <see cref="ColorSlider"/> class.</summary>
         public ColorSlider()
         {
             Loaded += ColorSlider_Loaded;
@@ -52,14 +77,16 @@ namespace WPF.AA.CustomControls
         {
             if (colorGradient == null) return;
 
-            Rect bounds = VisualTreeHelper.GetDescendantBounds(colorGradient);            
+            // draw gradient
+            Rect bounds = VisualTreeHelper.GetDescendantBounds(colorGradient);
             DrawingVisual dv = new DrawingVisual();
 
-            using (DrawingContext dc = dv.RenderOpen()) 
+            using (DrawingContext dc = dv.RenderOpen())
             {
                 dc.DrawRectangle(new VisualBrush(colorGradient), null, new Rect(new Point(), bounds.Size));
             }
 
+            // render gradient as image
             RenderTargetBitmap rtb = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height, 96, 96, PixelFormats.Pbgra32);
             rtb.Render(dv);
 
@@ -75,7 +102,11 @@ namespace WPF.AA.CustomControls
             }
         }
 
-        private double Distance(Color source, Color target)
+        /// <summary>Calculates the distance between 2 colors.</summary>
+        /// <param name="source">The color that is being compared.</param>
+        /// <param name="target">The target or desired color.</param>
+        /// <returns>The distance between the 2 colors.</returns>
+        protected virtual double Distance(Color source, Color target)
         {
             System.Drawing.Color c1 = System.Drawing.Color.FromArgb(source.R, source.G, source.B);
             System.Drawing.Color c2 = System.Drawing.Color.FromArgb(target.R, target.G, target.B);
@@ -87,15 +118,40 @@ namespace WPF.AA.CustomControls
             return (hue * hue) + (saturation * saturation) + (brightness * brightness);
         }
 
-        private Color GetColorAtPosition(int position) 
+        /// <summary>Gets the color at the associated position in the slider.</summary>
+        /// <param name="position">The position of the thumb in the slider (pixel wise, not value wise).</param>
+        /// <returns>The color at the specified position.</returns>
+        protected virtual Color GetColorAtPosition(int position)
         {
             if (colorGradientImage == null) return Color.FromArgb(0, 0, 0, 0);
 
-            CroppedBitmap cb = new CroppedBitmap(colorGradientImage, new Int32Rect((int)colorGradientImage.Width / 2, position, 1, 1));
+            CroppedBitmap cb;
+
+            if (Orientation == Orientation.Horizontal)
+            {
+                // if the value is == the Width of the gradient image an ArgumentException is thrown, so we 
+                // need to ensure the value stays just 1 pixel shy of that to avoid the exception
+                if (position >= colorGradientImage.Width)
+                    position = (int)colorGradientImage.Width - 1;
+
+                cb = new CroppedBitmap(colorGradientImage, new Int32Rect(position, (int)colorGradientImage.Height / 2, 1, 1));
+            }
+            else
+            {
+                // if the value is == the Height of the gradient image an ArgumentException is thrown, so we 
+                // need to ensure the value stays just 1 pixel shy of that to avoid the exception
+                if (position >= colorGradientImage.Height)
+                    position = (int)colorGradientImage.Height - 1;
+
+                cb = new CroppedBitmap(colorGradientImage, new Int32Rect((int)colorGradientImage.Width / 2, position, 1, 1));
+            }
+
+            // create a 1 x 1 image to red the pixel color from
             byte[] rgb = new byte[4];
 
             cb.CopyPixels(rgb, 4, 0);
 
+            // gen color from read pixel color
             Color returnColor = Color.FromRgb(rgb[2], rgb[1], rgb[0]);
 
             return returnColor;
@@ -120,8 +176,18 @@ namespace WPF.AA.CustomControls
             if (colorGradient == null) return;
             if (isBeingUpdated) return; // update originated on set color
 
-            // vertical sliders have their max value at the top (pixel 0 vertically) and min value at the bottom (pixel Height veritcally)
-            int position = (int)(Math.Abs(newValue - 1000) / (Maximum - Minimum) * VisualTreeHelper.GetDescendantBounds(colorGradient).Height);
+            int position;
+
+            if (Orientation == Orientation.Horizontal)
+            {
+                position = (int)(newValue / (Maximum - Minimum) * VisualTreeHelper.GetDescendantBounds(colorGradient).Width);
+            }
+            else
+            {
+                // vertical sliders have their max value at the top (pixel 0 vertically) and min value at the bottom (pixel Height veritcally)
+                // so we need the absolute position - Maximum instead to get the accurate color
+                position = (int)(Math.Abs(newValue - Maximum) / (Maximum - Minimum) * VisualTreeHelper.GetDescendantBounds(colorGradient).Height);
+            }
 
             isBeingUpdated = true;
 
@@ -132,16 +198,21 @@ namespace WPF.AA.CustomControls
             base.OnValueChanged(oldValue, newValue);
         }
 
-        private static void SelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void SelectedColorChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ColorSlider cs = d as ColorSlider;
 
             if (cs == null) return;
 
-            cs.SetValueBasedOnColor((Color)e.NewValue);
+            Color c = (Color)e.NewValue;
+
+            cs.SetValueBasedOnColor(c);
+            cs.RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));
         }
 
-        private void SetValueBasedOnColor(Color color)
+        /// <summary>Sets the value of the slider based on the specified color.</summary>
+        /// <param name="color">The color to set on the slider.</param>
+        protected virtual void SetValueBasedOnColor(Color color)
         {
             if (colorGradient == null) return;
             if (isBeingUpdated) return; // update originated on value change
@@ -149,10 +220,23 @@ namespace WPF.AA.CustomControls
             double currentDistance = int.MaxValue;
             int currentPos = -1;
             Rect bounds = VisualTreeHelper.GetDescendantBounds(colorGradient);
+            int upperBounds;
 
-            for (int i = 0; i < bounds.Height; i++)
+            // loop through the height of the image (checking every pixel) to see if we have a color match
+            if (Orientation == Orientation.Horizontal)
+            {
+                upperBounds = (int)bounds.Height;
+            }
+            else
+            {
+                upperBounds= (int)bounds.Width;
+            }
+
+            for (int i = 0; i < upperBounds; i++)
             {
                 Color temp = GetColorAtPosition(i);
+
+                // determine distance between the two colors
                 double dis = Distance(temp, color);
 
                 if (dis == 0.0)
@@ -168,9 +252,10 @@ namespace WPF.AA.CustomControls
                 }
             }
 
+            // update value based on calculate result
             isBeingUpdated = true;
 
-            Value = Math.Abs((currentPos / bounds.Height) * (Maximum - Minimum) - 1000);
+            Value = Math.Abs((currentPos / upperBounds) * (Maximum - Minimum) - Maximum);
 
             isBeingUpdated = false;
         }

@@ -14,7 +14,7 @@ namespace WPF.AA.CustomControls
     {
         #region Fields
 
-        private bool isMinLessthanZero = false;
+        private bool isMinLessThanZero = false;
 
         private RepeatButton partDownIncrement;
         private TextBox partNumericDisplay;
@@ -23,16 +23,6 @@ namespace WPF.AA.CustomControls
         #endregion
 
         #region Properties
-
-        /// <summary>Gets or sets the increment to use when incrementing or decrementing the value. Default is 1.</summary>
-        public object Increment
-        {
-            get { return (object)GetValue(IncrementProperty); }
-            set { SetValue(IncrementProperty, value); }
-        }
-
-        public static readonly DependencyProperty IncrementProperty =
-            DependencyProperty.Register("Increment", typeof(object), typeof(NumericUpDown), new PropertyMetadata(1));
 
         /// <summary>Gets or sets whether or not the user can modify the content (this affects typing only).</summary>
         public bool IsReadOnly
@@ -56,7 +46,7 @@ namespace WPF.AA.CustomControls
 
         private static void MaxValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            NumericUpDown numericUpDown = (NumericUpDown)d;
+            //NumericUpDown numericUpDown = (NumericUpDown)d;
         }
 
         private static object CoerceMaxValue(DependencyObject d, object baseValue)
@@ -119,33 +109,24 @@ namespace WPF.AA.CustomControls
                 if (!int.TryParse(numericUpDown.MinValue.ToString(), out int minValue))
                     return;
 
-                if (!int.TryParse(numericUpDown.Value.ToString(), out int value))
-                    return;
-
-                if (value < minValue) numericUpDown.isMinLessthanZero = true;
-                else numericUpDown.isMinLessthanZero = false;
+                if (minValue < 0) numericUpDown.isMinLessThanZero = true;
+                else numericUpDown.isMinLessThanZero = false;
             }
             else if (numericUpDown.ValueType == NumericUpDownType.Decimal)
             {
                 if (!decimal.TryParse(numericUpDown.MinValue.ToString(), out decimal minValue))
                     return;
 
-                if (!decimal.TryParse(numericUpDown.Value.ToString(), out decimal value))
-                    return;
-
-                if (value < minValue) numericUpDown.isMinLessthanZero = true;
-                else numericUpDown.isMinLessthanZero = false;
+                if (minValue < 0) numericUpDown.isMinLessThanZero = true;
+                else numericUpDown.isMinLessThanZero = false;
             }
             else if (numericUpDown.ValueType == NumericUpDownType.Double)
             {
                 if (!double.TryParse(numericUpDown.MinValue.ToString(), out double minValue))
                     return;
 
-                if (!double.TryParse(numericUpDown.Value.ToString(), out double value))
-                    return;
-
-                if (value < minValue) numericUpDown.isMinLessthanZero = true;
-                else numericUpDown.isMinLessthanZero = false;
+                if (minValue < 0) numericUpDown.isMinLessThanZero = true;
+                else numericUpDown.isMinLessThanZero = false;
             }
         }
 
@@ -190,6 +171,16 @@ namespace WPF.AA.CustomControls
             return 0;
         }
 
+        /// <summary>Gets or sets the step to use when incrementing or decrementing the value. Default is 1.</summary>
+        public object Step
+        {
+            get { return (object)GetValue(StepProperty); }
+            set { SetValue(StepProperty, value); }
+        }
+
+        public static readonly DependencyProperty StepProperty =
+            DependencyProperty.Register("Step", typeof(object), typeof(NumericUpDown), new PropertyMetadata(1));
+
         /// <summary>Gets or sets the value for the numeric up down. Default is 0.</summary>
         public object Value
         {
@@ -203,7 +194,7 @@ namespace WPF.AA.CustomControls
 
         private static void ValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            NumericUpDown numericUpDown = (NumericUpDown)d;
+            //NumericUpDown numericUpDown = (NumericUpDown)d;
         }
 
         private static object CoerceValue(DependencyObject d, object baseValue)
@@ -325,7 +316,7 @@ namespace WPF.AA.CustomControls
 
             if (ValueType == NumericUpDownType.Integer)
             {
-                if (isMinLessthanZero)
+                if (isMinLessThanZero)
                 {
                     if (!(e.Key == Key.D0 || e.Key == Key.D1 || e.Key == Key.D2 ||
                         e.Key == Key.D3 || e.Key == Key.D4 || e.Key == Key.D5 ||
@@ -356,7 +347,7 @@ namespace WPF.AA.CustomControls
             }
             else if (ValueType == NumericUpDownType.Decimal || ValueType == NumericUpDownType.Double)
             {
-                if (isMinLessthanZero)
+                if (isMinLessThanZero)
                 {
                     if (!(e.Key == Key.D0 || e.Key == Key.D1 || e.Key == Key.D2 ||
                         e.Key == Key.D3 || e.Key == Key.D4 || e.Key == Key.D5 ||
@@ -397,7 +388,7 @@ namespace WPF.AA.CustomControls
             {
                 if (int.TryParse(Value.ToString(), out int value) &&
                     int.TryParse(MinValue.ToString(), out int minValue) &&
-                    int.TryParse(Increment.ToString(), out int increment))
+                    int.TryParse(Step.ToString(), out int increment))
                 {
                     if (value - increment < minValue)
                         Value = minValue;
@@ -409,7 +400,7 @@ namespace WPF.AA.CustomControls
             {
                 if (decimal.TryParse(Value.ToString(), out decimal value) &&
                     decimal.TryParse(MinValue.ToString(), out decimal minValue) &&
-                    decimal.TryParse(Increment.ToString(), out decimal increment))
+                    decimal.TryParse(Step.ToString(), out decimal increment))
                 {
                     if (value - increment < minValue)
                         Value = minValue;
@@ -421,7 +412,7 @@ namespace WPF.AA.CustomControls
             {
                 if (double.TryParse(Value.ToString(), out double value) &&
                     double.TryParse(MinValue.ToString(), out double minValue) &&
-                    double.TryParse(Increment.ToString(), out double increment))
+                    double.TryParse(Step.ToString(), out double increment))
                 {
                     if (value - increment < minValue)
                         Value = minValue;
@@ -439,7 +430,7 @@ namespace WPF.AA.CustomControls
             {
                 if (int.TryParse(Value.ToString(), out int value) &&
                     int.TryParse(MaxValue.ToString(), out int maxValue) &&
-                    int.TryParse(Increment.ToString(), out int increment))
+                    int.TryParse(Step.ToString(), out int increment))
                 {
                     if (value + increment > maxValue)
                         Value = maxValue;
@@ -451,7 +442,7 @@ namespace WPF.AA.CustomControls
             {
                 if (decimal.TryParse(Value.ToString(), out decimal value) &&
                     decimal.TryParse(MaxValue.ToString(), out decimal maxValue) &&
-                    decimal.TryParse(Increment.ToString(), out decimal increment))
+                    decimal.TryParse(Step.ToString(), out decimal increment))
                 {
                     if (value + increment > maxValue)
                         Value = maxValue;
@@ -463,7 +454,7 @@ namespace WPF.AA.CustomControls
             {
                 if (double.TryParse(Value.ToString(), out double value) &&
                     double.TryParse(MaxValue.ToString(), out double maxValue) &&
-                    double.TryParse(Increment.ToString(), out double increment))
+                    double.TryParse(Step.ToString(), out double increment))
                 {
                     if (value + increment > maxValue)
                         Value = maxValue;
