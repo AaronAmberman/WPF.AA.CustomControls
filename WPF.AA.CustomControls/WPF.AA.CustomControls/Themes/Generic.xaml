@@ -698,6 +698,7 @@
     </Style>
 
     <local:ColorPickerBackgroundConverter x:Key="ColorConverter" />
+    <local:SolidColorBrushConverter x:Key="SolidColorBrushConverter" />
 
     <Style TargetType="{x:Type local:ColorPicker}">
         <Setter Property="Background" Value="#FFDDDDDD"/>
@@ -752,10 +753,10 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Text="New" />
-                                    <Border Grid.Row="1" Background="LightSkyBlue" BorderBrush="#FF000000" BorderThickness="1,1,1,0" 
-                                            SnapsToDevicePixels="True" UseLayoutRounding="True" />
-                                    <Border Grid.Row="2" Background="LightCoral" BorderBrush="#FF000000" BorderThickness="1,0,1,1" 
-                                            SnapsToDevicePixels="True" UseLayoutRounding="True" />
+                                    <Border Grid.Row="1" BorderBrush="#FF000000" BorderThickness="1,1,1,0" SnapsToDevicePixels="True" UseLayoutRounding="True"
+                                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor, Converter={StaticResource SolidColorBrushConverter}}"/>
+                                    <Border Grid.Row="2" BorderBrush="#FF000000" BorderThickness="1,0,1,1" SnapsToDevicePixels="True" UseLayoutRounding="True" 
+                                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PreviousColor, Converter={StaticResource SolidColorBrushConverter}}" />
                                     <TextBlock Grid.Row="3" Text="Current" />
                                 </Grid>
                             </Grid>
@@ -802,24 +803,32 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="R" />
-                                <Slider Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="255" Margin="5,0" />
-                                <TextBox Grid.Column="2" Grid.Row="0" />
+                                <Slider Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="255" Margin="5,0"
+                                        Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderRValue, Mode=TwoWay}" />
+                                <TextBox Grid.Column="2" Grid.Row="0" MaxLength="3"
+                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderRValue, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="G" Margin="0,5,0,0" />
-                                <Slider Grid.Column="1" Grid.Row="1" Minimum="0" Maximum="255" Margin="5,5,5,0" />
-                                <TextBox Grid.Column="2" Grid.Row="1" Margin="0,5,0,0" />
+                                <Slider Grid.Column="1" Grid.Row="1" Minimum="0" Maximum="255" Margin="5,5,5,0"
+                                        Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderGValue, Mode=TwoWay}" />
+                                <TextBox Grid.Column="2" Grid.Row="1" Margin="0,5,0,0" MaxLength="3"
+                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderGValue, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="B" Margin="0,5,0,0" />
-                                <Slider Grid.Column="1" Grid.Row="2" Minimum="0" Maximum="255" Margin="5,5,5,0" />
-                                <TextBox Grid.Column="2" Grid.Row="2" Margin="0,5,0,0" />
+                                <Slider Grid.Column="1" Grid.Row="2" Minimum="0" Maximum="255" Margin="5,5,5,0"
+                                        Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderBValue, Mode=TwoWay}" />
+                                <TextBox Grid.Column="2" Grid.Row="2" Margin="0,5,0,0" MaxLength="3"
+                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderBValue, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Column="0" Grid.Row="3" Text="A" Margin="0,5,0,0" />
-                                <Slider Grid.Column="1" Grid.Row="3" Minimum="0" Maximum="255" Margin="5,5,5,0" />
-                                <TextBox Grid.Column="2" Grid.Row="3" Margin="0,5,0,0" />
+                                <Slider Grid.Column="1" Grid.Row="3" Minimum="0" Maximum="255" Margin="5,5,5,0"
+                                        Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderAValue, Mode=TwoWay}" />
+                                <TextBox Grid.Column="2" Grid.Row="3" Margin="0,5,0,0" MaxLength="3"
+                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderAValue, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
                             <Grid Grid.Row="3" Margin="0,0,10,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" MinWidth="60" />
                                 </Grid.ColumnDefinitions>
-                                <TextBox Grid.Column="1" MaxLength="9" Text="" />
+                                <TextBox Grid.Column="1" MaxLength="9" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HexStringCode}" />
                             </Grid>
                         </Grid>
                     </Border>
