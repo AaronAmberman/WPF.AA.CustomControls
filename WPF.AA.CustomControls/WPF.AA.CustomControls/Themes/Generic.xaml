@@ -681,8 +681,8 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Text="New" />
-                                    <Border Grid.Row="1" Background="LightSkyBlue" />
-                                    <Border Grid.Row="2" Background="LightCoral" />
+                                    <Border Grid.Row="1" Background="LightSkyBlue" BorderBrush="#FF000000" BorderThickness="1,1,1,0" SnapsToDevicePixels="True" UseLayoutRounding="True" />
+                                    <Border Grid.Row="2" Background="LightCoral" BorderBrush="#FF000000" BorderThickness="1,0,1,1" SnapsToDevicePixels="True" UseLayoutRounding="True" />
                                     <TextBlock Grid.Row="3" Text="Current" />
                                 </Grid>
                             </Grid>
