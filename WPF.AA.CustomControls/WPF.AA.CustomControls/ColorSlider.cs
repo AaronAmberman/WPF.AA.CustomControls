@@ -73,26 +73,6 @@ namespace WPF.AA.CustomControls
 
         #region Methods
 
-        private void CacheColorGradientVisual()
-        {
-            if (colorGradient == null) return;
-
-            // draw gradient
-            Rect bounds = VisualTreeHelper.GetDescendantBounds(colorGradient);
-            DrawingVisual dv = new DrawingVisual();
-
-            using (DrawingContext dc = dv.RenderOpen())
-            {
-                dc.DrawRectangle(new VisualBrush(colorGradient), null, new Rect(new Point(), bounds.Size));
-            }
-
-            // render gradient as image
-            RenderTargetBitmap rtb = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height, 96, 96, PixelFormats.Pbgra32);
-            rtb.Render(dv);
-
-            colorGradientImage = rtb;
-        }
-
         private void ColorSlider_Loaded(object sender, RoutedEventArgs e)
         {
             // if the SelectedColor is not the default color we need to run the color calc mechanism
@@ -146,7 +126,7 @@ namespace WPF.AA.CustomControls
                 cb = new CroppedBitmap(colorGradientImage, new Int32Rect((int)colorGradientImage.Width / 2, position, 1, 1));
             }
 
-            // create a 1 x 1 image to red the pixel color from
+            // create a 1 x 1 image to read the pixel color from
             byte[] rgb = new byte[4];
 
             cb.CopyPixels(rgb, 4, 0);
@@ -168,7 +148,7 @@ namespace WPF.AA.CustomControls
         {
             base.OnRender(drawingContext);
 
-            CacheColorGradientVisual();
+            colorGradientImage = colorGradient.CaptureAsImage();
         }
 
         protected override void OnValueChanged(double oldValue, double newValue)

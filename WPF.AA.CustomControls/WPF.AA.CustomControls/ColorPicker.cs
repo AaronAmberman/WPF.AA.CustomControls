@@ -1,11 +1,15 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace WPF.AA.CustomControls
 {
     /// <summary>A simple RBG color picker control for WPF.</summary>
-    [TemplatePart(Name = "PART_ColorSlider", Type = typeof(ColorSlider))]
+    [TemplatePart(Name = "PART_ColorRectangle", Type = typeof(Rectangle))]
     public class ColorPicker : Control
     {
         // https://stackoverflow.com/questions/32513387/how-to-create-a-color-canvas-for-color-picker-wpf
@@ -15,7 +19,9 @@ namespace WPF.AA.CustomControls
 
         #region Fields
 
-        //private ColorSlider colorSlider;
+        //private BitmapSource colorGradientImage;
+        //private Rectangle colorRectangle;
+        private Border colorSquare;
 
         #endregion
 
@@ -67,9 +73,27 @@ namespace WPF.AA.CustomControls
 
         public override void OnApplyTemplate()
         {
-            //colorSlider = GetTemplateChild("PART_ColorSlider") as ColorSlider;
+            colorSquare = GetTemplateChild("PART_ColorSquare") as Border;
+            colorSquare.PreviewMouseLeftButtonDown += ColorSquare_PreviewMouseLeftButtonDown;
 
             base.OnApplyTemplate();
+        }
+
+        private void ColorSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Point clickPoint = e.GetPosition(colorSquare);
+            BitmapSource gradientImage = colorSquare.CaptureAsImage();
+
+            // get the color from the image at the click point
+            CroppedBitmap cb = new CroppedBitmap(gradientImage, new Int32Rect((int)clickPoint.X, (int)clickPoint.Y, 1, 1));
+            byte[] rgb = new byte[4];
+
+            cb.CopyPixels(rgb, 4, 0);
+
+            // gen color from read pixel color
+            Color clickedColor = Color.FromRgb(rgb[2], rgb[1], rgb[0]);
+
+            Debug.WriteLine($"The clicked on color is: {clickedColor}");
         }
 
         #endregion
