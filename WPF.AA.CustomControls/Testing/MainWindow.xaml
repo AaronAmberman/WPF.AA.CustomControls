@@ -265,6 +265,8 @@
         <!--<cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Foreground="Red" Background="LightGreen"
                                 BorderBrush="Purple" BorderThickness="3"/>-->
 
-        <cc:ColorPicker />
+        <!--<cc:ColorPicker />-->
+        <cc:ColorSlider x:Name="cs" Background="Gray" Orientation="Vertical" Margin="0,0,0,100" SelectedColor="Blue" />        
+        <Border VerticalAlignment="Bottom" Height="75" Background="{Binding ElementName=cs, Path=SelectedColor, Converter={StaticResource SolidColorBrushConverter}}" />
     </Grid>
 </Window>

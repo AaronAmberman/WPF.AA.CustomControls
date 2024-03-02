@@ -199,17 +199,17 @@ namespace WPF.AA.CustomControls
 
             double currentDistance = int.MaxValue;
             int currentPos = -1;
-            Rect bounds = VisualTreeHelper.GetDescendantBounds(colorGradient);
             int upperBounds;
+            Rect bounds = VisualTreeHelper.GetDescendantBounds(colorGradient);
 
-            // loop through the height of the image (checking every pixel) to see if we have a color match
+            // loop through the height (or width) of the image (checking every pixel) to see if we have a color match
             if (Orientation == Orientation.Horizontal)
             {
-                upperBounds = (int)bounds.Height;
+                upperBounds = (int)bounds.Width;
             }
             else
             {
-                upperBounds= (int)bounds.Width;
+                upperBounds = (int)bounds.Height;
             }
 
             for (int i = 0; i < upperBounds; i++)
@@ -222,6 +222,7 @@ namespace WPF.AA.CustomControls
                 if (dis == 0.0)
                 {
                     currentPos = i;
+
                     break;
                 }
 
@@ -235,7 +236,16 @@ namespace WPF.AA.CustomControls
             // update value based on calculate result
             isBeingUpdated = true;
 
-            Value = Math.Abs((currentPos / upperBounds) * (Maximum - Minimum) - Maximum);
+            if (Orientation == Orientation.Horizontal)
+            {
+                // do not remove the double cast, they are not redundant, without them resulting division is integer and we get 0 not a decimal number
+                Value = (double)currentPos / (double)upperBounds * (Maximum - Minimum);
+            }
+            else
+            {
+                // do not remove the double cast, they are not redundant, without them resulting division is integer and we get 0 not a decimal number
+                Value = Math.Abs((double)currentPos / (double)upperBounds * (Maximum - Minimum) - Maximum);
+            }
 
             isBeingUpdated = false;
         }
