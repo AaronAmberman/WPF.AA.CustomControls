@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -176,6 +177,8 @@ namespace WPF.AA.CustomControls
             isBeingUpdated = false;
 
             base.OnValueChanged(oldValue, newValue);
+
+            Debug.WriteLine($"Value position: {position} || Color: {SelectedColor}");
         }
 
         private static void SelectedColorChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -231,6 +234,8 @@ namespace WPF.AA.CustomControls
                     currentDistance = dis;
                     currentPos = i;
                 }
+
+                Debug.WriteLine($"Color distance: {dis} || Pixel location: {currentPos}");
             }
 
             // update value based on calculate result
@@ -246,6 +251,8 @@ namespace WPF.AA.CustomControls
                 // do not remove the double cast, they are not redundant, without them resulting division is integer and we get 0 not a decimal number
                 Value = Math.Abs((double)currentPos / (double)upperBounds * (Maximum - Minimum) - Maximum);
             }
+
+            Debug.WriteLine($"Value:{Value}");
 
             isBeingUpdated = false;
         }

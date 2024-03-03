@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace WPF.AA.CustomControls
+namespace WPF.AA.CustomControls.Converters
 {
     /// <summary>Converter that can be used to calculate if things are not equal.</summary>
     /// <seealso cref="IValueConverter"/>

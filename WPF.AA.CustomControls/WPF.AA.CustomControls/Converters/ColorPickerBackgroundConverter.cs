@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace WPF.AA.CustomControls
+namespace WPF.AA.CustomControls.Converters
 {
     /// <summary>Converts the color from the ColorSlider into a LinearGradientBrush for the picker.</summary>
     public class ColorPickerBackgroundConverter : IValueConverter

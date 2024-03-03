@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace WPF.AA.CustomControls
+namespace WPF.AA.CustomControls.Converters
 {
     /// <summary>Converts a Windows.Media.Color to a SolidColorBrush.</summary>
     public class SolidColorBrushConverter : IValueConverter

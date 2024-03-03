@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace WPF.AA.CustomControls
+namespace WPF.AA.CustomControls.Converters
 {
     public class ThicknessConverter : IValueConverter
     {
@@ -15,7 +15,7 @@ namespace WPF.AA.CustomControls
 
             string param = parameter?.ToString();
 
-            if (string.IsNullOrEmpty(param) ) return thickness;
+            if (string.IsNullOrEmpty(param)) return thickness;
 
             string[] exploded = param.Split('|');
 
