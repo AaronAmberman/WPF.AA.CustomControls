@@ -10,8 +10,8 @@ namespace WPF.AA.CustomControls.ColorSpace
     {
         // https://www.easyrgb.com/en/math.php#text20
         // https://github.com/xceedsoftware/wpftoolkit/blob/master/ExtendedWPFToolkitSolution/Src/Xceed.Wpf.Toolkit/Core/Utilities/ColorUtilities.cs
-        // https://stackoverflow.com/questions/1335426/is-there-a-built-in-c-net-system-api-for-hsv-to-rgb
         // https://stackoverflow.com/questions/359612/how-to-convert-rgb-color-to-hsv
+        // https://bootcamp.uxdesign.cc/definitive-guide-to-wpf-colors-color-spaces-color-pickers-and-creating-your-own-colors-for-mere-f480935c6e94
 
         #region Methods
 
@@ -66,9 +66,9 @@ namespace WPF.AA.CustomControls.ColorSpace
             }
             else if (hsl.S != 0)
             {
-                r = GetHue(min, max, hue + 1.0f / 3.0f);
-                g = GetHue(min, max, hue);
-                b = GetHue(min, max, hue - 1.0f / 3.0f);
+                r = GetComponentHue(min, max, hue + 1.0f / 3.0f);
+                g = GetComponentHue(min, max, hue);
+                b = GetComponentHue(min, max, hue - 1.0f / 3.0f);
             }
             else // ensure greys are not converted to white
             {
@@ -80,19 +80,19 @@ namespace WPF.AA.CustomControls.ColorSpace
             return System.Drawing.Color.FromArgb(255, (byte)Math.Round(r * 255), (byte)Math.Round(g * 255), (byte)Math.Round(b * 255));
         }
 
-        private static float GetHue(float p, float q, float t)
+        private static float GetComponentHue(float min, float max, float hue)
         {
-            float value = p;
+            float value = min;
 
-            if (t < 0.0f) t++;
-            if (t > 1.0f) t--;
+            if (hue < 0.0f) hue++;
+            if (hue > 1.0f) hue--;
             
-            if (t * 6.0f < 1.0f)
-                value = p + (q - p) * 6.0f * t;
-            else if (t * 2.0f < 1.0f)
-                value = q;
-            else if (t * 3.0f < 2.0f)
-                value = p + (q - p) * (2.0f / 3.0f - t) * 6.0f;
+            if (hue * 6.0f < 1.0f)
+                value = min + (max - min) * 6.0f * hue;
+            else if (hue * 2.0f < 1.0f)
+                value = max;
+            else if (hue * 3.0f < 2.0f)
+                value = min + (max - min) * (2.0f / 3.0f - hue) * 6.0f;
 
             return value;
         }
@@ -141,6 +141,48 @@ namespace WPF.AA.CustomControls.ColorSpace
 
         #region RGB
 
+        public static CMY ConvertRgbToCmy(Color color)
+        {
+            return ConvertRgbToCmy(ConvertMediaColorToDrawingColor(color));
+        }
+
+        public static CMY ConvertRgbToCmy(System.Drawing.Color color)
+        {
+            return new CMY
+            {
+                C = (byte)(1 - color.R / 255),
+                M = (byte)(1 - color.G / 255),
+                Y = (byte)(1 - color.B / 255),
+            };
+        }
+
+        public static CMYK ConvertRgbToCmyk(Color color)
+        {
+            return ConvertRgbToCmyk(ConvertMediaColorToDrawingColor(color));
+        }
+
+        public static CMYK ConvertRgbToCmyk(System.Drawing.Color color)
+        {
+            double r, g, b, c, m, y, k;
+
+            r = color.R / 255.0;
+            g = color.G / 255.0;
+            b = color.B / 255.0;
+
+            k = 1 - new List<double>() { r, g, b }.Max();
+            c = (1 - r - k) / (1 - k);
+            m = (1 - g - k) / (1 - k);
+            y = (1 - b - k) / (1 - k);
+
+            return new CMYK
+            {
+                C = (byte)Math.Round(c * 100),
+                M = (byte)Math.Round(m * 100),
+                Y = (byte)Math.Round(y * 100),
+                K = (byte)Math.Round(k * 100)
+            };
+        }
+
         public static HSL ConvertRgbToHsl(Color color) 
         {
             return ConvertRgbToHsl(ConvertMediaColorToDrawingColor(color));
@@ -178,9 +220,53 @@ namespace WPF.AA.CustomControls.ColorSpace
             };
         }
 
+        public static XYZ ConvertRgbToXyz(Color color)
+        {
+            return ConvertRgbToXyz(ConvertMediaColorToDrawingColor(color));
+        }
+
+        public static XYZ ConvertRgbToXyz(System.Drawing.Color color)
+        {
+            double[] modifiedRGB = { color.R / 255.0, color.G / 255.0, color.B / 255.0 };
+
+            for (var x = 0; x < modifiedRGB.Length; x++)
+            {
+                modifiedRGB[x] = (modifiedRGB[x] > 0.04045) 
+                    ? Math.Pow((modifiedRGB[x] + 0.055) / 1.055, 2.4) 
+                    : modifiedRGB[x] / 12.92;
+
+                modifiedRGB[x] *= 100;
+            }
+
+            // XYZ output will be a D65/2 standard illumnant
+            return new XYZ
+            {
+                X = (float)(modifiedRGB[0] * 0.4124f + modifiedRGB[1] * 0.3576f + modifiedRGB[2] * 0.1805f),
+                Y = (float)(modifiedRGB[0] * 0.2126f + modifiedRGB[1] * 0.7152f + modifiedRGB[2] * 0.0722f),
+                Z = (float)(modifiedRGB[0] * 0.0193f + modifiedRGB[1] * 0.1192f + modifiedRGB[2] * 0.9505f)
+            };
+        }
+
+        public static YXY ConvertRgbToYxy(Color color)
+        {
+            return ConvertRgbToYxy(ConvertMediaColorToDrawingColor(color));
+        }
+
+        public static YXY ConvertRgbToYxy(System.Drawing.Color color)
+        {
+            XYZ xyz = ConvertRgbToXyz(color);
+
+            return new YXY
+            {
+                Y = xyz.Y,
+                x = xyz.X / (xyz.X + xyz.Y + xyz.Z),
+                y = xyz.Y / (xyz.X + xyz.Y + xyz.Z),
+            };
+        }
+
         #endregion
 
-        #region XYX
+        #region XYZ
 
         #endregion
 
