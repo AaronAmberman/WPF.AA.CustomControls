@@ -17,6 +17,9 @@ namespace WPF.AA.CustomControls.ColorSpace
 
         #region Convert Between Media.Color and Drawing.Color
 
+        /// <summary>Converts a <see cref="System.Drawing.Color"/> to a <see cref="System.Windows.Media.Color"/>.</summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
         public static Color ConvertDrawingColorToMediaColor(System.Drawing.Color color)
         {
             return new Color
@@ -28,6 +31,9 @@ namespace WPF.AA.CustomControls.ColorSpace
             };
         }
 
+        /// <summary>Converts a <see cref="System.Windows.Media.Color"/> to a <see cref="System.Drawing.Color"/>.</summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
         public static System.Drawing.Color ConvertMediaColorToDrawingColor(Color color)
         {
             return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
@@ -35,21 +41,82 @@ namespace WPF.AA.CustomControls.ColorSpace
 
         #endregion
 
-        #region CMY
-
-        #endregion
-
         #region CMYK
+
+        /// <summary>Converts a color in the CMYK space to the HSL space.</summary>
+        /// <param name="cmyk">The CMYK (CMYK values are expressed 1 to 100).</param>
+        /// <returns>The HSL (hsl values; H = 0 - 360, S = 0 - 1, L = 0 - 1) equivalent.</returns>
+        public static HSL ConvertCmykToHsl(CMYK cmyk)
+        {
+            return ConvertRgbToHsl(ConvertCmykToRgbDrawing(cmyk));
+        }
+
+        /// <summary>Converts a color in the CMYK space to the HSV space.</summary>
+        /// <param name="cmyk">The CMYK (CMYK values are expressed 1 to 100).</param>
+        /// <returns>The HSV (hsv values; H = 0 - 360, S = 0 - 1, V = 0 - 1) equivalent.</returns>
+        public static HSV ConvertCmykToHsv(CMYK cmyk)
+        {
+            return ConvertRgbToHsv(ConvertCmykToRgbDrawing(cmyk));
+        }
+
+        /// <summary>Converts a color in the CMYK space to the RGB space.</summary>
+        /// <param name="cmyk">The CMYK (CMYK values are expressed 1 to 100).</param>
+        /// <returns>The RGB equivalent.</returns>
+        public static Color ConvertCmykToRgb(CMYK cmyk)
+        {
+            return ConvertDrawingColorToMediaColor(ConvertCmykToRgbDrawing(cmyk));
+        }
+
+        /// <summary>Converts a color in the CMYK space to the RGB space.</summary>
+        /// <param name="cmyk">The CMYK (CMYK values are expressed 1 to 100).</param>
+        /// <returns>The RGB equivalent.</returns>
+        public static System.Drawing.Color ConvertCmykToRgbDrawing(CMYK cmyk)
+        {
+            return System.Drawing.Color.FromArgb(255,
+                (byte)Math.Round(255 * (1 - cmyk.C * 0.01) * (1 - cmyk.K * 0.01)),
+                (byte)Math.Round(255 * (1 - cmyk.M * 0.01) * (1 - cmyk.K * 0.01)),
+                (byte)Math.Round(255 * (1 - cmyk.Y * 0.01) * (1 - cmyk.K * 0.01)));
+        }
 
         #endregion
 
         #region HSL
 
+        /// <summary>Converts a color in the HSL space to the CMYK space.</summary>
+        /// <param name="hsl">The HSL (hsl values; H = 0 - 360, S = 0 - 1, L = 0 - 1).</param>
+        /// <returns>The CMYK equivalent (CMYK values are expressed 1 to 100).</returns>
+        public static CMYK ConvertHslToCmyk(HSL hsl)
+        {
+            return ConvertRgbToCmyk(ConvertHslToRgbDrawing(hsl));
+        }
+
+        /// <summary>Converts a color in the HSL space to the HSV space.</summary>
+        /// <param name="hsl">The HSL (hsl values; H = 0 - 360, S = 0 - 1, L = 0 - 1).</param>
+        /// <returns>The HSV (hsv values; H = 0 - 360, S = 0 - 1, V = 0 - 1) equivalent.</returns>
+        public static HSV ConvertHslToHsv(HSL hsl)
+        {
+            float hsvV = hsl.L + hsl.S * Math.Min(hsl.L, 1 - hsl.L);
+            float hsvS = (hsvV == 0) ? 0 : 2 * (1 - hsl.L / hsvV);
+
+            return new HSV
+            {
+                H = hsl.H, 
+                S = hsvS, 
+                V = hsvV 
+            };
+        }
+
+        /// <summary>Converts a color in the HSL space to the RGB space.</summary>
+        /// <param name="hsl">The HSL (hsl values; H = 0 - 360, S = 0 - 1, L = 0 - 1).</param>
+        /// <returns>The RGB equivalent.</returns>
         public static Color ConvertHslToRgb(HSL hsl)
         {
             return ConvertDrawingColorToMediaColor(ConvertHslToRgbDrawing(hsl));
         }
 
+        /// <summary>Converts a color in the HSL space to the RGB space.</summary>
+        /// <param name="hsl">The HSL (hsl values; H = 0 - 360, S = 0 - 1, L = 0 - 1).</param>
+        /// <returns>The RGB equivalent.</returns>
         public static System.Drawing.Color ConvertHslToRgbDrawing(HSL hsl)
         {
             float hue, r, g, b, max, min;
@@ -101,11 +168,41 @@ namespace WPF.AA.CustomControls.ColorSpace
 
         #region HSV
 
+        /// <summary>Converts a color in the HSV space to the CMYK space.</summary>
+        /// <param name="hsv">The HSV (hsv values; H = 0 - 360, S = 0 - 1, V = 0 - 1).</param>
+        /// <returns>The CMYK equivalent (CMYK values are expressed 1 to 100).</returns>
+        public static CMYK ConvertHsvToCmyk(HSV hsv)
+        {
+            return ConvertHslToCmyk(ConvertHsvToHsl(hsv));
+        }
+
+        /// <summary>Converts a color in the HSV space to the HSL space.</summary>
+        /// <param name="hsv">The HSV (hsv values; H = 0 - 360, S = 0 - 1, V = 0 - 1).</param>
+        /// <returns>The HSL (hsl values; H = 0 - 360, S = 0 - 1, L = 0 - 1) equivalent.</returns>
+        public static HSL ConvertHsvToHsl(HSV hsv)
+        {
+            float hslL = hsv.V * (1 - hsv.S / 2);
+            float hslS = (hslL == 0 || hslL == 1) ? 0 : (hsv.V - hslL) / Math.Min(hslL, 1 - hslL);
+
+            return new HSL
+            {
+                H = hsv.H, 
+                S = hslS, 
+                L = hslL
+            };
+        }
+
+        /// <summary>Converts a color in the HSV space to the RGB space.</summary>
+        /// <param name="hsv">The HSV (hsv values; H = 0 - 360, S = 0 - 1, V = 0 - 1).</param>
+        /// <returns>The RGB equivalent.</returns>
         public static Color ConvertHsvToRgb(HSV hsv)
         {
             return ConvertDrawingColorToMediaColor(ConvertHsvToRgbDrawing(hsv));
         }
 
+        /// <summary>Converts a color in the HSV space to the RGB space.</summary>
+        /// <param name="hsv">The HSV (hsv values; H = 0 - 360, S = 0 - 1, V = 0 - 1).</param>
+        /// <returns>The RGB equivalent.</returns>
         public static System.Drawing.Color ConvertHsvToRgbDrawing(HSV hsv)
         {
             if (hsv.S == 0)
@@ -141,26 +238,17 @@ namespace WPF.AA.CustomControls.ColorSpace
 
         #region RGB
 
-        public static CMY ConvertRgbToCmy(Color color)
-        {
-            return ConvertRgbToCmy(ConvertMediaColorToDrawingColor(color));
-        }
-
-        public static CMY ConvertRgbToCmy(System.Drawing.Color color)
-        {
-            return new CMY
-            {
-                C = (byte)(1 - color.R / 255),
-                M = (byte)(1 - color.G / 255),
-                Y = (byte)(1 - color.B / 255),
-            };
-        }
-
+        /// <summary>Converts a color in the RGB space to the CMYK space.</summary>
+        /// <param name="color">The RGB color.</param>
+        /// <returns>The CMYK equivalent (CMYK values are expressed 1 to 100).</returns>
         public static CMYK ConvertRgbToCmyk(Color color)
         {
             return ConvertRgbToCmyk(ConvertMediaColorToDrawingColor(color));
         }
 
+        /// <summary>Converts a color in the RGB space to the CMYK space.</summary>
+        /// <param name="color">The RGB color.</param>
+        /// <returns>The CMYK equivalent (CMYK values are expressed 1 to 100).</returns>
         public static CMYK ConvertRgbToCmyk(System.Drawing.Color color)
         {
             double r, g, b, c, m, y, k;
@@ -183,11 +271,17 @@ namespace WPF.AA.CustomControls.ColorSpace
             };
         }
 
+        /// <summary>Converts a color in the RGB space to the HSL space.</summary>
+        /// <param name="color">The RGB color.</param>
+        /// <returns>The HSL (hsl values; H = 0 - 360, S = 0 - 1, L = 0 - 1) equivalent.</returns>
         public static HSL ConvertRgbToHsl(Color color) 
         {
             return ConvertRgbToHsl(ConvertMediaColorToDrawingColor(color));
         }
 
+        /// <summary>Converts a color in the RGB space to the HSL space.</summary>
+        /// <param name="color">The RGB color.</param>
+        /// <returns>The HSL (hsl values; H = 0 - 360, S = 0 - 1, L = 0 - 1) equivalent.</returns>
         public static HSL ConvertRgbToHsl(System.Drawing.Color color)
         {
             return new HSL
@@ -198,11 +292,17 @@ namespace WPF.AA.CustomControls.ColorSpace
             };
         }
 
+        /// <summary>Converts a color in the RGB space to the HSV space.</summary>
+        /// <param name="color">The RGB color.</param>
+        /// <returns>The HSV (hsv values; H = 0 - 360, S = 0 - 1, V = 0 - 1) equivalent.</returns>
         public static HSV ConvertRgbToHsv(Color color)
         {
             return ConvertRgbToHsv(ConvertMediaColorToDrawingColor(color));
         }
 
+        /// <summary>Converts a color in the RGB space to the HSV space.</summary>
+        /// <param name="color">The RGB color.</param>
+        /// <returns>The HSV (hsv values; H = 0 - 360, S = 0 - 1, V = 0 - 1) equivalent.</returns>
         public static HSV ConvertRgbToHsv(System.Drawing.Color color)
         {
             int max = Math.Max(color.R, Math.Max(color.G, color.B));
@@ -219,58 +319,6 @@ namespace WPF.AA.CustomControls.ColorSpace
                 V = value
             };
         }
-
-        public static XYZ ConvertRgbToXyz(Color color)
-        {
-            return ConvertRgbToXyz(ConvertMediaColorToDrawingColor(color));
-        }
-
-        public static XYZ ConvertRgbToXyz(System.Drawing.Color color)
-        {
-            double[] modifiedRGB = { color.R / 255.0, color.G / 255.0, color.B / 255.0 };
-
-            for (var x = 0; x < modifiedRGB.Length; x++)
-            {
-                modifiedRGB[x] = (modifiedRGB[x] > 0.04045) 
-                    ? Math.Pow((modifiedRGB[x] + 0.055) / 1.055, 2.4) 
-                    : modifiedRGB[x] / 12.92;
-
-                modifiedRGB[x] *= 100;
-            }
-
-            // XYZ output will be a D65/2 standard illumnant
-            return new XYZ
-            {
-                X = (float)(modifiedRGB[0] * 0.4124f + modifiedRGB[1] * 0.3576f + modifiedRGB[2] * 0.1805f),
-                Y = (float)(modifiedRGB[0] * 0.2126f + modifiedRGB[1] * 0.7152f + modifiedRGB[2] * 0.0722f),
-                Z = (float)(modifiedRGB[0] * 0.0193f + modifiedRGB[1] * 0.1192f + modifiedRGB[2] * 0.9505f)
-            };
-        }
-
-        public static YXY ConvertRgbToYxy(Color color)
-        {
-            return ConvertRgbToYxy(ConvertMediaColorToDrawingColor(color));
-        }
-
-        public static YXY ConvertRgbToYxy(System.Drawing.Color color)
-        {
-            XYZ xyz = ConvertRgbToXyz(color);
-
-            return new YXY
-            {
-                Y = xyz.Y,
-                x = xyz.X / (xyz.X + xyz.Y + xyz.Z),
-                y = xyz.Y / (xyz.X + xyz.Y + xyz.Z),
-            };
-        }
-
-        #endregion
-
-        #region XYZ
-
-        #endregion
-
-        #region YXY
 
         #endregion
 
