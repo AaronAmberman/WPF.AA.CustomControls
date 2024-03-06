@@ -582,7 +582,7 @@
                                     BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" UseLayoutRounding="True"
                                     Padding="{TemplateBinding Padding}">
                                 <Grid>
-                                    <Border x:Name="PART_ColorGradient" Margin="5,10">
+                                    <Border Margin="5,10">
                                         <Border.Background>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                 <LinearGradientBrush.GradientStops>
@@ -667,7 +667,7 @@
                                     BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" UseLayoutRounding="True"
                                     Padding="{TemplateBinding Padding}">
                                 <Grid>
-                                    <Border x:Name="PART_ColorGradient" Margin="10,5,10,5">
+                                    <Border Margin="10,5,10,5">
                                         <Border.Background>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                 <LinearGradientBrush.GradientStops>

@@ -6,7 +6,6 @@ using WPF.AA.CustomControls.ColorSpace;
 namespace WPF.AA.CustomControls
 {
     /// <summary>A color slider control.</summary>
-    [TemplatePart(Name = "PART_ColorGradient", Type = typeof(Border))]
     public class ColorSlider : Slider
     {
         #region Fields

@@ -266,6 +266,6 @@
                                 BorderBrush="Purple" BorderThickness="3"/>-->
 
         <!--<cc:ColorPicker BaseColor="Green" />-->
-        <cc:ColorSlider x:Name="colorSlider" Height="50" />
+        <cc:ColorSlider x:Name="colorSlider" Height="50" SelectedColor="Black" />
     </Grid>
 </Window>
