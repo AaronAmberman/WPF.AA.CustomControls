@@ -524,6 +524,10 @@
     
     <Style TargetType="{x:Type local:ColorSlider}">
         <Setter Property="IsSelectionRangeEnabled" Value="False" />
+        <Setter Property="LargeChange" Value="5" />
+        <Setter Property="Maximum" Value="360" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="SmallChange" Value="1" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="ThumbStyle">

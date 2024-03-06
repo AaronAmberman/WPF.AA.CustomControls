@@ -266,8 +266,6 @@
                                 BorderBrush="Purple" BorderThickness="3"/>-->
 
         <!--<cc:ColorPicker BaseColor="Green" />-->
-        <cc:ColorSlider Height="50" />
-        <Border x:Name="codeGened" Background="Blue" Height="50" VerticalAlignment="Top" />
-        <Border x:Name="codeGened2" Background="Blue" Height="50" VerticalAlignment="Top" Margin="0,75,0,0" />
+        <cc:ColorSlider x:Name="colorSlider" Height="50" />
     </Grid>
 </Window>
