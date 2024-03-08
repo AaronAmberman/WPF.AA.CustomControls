@@ -62,8 +62,7 @@ namespace WPF.AA.CustomControls
 
         /// <summary>Initializes a new instance of the <see cref="ColorSlider"/> class.</summary>
         public ColorSlider()
-        {
-            
+        {            
         }
 
         #endregion
@@ -77,10 +76,25 @@ namespace WPF.AA.CustomControls
             // if we have a SelectedColor prior to having our template applied then we need to set the value to match
             if (SelectedColor != Colors.Transparent)
             {
+                /*
+                 * we use the HSV color space to simply get the hue value, our min should be 0 and our max should be 360, this way 
+                 * the values match to the 360 degree hue angle of the HSV color space, this way it is simply a value mapping
+                 * 
+                 * note: vertical sliders have their minimum at the bottom and their maximum at the top, so we need to invert the 
+                 *       value by taking the absolute value of the hue - 360;
+                 */
                 if (Orientation == Orientation.Horizontal)
                     Value = SelectedColor.ToHsv().H;
                 else
                     Value = Math.Abs(SelectedColor.ToHsv().H - 360);
+            }
+            else
+            {
+                // we do not want to load the default transparent, we do this here to trigger a value change rather than set the default to red
+                if (Orientation == Orientation.Horizontal)
+                    Value = 0; // red is on the left
+                else
+                    Value = Maximum; // red is on the top at max value (360 be default)
             }
         }
 
@@ -93,9 +107,15 @@ namespace WPF.AA.CustomControls
             /*
              * we use the HSV color space to simply get the hue value, our min should be 0 and our max should be 360, this way 
              * the values match to the 360 degree hue angle of the HSV color space, this way it is simply a value mapping
+             * 
+             * note: vertical sliders have their minimum at the bottom and their maximum at the top, so we need to invert the 
+             *       value by taking the absolute value of the hue - 360;
              */
 
-            SelectedColor = new HSV { H = (float)newValue, S = 1, V = 1 }.ToMediaColor();
+            if (Orientation == Orientation.Horizontal)
+                SelectedColor = new HSV { H = (float)newValue, S = 1, V = 1 }.ToMediaColor();
+            else
+                SelectedColor = new HSV { H = (float)Math.Abs(newValue - 360), S = 1, V = 1 }.ToMediaColor();
 
             isBeingUpdated = false;
         }

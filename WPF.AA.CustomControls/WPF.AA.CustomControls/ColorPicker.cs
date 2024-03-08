@@ -1,9 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WPF.AA.CustomControls.ColorSpace;
 
 namespace WPF.AA.CustomControls
 {
@@ -133,30 +135,29 @@ namespace WPF.AA.CustomControls
             colorSquare.PreviewMouseLeftButtonDown += ColorSquare_PreviewMouseLeftButtonDown;
 
             base.OnApplyTemplate();
+
+            // if we have a SelectedColor prior to having our template applied then we need to set the BaseColor and PreviousColor
+            if (SelectedColor != Colors.Transparent)
+            {
+                BaseColor = SelectedColor;
+                PreviousColor = SelectedColor;
+            }
         }
 
         private void ColorSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedColor = GetColorFromClickPoint(e.GetPosition(colorSquare));
-        }
+            Point point = e.GetPosition(colorSquare);            
+            float xPercentage = (float)(point.X / colorSquare.ActualWidth);
+            float yPercentage = (float)Math.Abs((point.Y / colorSquare.ActualHeight) - 1); // we want to invert the y so take the absolute value - 1
 
-        /// <summary>Gets the color from the color square where it was click.</summary>
-        /// <param name="point">The point where click occurred.</param>
-        /// <returns>The color at the specified location from the color square.</returns>
-        protected virtual Color GetColorFromClickPoint(Point point)
-        {
-            BitmapSource gradientImage = colorSquare.CaptureAsImage();
+            HSV hsv = new HSV
+            {
+                H = BaseColor.ToHsv().H,
+                S = xPercentage,
+                V = yPercentage
+            };
 
-            // get the color from the image at the click point
-            CroppedBitmap cb = new CroppedBitmap(gradientImage, new Int32Rect((int)point.X, (int)point.Y, 1, 1));
-            byte[] rgb = new byte[4];
-
-            cb.CopyPixels(rgb, 4, 0);
-
-            // gen color from read pixel color
-            Color clickedColor = Color.FromRgb(rgb[2], rgb[1], rgb[0]);
-
-            return clickedColor;
+            SelectedColor = hsv.ToMediaColor();
         }
 
         #endregion
