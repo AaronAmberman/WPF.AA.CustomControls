@@ -439,7 +439,7 @@
                                      Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" 
                                      Foreground="{TemplateBinding Foreground}" />
                             <PasswordBox x:Name="PART_PasswordBox" Padding="{TemplateBinding Padding}" Margin="0,0,23,0" 
-                                         Background="{TemplateBinding Background}" BorderBrush="Transparent" />
+                                         Background="{TemplateBinding Background}" BorderBrush="Transparent" Foreground="{TemplateBinding Foreground}" />
                             <ContentPresenter x:Name="watermark" IsHitTestVisible="False"
                                               Content="{TemplateBinding Watermark}"
                                               ContentTemplate="{TemplateBinding WatermarkTemplate}"                                          

@@ -262,8 +262,8 @@
         <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Integer" Foreground="Red" Background="LightBlue" BorderBrush="Pink" BorderThickness="2"
                           Margin="5,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding Value}" />-->
 
-        <!--<cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Foreground="Red" Background="LightGreen"
-                                BorderBrush="Purple" BorderThickness="3"/>-->
+        <cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Foreground="Red" Background="LightGreen"
+                                BorderBrush="Purple" BorderThickness="3"/>
 
         <!--<cc:ColorPicker BaseColor="Green" />-->
         <cc:ColorSlider x:Name="colorSlider" Height="50" SelectedColor="Black" />
