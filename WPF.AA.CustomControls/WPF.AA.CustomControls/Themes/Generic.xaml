@@ -747,7 +747,7 @@
                                     </Rectangle>
                                 </Border>
                                 <Border Grid.Column="1" Margin="5">
-                                    <local:ColorSlider x:Name="PART_ColorSlider" Orientation="Vertical" Minimum="0" Maximum="1000" SmallChange="1" LargeChange="5" Value="1000" 
+                                    <local:ColorSlider x:Name="PART_ColorSlider" Orientation="Vertical"  
                                                        SelectedColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseColor, Mode=TwoWay}" />
                                 </Border>
                                 <Grid Grid.Column="2" Margin="0,25,10,25">

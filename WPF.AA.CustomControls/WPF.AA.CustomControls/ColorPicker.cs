@@ -32,7 +32,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty BaseColorProperty =
-            DependencyProperty.Register("BaseColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Red));
+            DependencyProperty.Register("BaseColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
 
         /// <summary>Gets or sets the corner radius for the button.</summary>
         public CornerRadius CornerRadius
@@ -52,7 +52,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty HexStringCodeProperty =
-            DependencyProperty.Register("HexStringCode", typeof(string), typeof(ColorPicker), new PropertyMetadata("#FFFF0000"));
+            DependencyProperty.Register("HexStringCode", typeof(string), typeof(ColorPicker), new PropertyMetadata("#00000000"));
 
         /// <summary>Gets or sets the previous color.</summary>
         public Color PreviousColor
@@ -62,7 +62,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty PreviousColorProperty =
-            DependencyProperty.Register("PreviousColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Red));
+            DependencyProperty.Register("PreviousColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
 
         /// <summary>Gets or sets the selected color (the color for the gradient color picker).</summary>
         public Color SelectedColor
@@ -72,7 +72,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Red));
+            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
 
         /// <summary>Gets or sets the R slider value.</summary>
         public int SliderRValue

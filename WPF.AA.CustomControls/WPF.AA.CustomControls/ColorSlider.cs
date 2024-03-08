@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using WPF.AA.CustomControls.ColorSpace;
@@ -24,7 +25,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Red, SelectedColorChangedCallback));
+            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Transparent, SelectedColorChangedCallback));
 
         #endregion
 
@@ -62,19 +63,24 @@ namespace WPF.AA.CustomControls
         /// <summary>Initializes a new instance of the <see cref="ColorSlider"/> class.</summary>
         public ColorSlider()
         {
-            Loaded += ColorSlider_Loaded;
+            
         }
 
         #endregion
 
         #region Methods
 
-        private void ColorSlider_Loaded(object sender, RoutedEventArgs e)
+        public override void OnApplyTemplate()
         {
-            // if the SelectedColor is not the default color we need to run the color calc mechanism
-            if (SelectedColor != Colors.Red)
+            base.OnApplyTemplate();
+
+            // if we have a SelectedColor prior to having our template applied then we need to set the value to match
+            if (SelectedColor != Colors.Transparent)
             {
-                Value = SelectedColor.ToHsv().H;
+                if (Orientation == Orientation.Horizontal)
+                    Value = SelectedColor.ToHsv().H;
+                else
+                    Value = Math.Abs(SelectedColor.ToHsv().H - 360);
             }
         }
 
@@ -106,11 +112,19 @@ namespace WPF.AA.CustomControls
             /*
              * we use the HSV color space to simply get the hue value, our min should be 0 and our max should be 360, this way 
              * the values match to the 360 degree hue angle of the HSV color space, this way it is simply a value mapping
+             * 
+             * note: vertical sliders have their minimum at the bottom and their maximum at the top, so we need to invert the 
+             *       value by taking the absolute value of the hue - 360;
              */
 
             cs.isBeingUpdated = true;
-            cs.Value = c.ToHsv().H;
-            cs.isBeingUpdated = false;            
+
+            if (cs.Orientation == Orientation.Horizontal) 
+                cs.Value = c.ToHsv().H;
+            else
+                cs.Value = Math.Abs(c.ToHsv().H - 360);
+
+            cs.isBeingUpdated = false;
             cs.RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));
         }
 
