@@ -705,8 +705,26 @@
     <converters:ColorPickerBackgroundConverter x:Key="ColorConverter" />
     <converters:SolidColorBrushConverter x:Key="SolidColorBrushConverter" />
 
-    
-    
+    <DrawingBrush x:Key="CheckedBackgroundBrush" Stretch="None" TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute" x:Shared="False">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="LightGray">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,20,20" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="DarkGray">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <RectangleGeometry Rect="0,0,10,10" />
+                            <RectangleGeometry Rect="10,10,10,10" />
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
     <Style TargetType="{x:Type local:ColorPicker}">
         <Setter Property="Background" Value="#FFDDDDDD"/>
         <Setter Property="BorderBrush" Value="#FF707070"/>
@@ -761,6 +779,8 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Text="New" />
+                                    <Rectangle Grid.Row="1" Margin="0,1,0,0" Fill="{StaticResource CheckedBackgroundBrush}" />
+                                    <Rectangle Grid.Row="2" Margin="0,0,0,1" Fill="{StaticResource CheckedBackgroundBrush}" />
                                     <Border Grid.Row="1" BorderBrush="#FF000000" BorderThickness="1,1,1,0" SnapsToDevicePixels="True" UseLayoutRounding="True"
                                             Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor, Converter={StaticResource SolidColorBrushConverter}}"/>
                                     <Border Grid.Row="2" BorderBrush="#FF000000" BorderThickness="1,0,1,1" SnapsToDevicePixels="True" UseLayoutRounding="True" 
@@ -813,30 +833,31 @@
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="R" />
                                 <Slider Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="255" Margin="5,0"
                                         Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderRValue, Mode=TwoWay}" />
-                                <TextBox Grid.Column="2" Grid.Row="0" MaxLength="3"
+                                <TextBox x:Name="PART_RTextBox" Grid.Column="2" Grid.Row="0" MaxLength="3"
                                          Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderRValue, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="G" Margin="0,5,0,0" />
                                 <Slider Grid.Column="1" Grid.Row="1" Minimum="0" Maximum="255" Margin="5,5,5,0"
                                         Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderGValue, Mode=TwoWay}" />
-                                <TextBox Grid.Column="2" Grid.Row="1" Margin="0,5,0,0" MaxLength="3"
+                                <TextBox x:Name="PART_GTextBox" Grid.Column="2" Grid.Row="1" Margin="0,5,0,0" MaxLength="3"
                                          Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderGValue, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="B" Margin="0,5,0,0" />
                                 <Slider Grid.Column="1" Grid.Row="2" Minimum="0" Maximum="255" Margin="5,5,5,0"
                                         Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderBValue, Mode=TwoWay}" />
-                                <TextBox Grid.Column="2" Grid.Row="2" Margin="0,5,0,0" MaxLength="3"
+                                <TextBox x:Name="PART_BTextBox" Grid.Column="2" Grid.Row="2" Margin="0,5,0,0" MaxLength="3"
                                          Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderBValue, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Column="0" Grid.Row="3" Text="A" Margin="0,5,0,0" />
                                 <Slider Grid.Column="1" Grid.Row="3" Minimum="0" Maximum="255" Margin="5,5,5,0"
                                         Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderAValue, Mode=TwoWay}" />
-                                <TextBox Grid.Column="2" Grid.Row="3" Margin="0,5,0,0" MaxLength="3"
+                                <TextBox x:Name="PART_ATextBox" Grid.Column="2" Grid.Row="3" Margin="0,5,0,0" MaxLength="3"
                                          Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SliderAValue, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
                             <Grid Grid.Row="3" Margin="0,0,10,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" MinWidth="60" />
+                                    <ColumnDefinition Width="Auto" MinWidth="65" />
                                 </Grid.ColumnDefinitions>
-                                <TextBox Grid.Column="1" MaxLength="9" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HexStringCode}" />
+                                <TextBox x:Name="PART_HexTextBox" Grid.Column="1" MaxLength="9" 
+                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HexStringCode, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
                         </Grid>
                     </Border>

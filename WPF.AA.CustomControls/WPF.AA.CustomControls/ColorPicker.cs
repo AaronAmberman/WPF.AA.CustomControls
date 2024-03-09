@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using WPF.AA.CustomControls.ColorSpace;
 
 namespace WPF.AA.CustomControls
@@ -13,17 +12,23 @@ namespace WPF.AA.CustomControls
     [TemplatePart(Name = "PART_ColorSquare", Type = typeof(Border))]
     [TemplatePart(Name = "PART_WhiteSquare", Type = typeof(Border))]
     [TemplatePart(Name = "PART_BlackSquare", Type = typeof(Border))]
+    [TemplatePart(Name = "PART_ATextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_BTextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_GTextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_RTextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_HexTextBox", Type = typeof(TextBox))]
     public class ColorPicker : Control
     {
-        // https://stackoverflow.com/questions/32513387/how-to-create-a-color-canvas-for-color-picker-wpf
-        // https://www.codeproject.com/Articles/36802/WPF-Colour-Slider
-        // https://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=36802
-        // https://bootcamp.uxdesign.cc/definitive-guide-to-wpf-colors-color-spaces-color-pickers-and-creating-your-own-colors-for-mere-f480935c6e94
-
         #region Fields
 
         private Border blackSquare;
         private Border colorSquare;
+        private TextBox hexTextBox;
+        private bool isBeingUpdated;
+        private TextBox textBoxA;
+        private TextBox textBoxB;
+        private TextBox textBoxG;
+        private TextBox textBoxR;
         private Border whiteSquare;
 
         #endregion
@@ -68,7 +73,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty HexStringCodeProperty =
-            DependencyProperty.Register("HexStringCode", typeof(string), typeof(ColorPicker), new PropertyMetadata("#00000000"));
+            DependencyProperty.Register("HexStringCode", typeof(string), typeof(ColorPicker), new PropertyMetadata("#00000000", HexColorChanged));
 
         /// <summary>Gets or sets the previous color.</summary>
         public Color PreviousColor
@@ -98,7 +103,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty SliderRValueProperty =
-            DependencyProperty.Register("SliderRValue", typeof(int), typeof(ColorPicker), new PropertyMetadata(0));
+            DependencyProperty.Register("SliderRValue", typeof(int), typeof(ColorPicker), new PropertyMetadata(0, RValueChanged, CoerceRValue));
 
         /// <summary>Gets or sets the G slider value.</summary>
         public int SliderGValue
@@ -108,7 +113,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty SliderGValueProperty =
-            DependencyProperty.Register("SliderGValue", typeof(int), typeof(ColorPicker), new PropertyMetadata(0));
+            DependencyProperty.Register("SliderGValue", typeof(int), typeof(ColorPicker), new PropertyMetadata(0, GValueChanged, CoerceGValue));
 
         /// <summary>Gets or sets the B slider value.</summary>
         public int SliderBValue
@@ -118,7 +123,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty SliderBValueProperty =
-            DependencyProperty.Register("SliderBValue", typeof(int), typeof(ColorPicker), new PropertyMetadata(0));
+            DependencyProperty.Register("SliderBValue", typeof(int), typeof(ColorPicker), new PropertyMetadata(0, BValueChanged, CoerceBValue));
 
         /// <summary>Gets or sets the A slider value.</summary>
         public int SliderAValue
@@ -128,7 +133,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty SliderAValueProperty =
-            DependencyProperty.Register("SliderAValue", typeof(int), typeof(ColorPicker), new PropertyMetadata(0));
+            DependencyProperty.Register("SliderAValue", typeof(int), typeof(ColorPicker), new PropertyMetadata(0, AValueChanged, CoerceAValue));
 
         #endregion
 
@@ -142,6 +147,20 @@ namespace WPF.AA.CustomControls
         #endregion
 
         #region Methods
+
+        private void ARGBTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // only allow certain keys
+            if (!(e.Key == Key.D0 || e.Key == Key.D1 || e.Key == Key.D2 || e.Key == Key.D3 || e.Key == Key.D4 ||
+                e.Key == Key.D5 || e.Key == Key.D6 || e.Key == Key.D7 || e.Key == Key.D8 || e.Key == Key.D9 ||
+                e.Key == Key.NumPad0 || e.Key == Key.NumPad1 || e.Key == Key.NumPad2 || e.Key == Key.NumPad3 || e.Key == Key.NumPad4 ||
+                e.Key == Key.NumPad5 || e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 ||
+                e.Key == Key.Tab || e.Key == Key.Delete || e.Key == Key.Back || e.Key == Key.NumLock ||
+                (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && e.Key == Key.Tab)))
+            {
+                e.Handled = true;
+            }
+        }
 
         private void BlackSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -164,6 +183,115 @@ namespace WPF.AA.CustomControls
             SelectedColor = hsv.ToMediaColor();
         }
 
+        private static void ConvertHexCode(ColorPicker picker, string hexCode)
+        {
+            try
+            {
+                Color color = (Color)System.Windows.Media.ColorConverter.ConvertFromString(hexCode);
+
+                picker.isBeingUpdated = true;
+                picker.SelectedColor = color;
+                picker.SliderRValue = color.R;
+                picker.SliderGValue = color.G;
+                picker.SliderBValue = color.B;
+                picker.SliderAValue = color.A;
+                picker.isBeingUpdated = false;
+            }
+            catch (FormatException fe)
+            {
+                Debug.WriteLine($"An exception occurred attempting to convert the hex string to a color.{Environment.NewLine}{fe}");
+
+                // just don't do anything programmatically, we just won't set the color...because we can't
+            }
+        }
+
+        private static object CoerceAValue(DependencyObject d, object baseValue)
+        {
+            return CoerceSliderValue(d, baseValue);
+        }
+
+        private static object CoerceBValue(DependencyObject d, object baseValue)
+        {
+            return CoerceSliderValue(d, baseValue);
+        }
+
+        private static object CoerceGValue(DependencyObject d, object baseValue)
+        {
+            return CoerceSliderValue(d, baseValue);
+        }
+
+        private static object CoerceRValue(DependencyObject d, object baseValue)
+        {
+            return CoerceSliderValue(d, baseValue);
+        }
+
+        private static object CoerceSliderValue(DependencyObject d, object baseValue)
+        {
+            ColorPicker picker = d as ColorPicker;
+
+            if (picker == null) return baseValue;
+            if (baseValue == null) return 0;
+
+            int val = (int)baseValue;
+
+            if (val < 0) return 0;
+            else if (val > 255) return 255;
+
+            if (string.IsNullOrWhiteSpace(baseValue.ToString())) return 0;
+
+            return baseValue;
+        }
+
+        private static void HexColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColorPicker picker = d as ColorPicker;
+
+            if (picker == null) return;
+            if (picker.isBeingUpdated) return; // update originated else where that will handle the result
+
+            /*
+             * there are acceptable lengths for hex colors...
+             * 
+             * With #...
+             *     7 - indicates a color with RGB and alpha will be set to 255
+             *     9 - indicates a color with ARGB
+             *     
+             * Without #...
+             *     6 - indicates a color with RGB and alpha will be set to 255
+             *     8 - indicates a color with ARGB
+             */
+            if (picker.HexStringCode.StartsWith('#'))
+            {
+                if (picker.HexStringCode.Length == 7 || picker.HexStringCode.Length == 9)
+                {
+                    ConvertHexCode(picker, picker.HexStringCode);
+                }
+            }
+            else
+            {
+                if (picker.HexStringCode.Length == 6 || picker.HexStringCode.Length == 8)
+                {
+                    ConvertHexCode(picker, $"#{picker.HexStringCode}");
+                }
+            }
+        }
+
+        private void HexTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // only allow certain keys
+            if (!(e.Key == Key.D0 || e.Key == Key.D1 || e.Key == Key.D2 || e.Key == Key.D3 || e.Key == Key.D4 ||
+                e.Key == Key.D5 || e.Key == Key.D6 || e.Key == Key.D7 || e.Key == Key.D8 || e.Key == Key.D9 ||
+                e.Key == Key.NumPad0 || e.Key == Key.NumPad1 || e.Key == Key.NumPad2 || e.Key == Key.NumPad3 || e.Key == Key.NumPad4 ||
+                e.Key == Key.NumPad5 || e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 ||
+                e.Key == Key.Tab || e.Key == Key.Delete || e.Key == Key.Back || e.Key == Key.NumLock || e.Key == Key.CapsLock ||
+                e.Key == Key.A || e.Key == Key.B || e.Key == Key.C || e.Key == Key.D || e.Key == Key.E || e.Key == Key.F ||
+                (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && e.Key == Key.Tab) ||
+                (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.V) /* allow paste */))
+            {
+                e.Handled = true;
+            }
+        }
+
         public override void OnApplyTemplate()
         {
             colorSquare = GetTemplateChild("PART_ColorSquare") as Border;
@@ -175,12 +303,33 @@ namespace WPF.AA.CustomControls
             blackSquare = GetTemplateChild("PART_BlackSquare") as Border;
             blackSquare.PreviewMouseLeftButtonDown += BlackSquare_PreviewMouseLeftButtonDown;
 
+            textBoxA = GetTemplateChild("PART_ATextBox") as TextBox;
+            textBoxA.KeyDown += ARGBTextBox_KeyDown;
+
+            textBoxB = GetTemplateChild("PART_BTextBox") as TextBox;
+            textBoxB.KeyDown += ARGBTextBox_KeyDown;
+
+            textBoxG = GetTemplateChild("PART_GTextBox") as TextBox;
+            textBoxG.KeyDown += ARGBTextBox_KeyDown;
+
+            textBoxR = GetTemplateChild("PART_RTextBox") as TextBox;
+            textBoxR.KeyDown += ARGBTextBox_KeyDown;
+
+            hexTextBox = GetTemplateChild("PART_HexTextBox") as TextBox;
+            hexTextBox.KeyDown += HexTextBox_KeyDown; ;
+
             base.OnApplyTemplate();
 
             // if we have a SelectedColor prior to having our template applied then we need to set the BaseColor and PreviousColor
             if (SelectedColor != Colors.Transparent)
             {
-                BaseColor = SelectedColor;
+                BaseColor = new Color
+                {
+                    A = 255,
+                    R = SelectedColor.R,
+                    G = SelectedColor.G,
+                    B = SelectedColor.B
+                };
                 PreviousColor = SelectedColor;
             }
         }
@@ -190,14 +339,79 @@ namespace WPF.AA.CustomControls
             ColorPicker picker = d as ColorPicker;
 
             if (picker == null) return;
+            if (picker.isBeingUpdated) return; // update originated else where that will handle the result
 
             Color newColor = (Color)e.NewValue;
 
+            picker.isBeingUpdated = true;
             picker.SliderRValue = newColor.R;
             picker.SliderGValue = newColor.G;
             picker.SliderBValue = newColor.B;
             picker.SliderAValue = newColor.A;
             picker.HexStringCode = $"#{newColor.A:X2}{newColor.R:X2}{newColor.G:X2}{newColor.B:X2}";
+            picker.isBeingUpdated = false;
+        }
+
+        private static void RValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColorPicker picker = d as ColorPicker;
+
+            if (picker == null) return;
+            if (picker.isBeingUpdated) return; // update originated else where that will handle the result
+
+            byte newValue = Convert.ToByte(e.NewValue);
+
+            UpdateColorAndHexCode(picker, (byte)picker.SliderAValue, newValue, (byte)picker.SliderGValue, (byte)picker.SliderBValue);
+        }
+
+        private static void GValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColorPicker picker = d as ColorPicker;
+
+            if (picker == null) return;
+            if (picker.isBeingUpdated) return; // update originated else where that will handle the result
+
+            byte newValue = Convert.ToByte(e.NewValue);
+
+            UpdateColorAndHexCode(picker, (byte)picker.SliderAValue, (byte)picker.SliderRValue, newValue, (byte)picker.SliderBValue);
+        }
+
+        private static void BValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColorPicker picker = d as ColorPicker;
+
+            if (picker == null) return;
+            if (picker.isBeingUpdated) return; // update originated else where that will handle the result
+
+            byte newValue = Convert.ToByte(e.NewValue);
+
+            UpdateColorAndHexCode(picker, (byte)picker.SliderAValue, (byte)picker.SliderRValue, (byte)picker.SliderGValue, newValue);
+        }
+
+        private static void AValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColorPicker picker = d as ColorPicker;
+
+            if (picker == null) return;
+            if (picker.isBeingUpdated) return; // update originated else where that will handle the result
+
+            byte newValue = Convert.ToByte(e.NewValue);
+
+            UpdateColorAndHexCode(picker, newValue, (byte)picker.SliderRValue, (byte)picker.SliderGValue, (byte)picker.SliderBValue);
+        }
+
+        private static void UpdateColorAndHexCode(ColorPicker picker, byte a, byte r, byte g, byte b)
+        {
+            picker.isBeingUpdated = true;
+            picker.SelectedColor = new Color
+            {
+                A = a,
+                R = r,
+                G = g,
+                B = b
+            };
+            picker.HexStringCode = $"#{a:X2}{r:X2}{g:X2}{b:X2}";
+            picker.isBeingUpdated = false;
         }
 
         private void WhiteSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
