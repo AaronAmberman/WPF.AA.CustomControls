@@ -705,6 +705,8 @@
     <converters:ColorPickerBackgroundConverter x:Key="ColorConverter" />
     <converters:SolidColorBrushConverter x:Key="SolidColorBrushConverter" />
 
+    
+    
     <Style TargetType="{x:Type local:ColorPicker}">
         <Setter Property="Background" Value="#FFDDDDDD"/>
         <Setter Property="BorderBrush" Value="#FF707070"/>
@@ -731,7 +733,8 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Border x:Name="PART_ColorSquare" Background="#FF000000" Grid.Column="0" Margin="10,10,0,10" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                                <Border x:Name="PART_ColorSquare" Background="#FF000000" Grid.Column="0" Margin="10,10,0,10" SnapsToDevicePixels="True" UseLayoutRounding="True"
+                                        Cursor="{TemplateBinding ColorPickerCursor}">
                                     <Rectangle SnapsToDevicePixels="True" UseLayoutRounding="True"
                                                Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
                                                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
@@ -770,7 +773,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="#FFFFFFFF" BorderThickness="1" Width="20" Height="20">
+                                <Border x:Name="PART_WhiteSquare" Grid.Column="0" Background="#FFFFFFFF" BorderThickness="1" Width="20" Height="20">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="BorderBrush" Value="#FF000000" />
@@ -782,7 +785,7 @@
                                         </Style>
                                     </Border.Style>
                                 </Border>
-                                <Border Grid.Column="1" Background="#FF000000" BorderThickness="1" Width="20" Height="20" Margin="5,0,0,0">
+                                <Border x:Name="PART_BlackSquare" Grid.Column="1" Background="#FF000000" BorderThickness="1" Width="20" Height="20" Margin="5,0,0,0">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="BorderBrush" Value="#FFFFFFFF" />

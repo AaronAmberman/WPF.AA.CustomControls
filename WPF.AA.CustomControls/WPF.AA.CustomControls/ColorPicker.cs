@@ -11,6 +11,8 @@ namespace WPF.AA.CustomControls
 {
     /// <summary>A simple RBG color picker control for WPF.</summary>
     [TemplatePart(Name = "PART_ColorSquare", Type = typeof(Border))]
+    [TemplatePart(Name = "PART_WhiteSquare", Type = typeof(Border))]
+    [TemplatePart(Name = "PART_BlackSquare", Type = typeof(Border))]
     public class ColorPicker : Control
     {
         // https://stackoverflow.com/questions/32513387/how-to-create-a-color-canvas-for-color-picker-wpf
@@ -20,7 +22,9 @@ namespace WPF.AA.CustomControls
 
         #region Fields
 
+        private Border blackSquare;
         private Border colorSquare;
+        private Border whiteSquare;
 
         #endregion
 
@@ -35,6 +39,16 @@ namespace WPF.AA.CustomControls
 
         public static readonly DependencyProperty BaseColorProperty =
             DependencyProperty.Register("BaseColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
+
+        /// <summary>Gets or sets the cursor to show when the user mouses over the square color picker portion of the control.</summary>
+        public Cursor ColorPickerCursor
+        {
+            get { return (Cursor)GetValue(ColorPickerCursorProperty); }
+            set { SetValue(ColorPickerCursorProperty, value); }
+        }
+
+        public static readonly DependencyProperty ColorPickerCursorProperty =
+            DependencyProperty.Register("ColorPickerCursor", typeof(Cursor), typeof(ColorPicker), new PropertyMetadata(Cursors.Pen));
 
         /// <summary>Gets or sets the corner radius for the button.</summary>
         public CornerRadius CornerRadius
@@ -74,7 +88,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent, SelectedColorChanged));
 
         /// <summary>Gets or sets the R slider value.</summary>
         public int SliderRValue
@@ -129,24 +143,14 @@ namespace WPF.AA.CustomControls
 
         #region Methods
 
-        public override void OnApplyTemplate()
+        private void BlackSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            colorSquare = GetTemplateChild("PART_ColorSquare") as Border;
-            colorSquare.PreviewMouseLeftButtonDown += ColorSquare_PreviewMouseLeftButtonDown;
-
-            base.OnApplyTemplate();
-
-            // if we have a SelectedColor prior to having our template applied then we need to set the BaseColor and PreviousColor
-            if (SelectedColor != Colors.Transparent)
-            {
-                BaseColor = SelectedColor;
-                PreviousColor = SelectedColor;
-            }
+            SelectedColor = Colors.Black;
         }
 
         private void ColorSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Point point = e.GetPosition(colorSquare);            
+            Point point = e.GetPosition(colorSquare);
             float xPercentage = (float)(point.X / colorSquare.ActualWidth);
             float yPercentage = (float)Math.Abs((point.Y / colorSquare.ActualHeight) - 1); // we want to invert the y so take the absolute value - 1
 
@@ -158,6 +162,47 @@ namespace WPF.AA.CustomControls
             };
 
             SelectedColor = hsv.ToMediaColor();
+        }
+
+        public override void OnApplyTemplate()
+        {
+            colorSquare = GetTemplateChild("PART_ColorSquare") as Border;
+            colorSquare.PreviewMouseLeftButtonDown += ColorSquare_PreviewMouseLeftButtonDown;
+
+            whiteSquare = GetTemplateChild("PART_WhiteSquare") as Border;
+            whiteSquare.PreviewMouseLeftButtonDown += WhiteSquare_PreviewMouseLeftButtonDown;
+
+            blackSquare = GetTemplateChild("PART_BlackSquare") as Border;
+            blackSquare.PreviewMouseLeftButtonDown += BlackSquare_PreviewMouseLeftButtonDown;
+
+            base.OnApplyTemplate();
+
+            // if we have a SelectedColor prior to having our template applied then we need to set the BaseColor and PreviousColor
+            if (SelectedColor != Colors.Transparent)
+            {
+                BaseColor = SelectedColor;
+                PreviousColor = SelectedColor;
+            }
+        }
+
+        private static void SelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColorPicker picker = d as ColorPicker;
+
+            if (picker == null) return;
+
+            Color newColor = (Color)e.NewValue;
+
+            picker.SliderRValue = newColor.R;
+            picker.SliderGValue = newColor.G;
+            picker.SliderBValue = newColor.B;
+            picker.SliderAValue = newColor.A;
+            picker.HexStringCode = $"#{newColor.A:X2}{newColor.R:X2}{newColor.G:X2}{newColor.B:X2}";
+        }
+
+        private void WhiteSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SelectedColor = Colors.White;
         }
 
         #endregion
