@@ -751,7 +751,8 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Border x:Name="PART_ColorSquare" Background="#FF000000" Grid.Column="0" Margin="10,10,0,10" SnapsToDevicePixels="True" UseLayoutRounding="True"
+                                <Border x:Name="PART_ColorSquare" Grid.Column="0" Background="#FF000000" BorderThickness="0"
+                                        Margin="10,10,0,10" SnapsToDevicePixels="True" UseLayoutRounding="True"
                                         Cursor="{TemplateBinding ColorPickerCursor}">
                                     <Rectangle SnapsToDevicePixels="True" UseLayoutRounding="True"
                                                Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
@@ -767,6 +768,10 @@
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </Border>
+                                <Canvas x:Name="PART_Canvas" Grid.Column="0" Background="Transparent" IsHitTestVisible="False" Margin="0,0,0,10">
+                                    <Ellipse x:Name="PART_InnerCircle" Width="10" Height="10" StrokeThickness="1" Stroke="Black" Canvas.Left="1" Canvas.Top="1" />
+                                    <Ellipse x:Name="PART_OuterCircle" Width="12" Height="12" StrokeThickness="1" Stroke="White" />
+                                </Canvas>
                                 <Border Grid.Column="1" Margin="5">
                                     <local:ColorSlider x:Name="PART_ColorSlider" Orientation="Vertical"  
                                                        SelectedColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseColor, Mode=TwoWay}" />

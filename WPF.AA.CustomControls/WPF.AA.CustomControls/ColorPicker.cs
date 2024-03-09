@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using WPF.AA.CustomControls.ColorSpace;
 
 namespace WPF.AA.CustomControls
@@ -17,11 +18,17 @@ namespace WPF.AA.CustomControls
     [TemplatePart(Name = "PART_GTextBox", Type = typeof(TextBox))]
     [TemplatePart(Name = "PART_RTextBox", Type = typeof(TextBox))]
     [TemplatePart(Name = "PART_HexTextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_Canvas", Type = typeof(Canvas))]
+    [TemplatePart(Name = "PART_InnerCircle", Type = typeof(Ellipse))]
+    [TemplatePart(Name = "PART_OuterCircle", Type = typeof(Ellipse))]
     public class ColorPicker : Control
     {
         #region Fields
 
         private Border blackSquare;
+        private Canvas canvas;
+        private Ellipse canvasInnerCircle;
+        private Ellipse canvasOuterCircle;
         private Border colorSquare;
         private TextBox hexTextBox;
         private bool isBeingUpdated;
@@ -144,6 +151,16 @@ namespace WPF.AA.CustomControls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPicker), new FrameworkPropertyMetadata(typeof(ColorPicker)));
         }
 
+        public ColorPicker()
+        {
+            Loaded += ColorPicker_Loaded;
+        }
+
+        private void ColorPicker_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateColorCircle();
+        }
+
         #endregion
 
         #region Methods
@@ -165,6 +182,8 @@ namespace WPF.AA.CustomControls
         private void BlackSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SelectedColor = Colors.Black;
+
+            UpdateColorCircle();
         }
 
         private void ColorSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -181,6 +200,8 @@ namespace WPF.AA.CustomControls
             };
 
             SelectedColor = hsv.ToMediaColor();
+
+            UpdateColorCircle();
         }
 
         private static void ConvertHexCode(ColorPicker picker, string hexCode)
@@ -196,6 +217,8 @@ namespace WPF.AA.CustomControls
                 picker.SliderBValue = color.B;
                 picker.SliderAValue = color.A;
                 picker.isBeingUpdated = false;
+
+                picker.UpdateColorCircle();
             }
             catch (FormatException fe)
             {
@@ -318,6 +341,10 @@ namespace WPF.AA.CustomControls
             hexTextBox = GetTemplateChild("PART_HexTextBox") as TextBox;
             hexTextBox.KeyDown += HexTextBox_KeyDown; ;
 
+            canvas = GetTemplateChild("PART_Canvas") as Canvas;
+            canvasInnerCircle = GetTemplateChild("PART_InnerCircle") as Ellipse;
+            canvasOuterCircle = GetTemplateChild("PART_OuterCircle") as Ellipse;
+
             base.OnApplyTemplate();
 
             // if we have a SelectedColor prior to having our template applied then we need to set the BaseColor and PreviousColor
@@ -412,11 +439,64 @@ namespace WPF.AA.CustomControls
             };
             picker.HexStringCode = $"#{a:X2}{r:X2}{g:X2}{b:X2}";
             picker.isBeingUpdated = false;
+
+            picker.UpdateColorCircle();
+        }
+
+        private void UpdateColorCircle()
+        {
+            HSV hsv = SelectedColor.ToHsv();
+
+            Debug.WriteLine($"S:{hsv.S} || V:{hsv.V}");
+
+            //float xPercentage;
+
+            //if (hsv.S <= 0) // 0
+            //{
+            //    xPercentage = 10;
+            //}
+            //else if (hsv.S >= 1) // 1
+            //{
+            //    xPercentage = (float)colorSquare.ActualWidth + 10;
+            //}
+            //else // between 0 and 1
+            //{
+            //    xPercentage = ((float)colorSquare.ActualWidth * hsv.S) + 10;
+            //}
+
+            float xPercentage = ((float)colorSquare.ActualWidth * hsv.S) + 10;
+
+            //float yPercentage;
+
+            //if (hsv.V <= 0) // 0
+            //{
+            //    yPercentage = (float)colorSquare.ActualHeight + 10;
+            //}
+            //else if (hsv.V >= 1) // 1
+            //{
+            //    yPercentage = 10;
+            //}
+            //else // between 0 and 1
+            //{
+            //    yPercentage = Math.Abs(((float)colorSquare.ActualHeight * hsv.V) - (float)colorSquare.ActualHeight) + 10;
+            //}
+
+            float yPercentage = Math.Abs(((float)colorSquare.ActualHeight * hsv.V) - (float)colorSquare.ActualHeight) + 10;
+
+            Debug.WriteLine($"X:{xPercentage} || Y:{yPercentage}");
+
+            Canvas.SetLeft(canvasInnerCircle, xPercentage - 5);
+            Canvas.SetTop(canvasInnerCircle, yPercentage - 5);
+
+            Canvas.SetLeft(canvasOuterCircle, xPercentage - 6);
+            Canvas.SetTop(canvasOuterCircle, yPercentage - 6);
         }
 
         private void WhiteSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SelectedColor = Colors.White;
+
+            UpdateColorCircle();
         }
 
         #endregion
