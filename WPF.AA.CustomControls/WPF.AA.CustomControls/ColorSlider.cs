@@ -79,22 +79,13 @@ namespace WPF.AA.CustomControls
                 /*
                  * we use the HSV color space to simply get the hue value, our min should be 0 and our max should be 360, this way 
                  * the values match to the 360 degree hue angle of the HSV color space, this way it is simply a value mapping
-                 * 
-                 * note: vertical sliders have their minimum at the bottom and their maximum at the top, so we need to invert the 
-                 *       value by taking the absolute value of the hue - 360;
                  */
-                if (Orientation == Orientation.Horizontal)
-                    Value = SelectedColor.ToHsv().H;
-                else
-                    Value = Math.Abs(SelectedColor.ToHsv().H - 360);
+                Value = SelectedColor.ToHsv().H;
             }
             else
             {
                 // we do not want to load the default transparent, we do this here to trigger a value change rather than set the default to red
-                if (Orientation == Orientation.Horizontal)
-                    Value = 0; // red is on the left
-                else
-                    Value = Maximum; // red is on the top at max value (360 be default)
+                Value = 0; // red is on the left
             }
         }
 
@@ -107,15 +98,9 @@ namespace WPF.AA.CustomControls
             /*
              * we use the HSV color space to simply get the hue value, our min should be 0 and our max should be 360, this way 
              * the values match to the 360 degree hue angle of the HSV color space, this way it is simply a value mapping
-             * 
-             * note: vertical sliders have their minimum at the bottom and their maximum at the top, so we need to invert the 
-             *       value by taking the absolute value of the hue - 360;
              */
 
-            if (Orientation == Orientation.Horizontal)
-                SelectedColor = new HSV { H = (float)newValue, S = 1, V = 1 }.ToMediaColor();
-            else
-                SelectedColor = new HSV { H = (float)Math.Abs(newValue - 360), S = 1, V = 1 }.ToMediaColor();
+            SelectedColor = new HSV { H = (float)newValue, S = 1, V = 1 }.ToMediaColor();
 
             isBeingUpdated = false;
         }
@@ -132,17 +117,11 @@ namespace WPF.AA.CustomControls
             /*
              * we use the HSV color space to simply get the hue value, our min should be 0 and our max should be 360, this way 
              * the values match to the 360 degree hue angle of the HSV color space, this way it is simply a value mapping
-             * 
-             * note: vertical sliders have their minimum at the bottom and their maximum at the top, so we need to invert the 
-             *       value by taking the absolute value of the hue - 360;
              */
 
             cs.isBeingUpdated = true;
 
-            if (cs.Orientation == Orientation.Horizontal) 
-                cs.Value = c.ToHsv().H;
-            else
-                cs.Value = Math.Abs(c.ToHsv().H - 360);
+            cs.Value = c.ToHsv().H;
 
             cs.isBeingUpdated = false;
             cs.RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));
