@@ -156,11 +156,6 @@ namespace WPF.AA.CustomControls
             Loaded += ColorPicker_Loaded;
         }
 
-        private void ColorPicker_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateColorCircle();
-        }
-
         #endregion
 
         #region Methods
@@ -184,6 +179,12 @@ namespace WPF.AA.CustomControls
             SelectedColor = Colors.Black;
 
             UpdateColorCircle();
+        }
+
+        private void ColorPicker_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (SelectedColor != Colors.Transparent)
+                UpdateColorCircle();
         }
 
         private void ColorSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -447,43 +448,12 @@ namespace WPF.AA.CustomControls
         {
             HSV hsv = SelectedColor.ToHsv();
 
-            Debug.WriteLine($"S:{hsv.S} || V:{hsv.V}");
-
-            //float xPercentage;
-
-            //if (hsv.S <= 0) // 0
-            //{
-            //    xPercentage = 10;
-            //}
-            //else if (hsv.S >= 1) // 1
-            //{
-            //    xPercentage = (float)colorSquare.ActualWidth + 10;
-            //}
-            //else // between 0 and 1
-            //{
-            //    xPercentage = ((float)colorSquare.ActualWidth * hsv.S) + 10;
-            //}
+            //Debug.WriteLine($"S:{hsv.S} || V:{hsv.V}");
 
             float xPercentage = ((float)colorSquare.ActualWidth * hsv.S) + 10;
-
-            //float yPercentage;
-
-            //if (hsv.V <= 0) // 0
-            //{
-            //    yPercentage = (float)colorSquare.ActualHeight + 10;
-            //}
-            //else if (hsv.V >= 1) // 1
-            //{
-            //    yPercentage = 10;
-            //}
-            //else // between 0 and 1
-            //{
-            //    yPercentage = Math.Abs(((float)colorSquare.ActualHeight * hsv.V) - (float)colorSquare.ActualHeight) + 10;
-            //}
-
             float yPercentage = Math.Abs(((float)colorSquare.ActualHeight * hsv.V) - (float)colorSquare.ActualHeight) + 10;
 
-            Debug.WriteLine($"X:{xPercentage} || Y:{yPercentage}");
+            //Debug.WriteLine($"X:{xPercentage} || Y:{yPercentage}");
 
             Canvas.SetLeft(canvasInnerCircle, xPercentage - 5);
             Canvas.SetTop(canvasInnerCircle, yPercentage - 5);
