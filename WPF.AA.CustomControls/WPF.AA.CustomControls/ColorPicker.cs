@@ -18,7 +18,6 @@ namespace WPF.AA.CustomControls
     [TemplatePart(Name = "PART_GTextBox", Type = typeof(TextBox))]
     [TemplatePart(Name = "PART_RTextBox", Type = typeof(TextBox))]
     [TemplatePart(Name = "PART_HexTextBox", Type = typeof(TextBox))]
-    [TemplatePart(Name = "PART_Canvas", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_InnerCircle", Type = typeof(Ellipse))]
     [TemplatePart(Name = "PART_OuterCircle", Type = typeof(Ellipse))]
     public class ColorPicker : Control
@@ -26,7 +25,6 @@ namespace WPF.AA.CustomControls
         #region Fields
 
         private Border blackSquare;
-        private Canvas canvas;
         private Ellipse canvasInnerCircle;
         private Ellipse canvasOuterCircle;
         private Border colorSquare;
@@ -342,7 +340,6 @@ namespace WPF.AA.CustomControls
             hexTextBox = GetTemplateChild("PART_HexTextBox") as TextBox;
             hexTextBox.KeyDown += HexTextBox_KeyDown; ;
 
-            canvas = GetTemplateChild("PART_Canvas") as Canvas;
             canvasInnerCircle = GetTemplateChild("PART_InnerCircle") as Ellipse;
             canvasOuterCircle = GetTemplateChild("PART_OuterCircle") as Ellipse;
 
