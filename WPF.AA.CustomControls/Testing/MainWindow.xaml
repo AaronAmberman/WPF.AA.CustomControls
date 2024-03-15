@@ -10,7 +10,7 @@
         Loaded="Window_Loaded"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
     <Grid x:Name="rootGrid" Background="#FF1F1F1F">
-        <!--<cc:PopupExpander HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0"
+        <cc:PopupExpander HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0"
                           ExpandDirection="Right" PopupStaysOpen="False">
             <cc:PopupExpander.Header>
                 <TextBlock Text="Expander w/ Popup">
@@ -25,7 +25,7 @@
                 </Grid>
             </Border>
         </cc:PopupExpander>
-        <cc:ZoomableListBox x:Name="ZoomableListView" Margin="50,200,50,50" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
+        <!--<cc:ZoomableListBox x:Name="ZoomableListView" Margin="50,200,50,50" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
             <ListBoxItem>
                 One
             </ListBoxItem>
@@ -257,9 +257,9 @@
         <!--<cc:RoundableButton Content="ABC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5" Background="Purple"
                             BorderBrush="Pink" BorderThickness="2"/>-->
 
-        <!--<cc:NumericUpDown x:Name="nud" Width="100" ValueType="Integer" Foreground="Red" BorderBrush="Purple" BorderThickness="2"
+        <!--<cc:NumericUpDown x:Name="nud" Width="100" ValueType="Integer"
                         Margin="5,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="53" />
-        <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Integer" Foreground="Red" Background="LightBlue" BorderBrush="Pink" BorderThickness="2"
+        <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Decimal" ValueFormat="N2"
                           Margin="5,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding Value}" />-->
 
         <!--<cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Foreground="Red" Background="LightGreen"

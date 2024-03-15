@@ -34,7 +34,7 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty IsReadOnlyProperty =
             DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(false));
 
-        /// <summary>Gets or sets the minimum value for the numeric up down. Default is 100.</summary>
+        /// <summary>Gets or sets the maximum value for the numeric up down. Default is 100.</summary>
         public object MaxValue
         {
             get { return (object)GetValue(MaxValueProperty); }
@@ -325,7 +325,9 @@ namespace WPF.AA.CustomControls
                         e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || e.Key == Key.NumPad5 ||
                         e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 ||
                         e.Key == Key.OemMinus || e.Key == Key.Subtract || e.Key == Key.Back || e.Key == Key.Delete ||
-                        e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Tab || e.Key == Key.End))
+                        e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Tab || e.Key == Key.End ||
+                        (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && e.Key == Key.Tab) ||
+                        (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.V) /* allow paste */))
                     {
                         e.Handled = true;
                     }
@@ -339,7 +341,9 @@ namespace WPF.AA.CustomControls
                         e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || e.Key == Key.NumPad5 ||
                         e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || 
                         e.Key == Key.NumPad9  || e.Key == Key.Back || e.Key == Key.Delete ||
-                        e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Tab || e.Key == Key.End))
+                        e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Tab || e.Key == Key.End ||
+                        (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && e.Key == Key.Tab) ||
+                        (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.V) /* allow paste */))
                     {
                         e.Handled = true;
                     }
@@ -357,7 +361,9 @@ namespace WPF.AA.CustomControls
                         e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 ||
                         e.Key == Key.OemMinus || e.Key == Key.Subtract || e.Key == Key.OemPeriod || e.Key == Key.Decimal || 
                         e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Left || e.Key == Key.Right || 
-                        e.Key == Key.Tab || e.Key == Key.End))
+                        e.Key == Key.Tab || e.Key == Key.End ||
+                        (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && e.Key == Key.Tab) ||
+                        (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.V) /* allow paste */))
                     {
                         e.Handled = true;
                     }
@@ -371,7 +377,9 @@ namespace WPF.AA.CustomControls
                         e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || e.Key == Key.NumPad5 ||
                         e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 || 
                         e.Key == Key.OemPeriod || e.Key == Key.Decimal || e.Key == Key.Back || e.Key == Key.Delete || 
-                        e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Tab || e.Key == Key.End))
+                        e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Tab || e.Key == Key.End ||
+                        (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && e.Key == Key.Tab) ||
+                        (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.V) /* allow paste */))
                     {
                         e.Handled = true;
                     }
