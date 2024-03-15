@@ -40,16 +40,6 @@ namespace WPF.AA.CustomControls
 
         #region Properties
 
-        /// <summary>Gets or sets the hue color (the color for the vertical color slider). Not intended for direct use, see SelectedColor.</summary>
-        public Color HueColor
-        {
-            get { return (Color)GetValue(HueColorProperty); }
-            set { SetValue(HueColorProperty, value); }
-        }
-
-        public static readonly DependencyProperty HueColorProperty =
-            DependencyProperty.Register("HueColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
-
         /// <summary>Gets or sets the cursor to show when the user mouses over the square color picker portion of the control.</summary>
         public Cursor ColorPickerCursor
         {
@@ -79,6 +69,16 @@ namespace WPF.AA.CustomControls
 
         public static readonly DependencyProperty HexStringCodeProperty =
             DependencyProperty.Register("HexStringCode", typeof(string), typeof(ColorPicker), new PropertyMetadata("#00000000", HexColorChanged));
+
+        /// <summary>Gets or sets the hue color (the color for the vertical color slider). Not intended for direct use, see SelectedColor.</summary>
+        public Color HueColor
+        {
+            get { return (Color)GetValue(HueColorProperty); }
+            set { SetValue(HueColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty HueColorProperty =
+            DependencyProperty.Register("HueColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
 
         /// <summary>Gets or sets the previous color. Not intended for direct use, see SelectedColor.</summary>
         public Color PreviousColor
