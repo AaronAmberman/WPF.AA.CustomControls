@@ -50,7 +50,7 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty ColorPickerCursorProperty =
             DependencyProperty.Register("ColorPickerCursor", typeof(Cursor), typeof(ColorPicker), new PropertyMetadata(Cursors.Pen));
 
-        /// <summary>Gets or sets the corner radius for the button.</summary>
+        /// <summary>Gets or sets the corner radius for the ColorPicker.</summary>
         public CornerRadius CornerRadius
         {
             get { return (CornerRadius)GetValue(CornerRadiusProperty); }
@@ -70,7 +70,7 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty HexStringCodeProperty =
             DependencyProperty.Register("HexStringCode", typeof(string), typeof(ColorPicker), new PropertyMetadata("#00000000", HexColorChanged));
 
-        /// <summary>Gets or sets the hue color (the color for the vertical color slider). Not intended for direct use, see SelectedColor.</summary>
+        /// <summary>Gets or sets the hue color (the color for the vertical color slider). Suggested to use SelectedColor.</summary>
         public Color HueColor
         {
             get { return (Color)GetValue(HueColorProperty); }
@@ -80,7 +80,7 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty HueColorProperty =
             DependencyProperty.Register("HueColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
 
-        /// <summary>Gets or sets the previous color. Not intended for direct use, see SelectedColor.</summary>
+        /// <summary>Gets or sets the previous color. Suggested to use SelectedColor.</summary>
         public Color PreviousColor
         {
             get { return (Color)GetValue(PreviousColorProperty); }
@@ -90,7 +90,7 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty PreviousColorProperty =
             DependencyProperty.Register("PreviousColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
 
-        /// <summary>Gets or sets the selected color (the color for the gradient color picker).</summary>
+        /// <summary>Gets or sets the selected color.</summary>
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
