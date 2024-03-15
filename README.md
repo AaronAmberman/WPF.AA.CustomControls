@@ -19,6 +19,7 @@ Please check out the [wiki](https://github.com/AaronAmberman/WPF.AA.CustomContro
 A color picker control that can be utilized in WPF applications. Uses HSV color space math rather than sampling bitmaps for color accuracy. There is a reason for this...please see [wiki](https://github.com/AaronAmberman/WPF.AA.CustomControls/wiki/ColorPicker) for more information.
 
 ![image](https://github.com/AaronAmberman/WPF.AA.CustomControls/assets/23512394/a3e2241a-d420-4bfb-bd23-0492af0848db)
+(This image will not show on [nuget](https://www.nuget.org/) because GitHub changed how they manage uploaded content and I do not have an account at any of the trusted domain websites for nuget.org. Please visit the [repo](https://github.com/AaronAmberman/WPF.AA.CustomControls) on GitHub to see the imagery. Sorry, hopefully in the future GitHub and Nuget can start playing nice together because Microsoft owns both of them now.)
 
 # GridSplitterPopupExpander Example
 Behaves like the AvalonDock side auto popup window, except that it cannot be ripped out or pinned.
