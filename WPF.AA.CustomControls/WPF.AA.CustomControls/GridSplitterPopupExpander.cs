@@ -30,7 +30,7 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(GridSplitterPopupExpander), new PropertyMetadata(null));
 
-        /// <summary>Gets or sets theexpand direction for the popup.</summary>
+        /// <summary>Gets or sets the expand direction for the popup.</summary>
         public ExpandDirection ExpandDirection
         {
             get { return (ExpandDirection)GetValue(ExpandDirectionProperty); }
@@ -71,7 +71,7 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty GridSplitterPreviewStyleProperty =
             DependencyProperty.Register("GridSplitterPreviewStyle", typeof(Style), typeof(GridSplitterPopupExpander), new PropertyMetadata(null));
 
-        /// <summary>gets or sets whether or not the expander is open (true) or closed (false).</summary>
+        /// <summary>Gets or sets whether or not the expander is open (true) or closed (false).</summary>
         public bool IsExpanded
         {
             get { return (bool)GetValue(IsExpandedProperty); }
@@ -503,26 +503,6 @@ namespace WPF.AA.CustomControls
             popupWindow.Show();
         }
 
-        private void PopupWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (ExpandDirection == ExpandDirection.Up)
-            {
-                widthHeight = contentGrid.RowDefinitions[2].ActualHeight;
-            }
-            else if (ExpandDirection == ExpandDirection.Down)
-            {
-                widthHeight = contentGrid.RowDefinitions[0].ActualHeight;
-            }
-            else if (ExpandDirection == ExpandDirection.Left)
-            {
-                widthHeight = contentGrid.ColumnDefinitions[2].ActualWidth;
-            }
-            else if (ExpandDirection == ExpandDirection.Right)
-            {
-                widthHeight = contentGrid.ColumnDefinitions[0].ActualWidth;
-            }
-        }
-
         private void GridSplitter_DragCompleted(object sender, DragCompletedEventArgs e)
         {
             if (ExpandDirection == ExpandDirection.Up)
@@ -551,6 +531,26 @@ namespace WPF.AA.CustomControls
             }
 
             if (widthHeight < 0) widthHeight = 0;
+        }
+
+        private void PopupWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (ExpandDirection == ExpandDirection.Up)
+            {
+                widthHeight = contentGrid.RowDefinitions[2].ActualHeight;
+            }
+            else if (ExpandDirection == ExpandDirection.Down)
+            {
+                widthHeight = contentGrid.RowDefinitions[0].ActualHeight;
+            }
+            else if (ExpandDirection == ExpandDirection.Left)
+            {
+                widthHeight = contentGrid.ColumnDefinitions[2].ActualWidth;
+            }
+            else if (ExpandDirection == ExpandDirection.Right)
+            {
+                widthHeight = contentGrid.ColumnDefinitions[0].ActualWidth;
+            }
         }
 
         private void PopupWindow_Deactivated(object sender, EventArgs e)

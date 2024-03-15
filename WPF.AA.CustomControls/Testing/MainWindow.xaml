@@ -36,7 +36,7 @@
                 Three
             </ListBoxItem>
         </cc:ZoomableListBox>-->
-        <cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
+        <!--<cc:GridSplitterPopupExpander PopupBoundsElement="{Binding ElementName=rootGrid}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top" 
                                           Header="Popup" PopupContentPadding="25,0,25,25"
                                           Margin="25,0,0,0">
@@ -249,7 +249,7 @@
 
                 </ListView>
             </Grid>
-        </cc:GridSplitterPopupExpander>
+        </cc:GridSplitterPopupExpander>-->
 
         <!--<cc:WatermarkTextBox Watermark="My watermark text" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="200" Foreground="Red" Background="Blue"
                              BorderBrush="Red" BorderThickness="2" />-->
