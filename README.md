@@ -2,6 +2,8 @@
 A custom control library for WPF with custom look-less control templates.
 
 # Controls
+- ColorPicker
+- ColorSlider
 - GridSplitterPopupExpander
 - NumericUpDown
 - PopupExpander
@@ -10,6 +12,13 @@ A custom control library for WPF with custom look-less control templates.
 - ShowHidePasswordBox
 - WatermarkTextBox
 - ZoomableListBox
+
+Please check out the [wiki](https://github.com/AaronAmberman/WPF.AA.CustomControls/wiki) for more information on each control. 
+
+# ColorPicker
+A color picker control that can be utilized in WPF applications. Uses HSV color space math rather than sampling bitmaps for color accuracy.
+
+![image](https://github.com/AaronAmberman/WPF.AA.CustomControls/assets/23512394/87a4db3f-efcd-4d6e-b47d-59b31b6ec552)
 
 # GridSplitterPopupExpander Example
 Behaves like the AvalonDock side auto popup window, except that it cannot be ripped out or pinned.
