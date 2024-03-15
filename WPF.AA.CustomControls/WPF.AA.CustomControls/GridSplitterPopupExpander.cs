@@ -90,8 +90,7 @@ namespace WPF.AA.CustomControls
             if ((bool)e.NewValue)
             {
                 obj.BuildAndShowPopupWindow();
-
-                obj.PopupOpened?.Invoke(obj, EventArgs.Empty);
+                obj.RaiseEvent(new RoutedEventArgs(PopupOpenedEvent));
             }
             else
             {
@@ -108,7 +107,7 @@ namespace WPF.AA.CustomControls
                 obj.popupWindow.Deactivated -= obj.PopupWindow_Deactivated;
                 obj.popupWindow = null;
 
-                obj.PopupClosed?.Invoke(obj, EventArgs.Empty);
+                obj.RaiseEvent(new RoutedEventArgs(PopupClosedEvent));
             }
         }
 
@@ -301,8 +300,25 @@ namespace WPF.AA.CustomControls
 
         #region Events
 
-        public event EventHandler PopupOpened;
-        public event EventHandler PopupClosed;
+        public static readonly RoutedEvent PopupClosedEvent = EventManager.RegisterRoutedEvent(
+            "PopupClosed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ColorPicker));
+
+        /// <summary>Occurs when the popup closes.</summary>
+        public event RoutedEventHandler PopupClosed
+        {
+            add { AddHandler(PopupClosedEvent, value); }
+            remove { RemoveHandler(PopupClosedEvent, value); }
+        }
+
+        public static readonly RoutedEvent PopupOpenedEvent = EventManager.RegisterRoutedEvent(
+            "PopupOpened", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ColorPicker));
+
+        /// <summary>Occurs when the popup opens.</summary>
+        public event RoutedEventHandler PopupOpened
+        {
+            add { AddHandler(PopupOpenedEvent, value); }
+            remove { RemoveHandler(PopupOpenedEvent, value); }
+        }
 
         #endregion
 
