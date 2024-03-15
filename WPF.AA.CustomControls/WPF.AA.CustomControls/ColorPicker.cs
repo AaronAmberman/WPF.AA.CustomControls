@@ -40,15 +40,15 @@ namespace WPF.AA.CustomControls
 
         #region Properties
 
-        /// <summary>Gets or sets the base color (the color for the vertical color slider).</summary>
-        public Color BaseColor
+        /// <summary>Gets or sets the hue color (the color for the vertical color slider). Not intended for direct use, see SelectedColor.</summary>
+        public Color HueColor
         {
-            get { return (Color)GetValue(BaseColorProperty); }
-            set { SetValue(BaseColorProperty, value); }
+            get { return (Color)GetValue(HueColorProperty); }
+            set { SetValue(HueColorProperty, value); }
         }
 
-        public static readonly DependencyProperty BaseColorProperty =
-            DependencyProperty.Register("BaseColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
+        public static readonly DependencyProperty HueColorProperty =
+            DependencyProperty.Register("HueColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
 
         /// <summary>Gets or sets the cursor to show when the user mouses over the square color picker portion of the control.</summary>
         public Cursor ColorPickerCursor
@@ -80,7 +80,7 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty HexStringCodeProperty =
             DependencyProperty.Register("HexStringCode", typeof(string), typeof(ColorPicker), new PropertyMetadata("#00000000", HexColorChanged));
 
-        /// <summary>Gets or sets the previous color.</summary>
+        /// <summary>Gets or sets the previous color. Not intended for direct use, see SelectedColor.</summary>
         public Color PreviousColor
         {
             get { return (Color)GetValue(PreviousColorProperty); }
@@ -193,7 +193,7 @@ namespace WPF.AA.CustomControls
 
             HSV hsv = new HSV
             {
-                H = BaseColor.ToHsv().H,
+                H = HueColor.ToHsv().H,
                 S = xPercentage,
                 V = yPercentage
             };
@@ -338,17 +338,17 @@ namespace WPF.AA.CustomControls
             textBoxR.KeyDown += ARGBTextBox_KeyDown;
 
             hexTextBox = GetTemplateChild("PART_HexTextBox") as TextBox;
-            hexTextBox.KeyDown += HexTextBox_KeyDown; ;
+            hexTextBox.KeyDown += HexTextBox_KeyDown;
 
             canvasInnerCircle = GetTemplateChild("PART_InnerCircle") as Ellipse;
             canvasOuterCircle = GetTemplateChild("PART_OuterCircle") as Ellipse;
 
             base.OnApplyTemplate();
 
-            // if we have a SelectedColor prior to having our template applied then we need to set the BaseColor and PreviousColor
+            // if we have a SelectedColor prior to having our template applied then we need to set the HueColor and PreviousColor
             if (SelectedColor != Colors.Transparent)
             {
-                BaseColor = new Color
+                HueColor = new Color
                 {
                     A = 255,
                     R = SelectedColor.R,

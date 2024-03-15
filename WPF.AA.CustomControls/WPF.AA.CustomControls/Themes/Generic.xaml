@@ -757,7 +757,7 @@
                                     <Rectangle SnapsToDevicePixels="True" UseLayoutRounding="True"
                                                Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
                                                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
-                                               Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseColor, Converter={StaticResource ColorConverter}}">
+                                               Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HueColor, Converter={StaticResource ColorConverter}}">
                                         <Rectangle.OpacityMask>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                 <LinearGradientBrush.GradientStops>
@@ -774,7 +774,7 @@
                                 </Canvas>
                                 <Border Grid.Column="1" Margin="5">
                                     <local:ColorSlider x:Name="PART_ColorSlider" Orientation="Vertical"  
-                                                       SelectedColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BaseColor, Mode=TwoWay}" />
+                                                       SelectedColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HueColor, Mode=TwoWay}" />
                                 </Border>
                                 <Grid Grid.Column="2" Margin="0,25,10,25">
                                     <Grid.RowDefinitions>
