@@ -10,7 +10,7 @@
         Loaded="Window_Loaded"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
     <Grid x:Name="rootGrid" Background="#FF1F1F1F">
-        <cc:PopupExpander HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0"
+        <!--<cc:PopupExpander HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0"
                           ExpandDirection="Right" PopupStaysOpen="False">
             <cc:PopupExpander.Header>
                 <TextBlock Text="Expander w/ Popup">
@@ -24,8 +24,8 @@
                     <TextBlock Text="Some simple content" />
                 </Grid>
             </Border>
-        </cc:PopupExpander>
-        <!--<cc:ZoomableListBox x:Name="ZoomableListView" Margin="50,200,50,50" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
+        </cc:PopupExpander>-->
+        <!--<cc:ZoomableListBox x:Name="ZoomableListView" Margin="50,200,50,50" ZoomFactor="1" ZoomMin="0.5" ZoomMax="4.0">
             <ListBoxItem>
                 One
             </ListBoxItem>
@@ -251,19 +251,47 @@
             </Grid>
         </cc:GridSplitterPopupExpander>-->
 
-        <!--<cc:WatermarkTextBox Watermark="My watermark text" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="200" Foreground="Red" Background="Blue"
-                             BorderBrush="Red" BorderThickness="2" />-->
+        <!--<cc:WatermarkTextBox Watermark="My watermark text" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="200" />
 
-        <!--<cc:RoundableButton Content="ABC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5" Background="Purple"
-                            BorderBrush="Pink" BorderThickness="2"/>-->
+        <cc:WatermarkTextBox Watermark="My image watermark" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,50,5,5" Width="200">
+            <cc:WatermarkTextBox.WatermarkTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0" Width="16" Height="16" Margin="0,0,5,0">
+                            <Rectangle.Fill>
+                                <DrawingBrush>
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M6.0003,-0.000199999999999534L6.0003,5.9998 0.000300000000000189,5.9998 0.000300000000000189,9.9998 6.0003,9.9998 6.0003,15.9998 10.0003,15.9998 10.0003,9.9998 16.0003,9.9998 16.0003,5.9998 10.0003,5.9998 10.0003,-0.000199999999999534z" />
+                                                <GeometryDrawing Brush="#FFCCCCCC" Geometry="F1M15,9L9,9 9,15 7,15 7,9 1,9 1,7 7,7 7,1 9,1 9,7 15,7z" />
+                                            </DrawingGroup.Children>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <ContentPresenter Grid.Column="1" Content="{Binding}" TextElement.Foreground="LightGray" />
+                    </Grid>
+                </DataTemplate>
+            </cc:WatermarkTextBox.WatermarkTemplate>
+        </cc:WatermarkTextBox>-->
+
+        <!--<cc:RoundableButton Content="ABC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5"/>-->
+
+        <!--<cc:RoundableToggleButton Content="ABCD" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5"/>-->
 
         <!--<cc:NumericUpDown x:Name="nud" Width="100" ValueType="Integer"
                         Margin="5,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="53" />
         <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Decimal" ValueFormat="N2"
                           Margin="5,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding Value}" />-->
 
-        <!--<cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Foreground="Red" Background="LightGreen"
-                                BorderBrush="Purple" BorderThickness="3"/>-->
+        <!--<cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" />-->
 
         <!--<cc:ColorSlider x:Name="colorSlider" Height="50" SelectedColor="DodgerBlue" Margin="0,0,50,0" />
         <cc:ColorSlider x:Name="colorSlider2" Width="50" SelectedColor="Green" Orientation="Vertical" HorizontalAlignment="Right" />-->

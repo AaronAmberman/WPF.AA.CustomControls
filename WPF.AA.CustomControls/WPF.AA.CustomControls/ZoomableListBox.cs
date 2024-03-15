@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -9,11 +8,10 @@ namespace WPF.AA.CustomControls
     /// <summary>A ListBox that has built in zooming capabilities.</summary>
     [TemplatePart(Name = "PART_ItemsPresenter", Type = typeof(ItemsPresenter))]
     [TemplatePart(Name = "PART_ResetZoom", Type = typeof(Button))]
-    public class ZoomableListBox : ListBox, IDisposable
+    public class ZoomableListBox : ListBox
     {
         #region Fields
 
-        private bool disposedValue;
         private ItemsPresenter itemsPresenter;
         private Button resetZoom;
 
@@ -118,28 +116,6 @@ namespace WPF.AA.CustomControls
             {
                 SetValue(ZoomFactorProperty, ZoomFactor + 0.1);
             }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    PreviewMouseWheel -= ZoomableListView_PreviewMouseWheel;
-
-                    if (resetZoom != null)
-                        resetZoom.Click -= ResetZoom_Click;
-                }
-
-                disposedValue=true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
 
         #endregion
