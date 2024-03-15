@@ -98,7 +98,7 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent, SelectedColorChanged));
+            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent, SelectedColorChangedCallback));
 
         /// <summary>Gets or sets the R slider value.</summary>
         public int SliderRValue
@@ -139,6 +139,20 @@ namespace WPF.AA.CustomControls
 
         public static readonly DependencyProperty SliderAValueProperty =
             DependencyProperty.Register("SliderAValue", typeof(int), typeof(ColorPicker), new PropertyMetadata(0, AValueChanged, CoerceAValue));
+
+        #endregion
+
+        #region Events
+
+        public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent(
+            "SelectedColorChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ColorPicker));
+
+        /// <summary>Occurs when the selected color changes.</summary>
+        public event RoutedEventHandler SelectedColorChanged
+        {
+            add { AddHandler(SelectedColorChangedEvent, value); }
+            remove { RemoveHandler(SelectedColorChangedEvent, value); }
+        }
 
         #endregion
 
@@ -362,7 +376,7 @@ namespace WPF.AA.CustomControls
             }
         }
 
-        private static void SelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void SelectedColorChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ColorPicker picker = d as ColorPicker;
 
@@ -378,6 +392,7 @@ namespace WPF.AA.CustomControls
             picker.SliderAValue = newColor.A;
             picker.HexStringCode = $"#{newColor.A:X2}{newColor.R:X2}{newColor.G:X2}{newColor.B:X2}";
             picker.isBeingUpdated = false;
+            picker.RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));
         }
 
         private static void RValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
