@@ -348,13 +348,16 @@ namespace WPF.AA.CustomControls
             // if we have a SelectedColor prior to having our template applied then we need to set the HueColor and PreviousColor
             if (SelectedColor != Colors.Transparent)
             {
-                HueColor = new Color
+                // get hue correct color for color slider
+                HSV hsv = SelectedColor.ToHsv();
+                Color hueCorrectedColor = new HSV
                 {
-                    A = 255,
-                    R = SelectedColor.R,
-                    G = SelectedColor.G,
-                    B = SelectedColor.B
-                };
+                    H = hsv.H,
+                    S = 1,
+                    V = 1
+                }.ToMediaColor();
+
+                HueColor = hueCorrectedColor;
                 PreviousColor = SelectedColor;
             }
         }
