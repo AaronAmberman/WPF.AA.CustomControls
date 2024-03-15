@@ -27,6 +27,16 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty SelectedColorProperty =
             DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Transparent, SelectedColorChangedCallback));
 
+        /// <summary>Gets or sets the style for the thumb portion of the control.</summary>
+        public Style ThumbStyle
+        {
+            get { return (Style)GetValue(ThumbStyleProperty); }
+            set { SetValue(ThumbStyleProperty, value); }
+        }
+
+        public static readonly DependencyProperty ThumbStyleProperty =
+            DependencyProperty.Register("ThumbStyle", typeof(Style), typeof(ColorSlider), new PropertyMetadata(null));
+
         #endregion
 
         #region Events
@@ -40,16 +50,6 @@ namespace WPF.AA.CustomControls
             add { AddHandler(SelectedColorChangedEvent, value); }
             remove { RemoveHandler(SelectedColorChangedEvent, value); }
         }
-
-        /// <summary>Gets or sets the style for the thumb portion of the control.</summary>
-        public Style ThumbStyle
-        {
-            get { return (Style)GetValue(ThumbStyleProperty); }
-            set { SetValue(ThumbStyleProperty, value); }
-        }
-
-        public static readonly DependencyProperty ThumbStyleProperty =
-            DependencyProperty.Register("ThumbStyle", typeof(Style), typeof(ColorSlider), new PropertyMetadata(null));
 
         #endregion
 

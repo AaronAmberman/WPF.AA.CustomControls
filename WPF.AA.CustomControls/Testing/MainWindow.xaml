@@ -9,7 +9,7 @@
         Title="MainWindow" Height="768" Width="1024" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
-    <Grid x:Name="rootGrid" Background="#FF1F1F1F">
+    <Grid x:Name="rootGrid">
         <!--<cc:PopupExpander HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0"
                           ExpandDirection="Right" PopupStaysOpen="False">
             <cc:PopupExpander.Header>
@@ -265,7 +265,8 @@
         <!--<cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Foreground="Red" Background="LightGreen"
                                 BorderBrush="Purple" BorderThickness="3"/>-->
 
-        <!--<cc:ColorSlider x:Name="colorSlider" Height="50" SelectedColor="DodgerBlue" />-->
-        <cc:ColorPicker SelectedColor="RosyBrown" />
+        <cc:ColorSlider x:Name="colorSlider" Height="50" SelectedColor="DodgerBlue" Margin="0,0,50,0" />
+        <cc:ColorSlider x:Name="colorSlider2" Width="50" SelectedColor="Green" Orientation="Vertical" HorizontalAlignment="Right" />
+        <!--<cc:ColorPicker SelectedColor="LightBlue" />-->
     </Grid>
 </Window>
