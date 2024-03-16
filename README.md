@@ -20,8 +20,6 @@ A color picker control that can be utilized in WPF applications. Uses HSV color 
 
 ![image](https://i.imgur.com/I0rN2sL.png)
 
-(This image will not show on [nuget](https://www.nuget.org/) because GitHub changed how they manage uploaded content and I do not have an account at any of the trusted domain websites for nuget.org. Please visit the [repo](https://github.com/AaronAmberman/WPF.AA.CustomControls) on GitHub to see the imagery. Sorry, hopefully in the future GitHub and Nuget can start playing nice together because Microsoft owns both of them now.)
-
 # GridSplitterPopupExpander Example
 Behaves like the AvalonDock side auto popup window, except that it cannot be ripped out or pinned.
 
