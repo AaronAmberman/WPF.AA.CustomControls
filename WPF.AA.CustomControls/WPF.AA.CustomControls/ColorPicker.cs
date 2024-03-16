@@ -166,6 +166,7 @@ namespace WPF.AA.CustomControls
         public ColorPicker()
         {
             Loaded += ColorPicker_Loaded;
+            SizeChanged += ColorPicker_SizeChanged;
         }
 
         #endregion
@@ -197,6 +198,13 @@ namespace WPF.AA.CustomControls
         {
             if (SelectedColor != Colors.Transparent)
                 UpdateColorCircle();
+        }
+
+        private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (canvasInnerCircle == null || canvasOuterCircle == null || colorSquare == null) return;
+
+            UpdateColorCircle();
         }
 
         private void ColorSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

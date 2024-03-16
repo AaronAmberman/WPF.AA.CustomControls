@@ -4,7 +4,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Company>Aaron Amberman</Company>
     <Description>A custom control library for WPF with custom look-less control templates.</Description>
     <Copyright>© Aaron Amberman 2023</Copyright>
@@ -12,7 +12,7 @@
     <RepositoryUrl>https://github.com/AaronAmberman/WPF.AA.CustomControls</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>WPF custom controls;WPF look-less control templates;WPF UI;WatermarkTextBox;Watermark TextBox; Watermark Text Box</PackageTags>
+    <PackageTags>WPF custom controls;WPF look-less control templates;WPF UI;WatermarkTextBox;Watermark TextBox; Watermark Text Box Color Picker Color Slider</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
