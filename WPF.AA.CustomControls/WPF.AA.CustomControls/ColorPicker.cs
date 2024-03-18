@@ -72,7 +72,7 @@ namespace WPF.AA.CustomControls
 
         /// <summary>Gets or sets the hue color (the color for the vertical color slider).</summary>
         /// <remarks>
-        /// The developer should not beed to manage this property too much or at all. When the selected color is set we strip the hue value out of 
+        /// The developer should not need to manage this property too much or at all. When the selected color is set we strip the hue value out of 
         /// it and assign that value here so that it reflects on the vertical slider. Devs can set this externally but it is not suggested. Instead
         /// just manage the SelectedColor.
         /// </remarks>
