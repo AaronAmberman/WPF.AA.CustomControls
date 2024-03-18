@@ -70,7 +70,12 @@ namespace WPF.AA.CustomControls
         public static readonly DependencyProperty HexStringCodeProperty =
             DependencyProperty.Register("HexStringCode", typeof(string), typeof(ColorPicker), new PropertyMetadata("#00000000", HexColorChanged));
 
-        /// <summary>Gets or sets the hue color (the color for the vertical color slider). Suggested to use SelectedColor.</summary>
+        /// <summary>Gets or sets the hue color (the color for the vertical color slider).</summary>
+        /// <remarks>
+        /// The developer should not beed to manage this property too much or at all. When the selected color is set we strip the hue value out of 
+        /// it and assign that value here so that it reflects on the vertical slider. Devs can set this externally but it is not suggested. Instead
+        /// just manage the SelectedColor.
+        /// </remarks>
         public Color HueColor
         {
             get { return (Color)GetValue(HueColorProperty); }
@@ -78,9 +83,15 @@ namespace WPF.AA.CustomControls
         }
 
         public static readonly DependencyProperty HueColorProperty =
-            DependencyProperty.Register("HueColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("HueColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent, HueColorChanged));
 
-        /// <summary>Gets or sets the previous color. Suggested to use SelectedColor.</summary>
+        /// <summary>Gets or sets the previous color.</summary>
+        /// <remarks>
+        /// This color is not managed at all. This is to be managed externally so the dev using this can decide if they want have the previous color
+        /// update in real time or at some other point. Loaded is not enough because this control might not be in a dialog and loaded will only fire
+        /// when the control is rendered to the screen. So rather than come up with some internal strategy for managing the PreviousColor we'll just
+        /// leave it up to the dev implementing the ColorPicker.
+        /// </remarks>
         public Color PreviousColor
         {
             get { return (Color)GetValue(PreviousColorProperty); }
@@ -91,6 +102,10 @@ namespace WPF.AA.CustomControls
             DependencyProperty.Register("PreviousColor", typeof(Color), typeof(ColorPicker), new PropertyMetadata(Colors.Transparent));
 
         /// <summary>Gets or sets the selected color.</summary>
+        /// <remarks>
+        /// When this property is set the hue value is stripped out of it and then set on the HueColor. This way the HueColor will always reflect the 
+        /// more core hue of the SelectedColor. Clearly, this won't work with colors not on the vertical slider; such as grays, whites and blacks.
+        /// </remarks>
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
@@ -230,8 +245,11 @@ namespace WPF.AA.CustomControls
             try
             {
                 Color color = (Color)System.Windows.Media.ColorConverter.ConvertFromString(hexCode);
+                HSV hsv = color.ToHsv();
+                Color hueColor = new HSV { H = hsv.H, S = 1, V = 1 }.ToMediaColor();
 
                 picker.isBeingUpdated = true;
+                picker.HueColor = hueColor;
                 picker.SelectedColor = color;
                 picker.SliderRValue = color.R;
                 picker.SliderGValue = color.G;
@@ -336,6 +354,35 @@ namespace WPF.AA.CustomControls
             }
         }
 
+        private static void HueColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColorPicker picker = d as ColorPicker;
+
+            if (picker == null) return;
+            if (picker.isBeingUpdated) return; // update originated else where that will handle the result
+
+            Color newColor = (Color)e.NewValue;
+
+            picker.isBeingUpdated = true;
+
+            HSV selectedColorHsv = picker.SelectedColor.ToHsv();
+            HSV hsv = newColor.ToHsv();
+
+            // update the hue of the selected color to match our hue but leave the S and V values the same
+            selectedColorHsv.H = hsv.H;
+
+            Color newSelectedColor = selectedColorHsv.ToMediaColor();
+
+            picker.SelectedColor = newSelectedColor;
+            picker.SliderRValue = newSelectedColor.R;
+            picker.SliderGValue = newSelectedColor.G;
+            picker.SliderBValue = newSelectedColor.B;
+            picker.SliderAValue = newSelectedColor.A;
+            picker.HexStringCode = $"#{newSelectedColor.A:X2}{newSelectedColor.R:X2}{newSelectedColor.G:X2}{newSelectedColor.B:X2}";
+
+            picker.isBeingUpdated = false;
+        }
+
         public override void OnApplyTemplate()
         {
             colorSquare = GetTemplateChild("PART_ColorSquare") as Border;
@@ -366,22 +413,6 @@ namespace WPF.AA.CustomControls
             canvasOuterCircle = GetTemplateChild("PART_OuterCircle") as Ellipse;
 
             base.OnApplyTemplate();
-
-            // if we have a SelectedColor prior to having our template applied then we need to set the HueColor and PreviousColor
-            if (SelectedColor != Colors.Transparent)
-            {
-                // get hue correct color for color slider
-                HSV hsv = SelectedColor.ToHsv();
-                Color hueCorrectedColor = new HSV
-                {
-                    H = hsv.H,
-                    S = 1,
-                    V = 1
-                }.ToMediaColor();
-
-                HueColor = hueCorrectedColor;
-                PreviousColor = SelectedColor;
-            }
         }
 
         private static void SelectedColorChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -399,6 +430,17 @@ namespace WPF.AA.CustomControls
             picker.SliderBValue = newColor.B;
             picker.SliderAValue = newColor.A;
             picker.HexStringCode = $"#{newColor.A:X2}{newColor.R:X2}{newColor.G:X2}{newColor.B:X2}";
+
+            // get hue correct color for color slider
+            HSV hsv = picker.SelectedColor.ToHsv();
+            Color hueCorrectedColor = new HSV
+            {
+                H = hsv.H,
+                S = 1,
+                V = 1
+            }.ToMediaColor();
+
+            picker.HueColor = hueCorrectedColor;
             picker.isBeingUpdated = false;
             picker.RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));
         }
@@ -461,6 +503,10 @@ namespace WPF.AA.CustomControls
                 G = g,
                 B = b
             };
+
+            HSV hsv = picker.SelectedColor.ToHsv();
+
+            picker.HueColor = new HSV { H = hsv.H, S = 1, V = 1 }.ToMediaColor();
             picker.HexStringCode = $"#{a:X2}{r:X2}{g:X2}{b:X2}";
             picker.isBeingUpdated = false;
 

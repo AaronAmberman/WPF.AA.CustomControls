@@ -295,6 +295,6 @@
 
         <!--<cc:ColorSlider x:Name="colorSlider" Height="50" SelectedColor="DodgerBlue" Margin="0,0,50,0" />
         <cc:ColorSlider x:Name="colorSlider2" Width="50" SelectedColor="Green" Orientation="Vertical" HorizontalAlignment="Right" />-->
-        <cc:ColorPicker SelectedColor="LightBlue" />
+        <cc:ColorPicker PreviousColor="LightBlue" SelectedColor="LightBlue" />
     </Grid>
 </Window>
