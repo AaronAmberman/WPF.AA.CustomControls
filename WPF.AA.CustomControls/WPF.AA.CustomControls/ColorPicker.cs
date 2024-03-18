@@ -103,8 +103,8 @@ namespace WPF.AA.CustomControls
 
         /// <summary>Gets or sets the selected color.</summary>
         /// <remarks>
-        /// When this property is set the hue value is stripped out of it and then set on the HueColor. This way the HueColor will always reflect the 
-        /// more core hue of the SelectedColor. Clearly, this won't work with colors not on the vertical slider; such as grays, whites and blacks.
+        /// When this property is set the hue value is stripped out of it and then set it on the HueColor. This way the HueColor will always reflect 
+        /// the more core hue of the SelectedColor. Clearly, this won't work with colors not on the vertical slider; such as grays, whites and blacks.
         /// </remarks>
         public Color SelectedColor
         {
