@@ -202,7 +202,7 @@ namespace WPF.AA.CustomControls
             }
         }
 
-        private void BlackSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BlackSquare_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SelectedColor = Colors.Black;
 
@@ -222,22 +222,17 @@ namespace WPF.AA.CustomControls
             UpdateColorCircle();
         }
 
-        private void ColorSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ColorSquare_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Point point = e.GetPosition(colorSquare);
-            float xPercentage = (float)(point.X / colorSquare.ActualWidth);
-            float yPercentage = (float)Math.Abs((point.Y / colorSquare.ActualHeight) - 1); // we want to invert the y so take the absolute value - 1
+            SetCirclePosition(e);
+        }
 
-            HSV hsv = new HSV
+        private void ColorSquare_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed) 
             {
-                H = HueColor.ToHsv().H,
-                S = xPercentage,
-                V = yPercentage
-            };
-
-            SelectedColor = hsv.ToMediaColor();
-
-            UpdateColorCircle();
+                SetCirclePosition(e);
+            }
         }
 
         private static void ConvertHexCode(ColorPicker picker, string hexCode)
@@ -386,13 +381,14 @@ namespace WPF.AA.CustomControls
         public override void OnApplyTemplate()
         {
             colorSquare = GetTemplateChild("PART_ColorSquare") as Border;
-            colorSquare.PreviewMouseLeftButtonDown += ColorSquare_PreviewMouseLeftButtonDown;
+            colorSquare.MouseLeftButtonDown += ColorSquare_MouseLeftButtonDown;
+            colorSquare.MouseMove += ColorSquare_MouseMove;
 
             whiteSquare = GetTemplateChild("PART_WhiteSquare") as Border;
-            whiteSquare.PreviewMouseLeftButtonDown += WhiteSquare_PreviewMouseLeftButtonDown;
+            whiteSquare.MouseLeftButtonDown += WhiteSquare_MouseLeftButtonDown;
 
             blackSquare = GetTemplateChild("PART_BlackSquare") as Border;
-            blackSquare.PreviewMouseLeftButtonDown += BlackSquare_PreviewMouseLeftButtonDown;
+            blackSquare.MouseLeftButtonDown += BlackSquare_MouseLeftButtonDown;
 
             textBoxA = GetTemplateChild("PART_ATextBox") as TextBox;
             textBoxA.KeyDown += ARGBTextBox_KeyDown;
@@ -493,6 +489,26 @@ namespace WPF.AA.CustomControls
             UpdateColorAndHexCode(picker, newValue, (byte)picker.SliderRValue, (byte)picker.SliderGValue, (byte)picker.SliderBValue);
         }
 
+        private void SetCirclePosition(MouseEventArgs e)
+        {
+            Point point = e.GetPosition(colorSquare);
+            float xPercentage = (float)(point.X / colorSquare.ActualWidth);
+            float yPercentage = (float)Math.Abs((point.Y / colorSquare.ActualHeight) - 1); // we want to invert the y so take the absolute value - 1
+
+            Debug.WriteLine($"[SetCirclePosition] x% : {xPercentage} | y% : {yPercentage}");
+
+            HSV hsv = new HSV
+            {
+                H = HueColor.ToHsv().H,
+                S = xPercentage,
+                V = yPercentage
+            };
+
+            SelectedColor = hsv.ToMediaColor();
+
+            UpdateColorCircle();
+        }
+
         private static void UpdateColorAndHexCode(ColorPicker picker, byte a, byte r, byte g, byte b)
         {
             picker.isBeingUpdated = true;
@@ -517,21 +533,21 @@ namespace WPF.AA.CustomControls
         {
             HSV hsv = SelectedColor.ToHsv();
 
-            //Debug.WriteLine($"S:{hsv.S} || V:{hsv.V}");
+            Debug.WriteLine($"[UpdateColorCircle] S:{hsv.S} || V:{hsv.V}");
 
-            float xPercentage = ((float)colorSquare.ActualWidth * hsv.S) + 10;
-            float yPercentage = Math.Abs(((float)colorSquare.ActualHeight * hsv.V) - (float)colorSquare.ActualHeight) + 10;
+            float x = ((float)colorSquare.ActualWidth * hsv.S) + 10;
+            float y = Math.Abs(((float)colorSquare.ActualHeight * hsv.V) - (float)colorSquare.ActualHeight) + 10;
 
-            //Debug.WriteLine($"X:{xPercentage} || Y:{yPercentage}");
+            Debug.WriteLine($"[UpdateColorCircle] x:{x} || y:{y}");
 
-            Canvas.SetLeft(canvasInnerCircle, xPercentage - 5);
-            Canvas.SetTop(canvasInnerCircle, yPercentage - 5);
+            Canvas.SetLeft(canvasInnerCircle, x - 5);
+            Canvas.SetTop(canvasInnerCircle, y - 5);
 
-            Canvas.SetLeft(canvasOuterCircle, xPercentage - 6);
-            Canvas.SetTop(canvasOuterCircle, yPercentage - 6);
+            Canvas.SetLeft(canvasOuterCircle, x - 6);
+            Canvas.SetTop(canvasOuterCircle, y - 6);
         }
 
-        private void WhiteSquare_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void WhiteSquare_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SelectedColor = Colors.White;
 

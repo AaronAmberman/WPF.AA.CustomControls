@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Media;
 
@@ -206,8 +207,11 @@ namespace WPF.AA.CustomControls.ColorSpace
         public static System.Drawing.Color ConvertHsvToRgbDrawing(HSV hsv)
         {
             if (hsv.S == 0)
-                return System.Drawing.Color.FromArgb(255, (byte)hsv.V, (byte)hsv.V, (byte)hsv.V);
-            else if (hsv.V < 0)
+            {
+                byte val = (byte)(hsv.V * 255);
+                return System.Drawing.Color.FromArgb(255, val, val, val);
+            }
+            else if (hsv.V <= 0)
                 return System.Drawing.Color.FromArgb(255, 0, 0, 0);
 
             int hi = Convert.ToInt32(Math.Floor(hsv.H / 60)) % 6;
