@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Media;
 
@@ -9,7 +8,7 @@ namespace WPF.AA.CustomControls.ColorSpace
     /// <summary>Helps convert colors between different color spaces.</summary>
     public static class ColorConverter
     {
-        // https://www.easyrgb.com/en/math.php#text20
+        // https://www.easyrgb.com/en/math.php
         // https://github.com/xceedsoftware/wpftoolkit/blob/master/ExtendedWPFToolkitSolution/Src/Xceed.Wpf.Toolkit/Core/Utilities/ColorUtilities.cs
         // https://stackoverflow.com/questions/359612/how-to-convert-rgb-color-to-hsv
         // https://bootcamp.uxdesign.cc/definitive-guide-to-wpf-colors-color-spaces-color-pickers-and-creating-your-own-colors-for-mere-f480935c6e94
@@ -208,34 +207,66 @@ namespace WPF.AA.CustomControls.ColorSpace
         {
             if (hsv.S == 0)
             {
-                byte val = (byte)(hsv.V * 255);
+                byte val = (byte)(hsv.V * 255f);
                 return System.Drawing.Color.FromArgb(255, val, val, val);
             }
             else if (hsv.V <= 0)
                 return System.Drawing.Color.FromArgb(255, 0, 0, 0);
 
-            int hi = Convert.ToInt32(Math.Floor(hsv.H / 60)) % 6;
-            float f = hsv.H / 60 - (float)Math.Floor(hsv.H / 60);
+            float h = (hsv.H / 360f) * 6f; // our HSVs go form 0 to 360 not 0 to 1
 
-            float value = hsv.V * 255;
+            if (h == 6f) h = 0f;
 
-            byte v = Convert.ToByte(value);
-            byte p = Convert.ToByte(value * (1 - hsv.S));
-            byte q = Convert.ToByte(value * (1 - f * hsv.S));
-            byte t = Convert.ToByte(value * (1 - (1 - f) * hsv.S));
+            int i = (int)h;
 
-            if (hi == 0)
-                return System.Drawing.Color.FromArgb(255, v, t, p);
-            else if (hi == 1)
-                return System.Drawing.Color.FromArgb(255, q, v, p);
-            else if (hi == 2)
-                return System.Drawing.Color.FromArgb(255, p, v, t);
-            else if (hi == 3)
-                return System.Drawing.Color.FromArgb(255, p, q, v);
-            else if (hi == 4)
-                return System.Drawing.Color.FromArgb(255, t, p, v);
+            float one = hsv.V * (1 - hsv.S);
+            float two = hsv.V * (1 - hsv.S * (h - i));
+            float three = hsv.V * (1 - hsv.S * (1 -  (h - i)));
+
+            float r, g, b;
+
+            if (i == 0)
+            {
+                r = hsv.V;
+                g = three;
+                b = one;
+            }
+            else if (i == 1)
+            {
+                r = two;
+                g = hsv.V;
+                b = one;
+            }
+            else if (i == 2)
+            {
+                r = one;
+                g = hsv.V;
+                b = three;
+            }
+            else if (i == 3)
+            {
+                r = one;
+                g = two;
+                b = hsv.V;
+            }
+            else if (i == 4)
+            {
+                r = three;
+                g = one;
+                b = hsv.V;
+            }
             else
-                return System.Drawing.Color.FromArgb(255, v, p, q);
+            {
+                r = hsv.V;
+                g = one;
+                b = two;
+            }
+
+            int convertedR = (int)(r * 255f);
+            int convertedG = (int)(g * 255f);
+            int convertedB = (int)(b * 255f);
+
+            return System.Drawing.Color.FromArgb(255, convertedR, convertedG, convertedB);
         }
 
         #endregion
@@ -309,19 +340,40 @@ namespace WPF.AA.CustomControls.ColorSpace
         /// <returns>The HSV (hsv values; H = 0 - 360, S = 0 - 1, V = 0 - 1) equivalent.</returns>
         public static HSV ConvertRgbToHsv(System.Drawing.Color color)
         {
-            int max = Math.Max(color.R, Math.Max(color.G, color.B));
-            int min = Math.Min(color.R, Math.Min(color.G, color.B));
+            float minifiedR = color.R / 255f;
+            float minifiedG = color.G / 255f;
+            float minifiedB = color.B / 255f;
 
-            float hue = color.GetHue();
-            float saturation = (max == 0) ? 0 : 1f - (1f * min / max);
-            float value = max / 255f;
+            float min = Math.Min(Math.Min(minifiedR, minifiedG), minifiedB);
+            float max = Math.Max(Math.Max(minifiedR, minifiedG), minifiedB);
+            float delta = max - min;
 
-            return new HSV
+            float H = 0;
+            float S = 0;
+            float V = max;
+
+            if (delta == 0) // gray
             {
-                H = hue,
-                S = saturation,
-                V = value
-            };
+                H = 0;
+                S = 0;
+            }
+            else // color
+            {
+                S = delta / max;
+
+                float deltaR = (((max - minifiedR) / 6) + (delta / 2)) / delta;
+                float deltaG = (((max - minifiedG) / 6) + (delta / 2)) / delta;
+                float deltaB = (((max - minifiedB) / 6) + (delta / 2)) / delta;
+
+                if (minifiedR == max) H = deltaB - deltaG;
+                else if (minifiedG == max) H = (1 / 3) + deltaR - deltaB;
+                else if (minifiedB == max) H = (2 / 3) + deltaG - deltaR;
+
+                if (H < 0) H += 1;
+                if (H > 1) H -= 1;
+            }
+
+            return new HSV { H = H, S = S, V = V };
         }
 
         #endregion

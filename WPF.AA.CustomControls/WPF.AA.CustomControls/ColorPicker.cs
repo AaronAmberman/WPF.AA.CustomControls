@@ -36,6 +36,8 @@ namespace WPF.AA.CustomControls
         private TextBox textBoxR;
         private Border whiteSquare;
 
+        private HSV currentHsv;
+
         #endregion
 
         #region Properties
@@ -206,20 +208,26 @@ namespace WPF.AA.CustomControls
         {
             SelectedColor = Colors.Black;
 
-            UpdateColorCircle();
+            currentHsv = SelectedColor.ToHsv();
+
+            UpdateColorCircle(currentHsv);
         }
 
         private void ColorPicker_Loaded(object sender, RoutedEventArgs e)
         {
             if (SelectedColor != Colors.Transparent)
-                UpdateColorCircle();
+            {
+                currentHsv = SelectedColor.ToHsv();
+
+                UpdateColorCircle(currentHsv);
+            }
         }
 
         private void ColorPicker_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (canvasInnerCircle == null || canvasOuterCircle == null || colorSquare == null) return;
+            if (canvasInnerCircle == null || canvasOuterCircle == null || colorSquare == null || currentHsv == null) return;
 
-            UpdateColorCircle();
+            UpdateColorCircle(currentHsv);
         }
 
         private void ColorSquare_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -251,8 +259,9 @@ namespace WPF.AA.CustomControls
                 picker.SliderBValue = color.B;
                 picker.SliderAValue = color.A;
                 picker.isBeingUpdated = false;
+                picker.currentHsv = hsv;
 
-                picker.UpdateColorCircle();
+                picker.UpdateColorCircle(hsv);
             }
             catch (FormatException fe)
             {
@@ -376,6 +385,7 @@ namespace WPF.AA.CustomControls
             picker.HexStringCode = $"#{newSelectedColor.A:X2}{newSelectedColor.R:X2}{newSelectedColor.G:X2}{newSelectedColor.B:X2}";
 
             picker.isBeingUpdated = false;
+            picker.currentHsv = hsv;
         }
 
         public override void OnApplyTemplate()
@@ -438,6 +448,7 @@ namespace WPF.AA.CustomControls
 
             picker.HueColor = hueCorrectedColor;
             picker.isBeingUpdated = false;
+            picker.currentHsv = hsv;
             picker.RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));
         }
 
@@ -504,9 +515,11 @@ namespace WPF.AA.CustomControls
                 V = yPercentage
             };
 
+            currentHsv = hsv;
+
             SelectedColor = hsv.ToMediaColor();
 
-            UpdateColorCircle();
+            UpdateColorCircle(hsv);
         }
 
         private static void UpdateColorAndHexCode(ColorPicker picker, byte a, byte r, byte g, byte b)
@@ -525,20 +538,15 @@ namespace WPF.AA.CustomControls
             picker.HueColor = new HSV { H = hsv.H, S = 1, V = 1 }.ToMediaColor();
             picker.HexStringCode = $"#{a:X2}{r:X2}{g:X2}{b:X2}";
             picker.isBeingUpdated = false;
+            picker.currentHsv = hsv;
 
-            picker.UpdateColorCircle();
+            picker.UpdateColorCircle(hsv);
         }
 
-        private void UpdateColorCircle()
+        private void UpdateColorCircle(HSV hsv)
         {
-            HSV hsv = SelectedColor.ToHsv();
-
-            Debug.WriteLine($"[UpdateColorCircle] S:{hsv.S} || V:{hsv.V}");
-
             float x = ((float)colorSquare.ActualWidth * hsv.S) + 10;
             float y = Math.Abs(((float)colorSquare.ActualHeight * hsv.V) - (float)colorSquare.ActualHeight) + 10;
-
-            Debug.WriteLine($"[UpdateColorCircle] x:{x} || y:{y}");
 
             Canvas.SetLeft(canvasInnerCircle, x - 5);
             Canvas.SetTop(canvasInnerCircle, y - 5);
@@ -551,7 +559,9 @@ namespace WPF.AA.CustomControls
         {
             SelectedColor = Colors.White;
 
-            UpdateColorCircle();
+            currentHsv = SelectedColor.ToHsv();
+
+            UpdateColorCircle(currentHsv);
         }
 
         #endregion
