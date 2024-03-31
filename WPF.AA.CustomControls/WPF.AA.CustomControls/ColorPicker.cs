@@ -37,6 +37,7 @@ namespace WPF.AA.CustomControls
         private Border whiteSquare;
 
         private HSV currentHsv;
+        private bool skipSettingHue;
 
         #endregion
 
@@ -437,16 +438,21 @@ namespace WPF.AA.CustomControls
             picker.SliderAValue = newColor.A;
             picker.HexStringCode = $"#{newColor.A:X2}{newColor.R:X2}{newColor.G:X2}{newColor.B:X2}";
 
-            // get hue correct color for color slider
             HSV hsv = picker.SelectedColor.ToHsv();
-            Color hueCorrectedColor = new HSV
-            {
-                H = hsv.H,
-                S = 1,
-                V = 1
-            }.ToMediaColor();
 
-            picker.HueColor = hueCorrectedColor;
+            // get hue correct color for color slider
+            if (!picker.skipSettingHue)
+            {
+                Color hueCorrectedColor = new HSV
+                {
+                    H = hsv.H,
+                    S = 1,
+                    V = 1
+                }.ToMediaColor();
+
+                picker.HueColor = hueCorrectedColor;
+            }
+
             picker.isBeingUpdated = false;
             picker.currentHsv = hsv;
             picker.RaiseEvent(new RoutedEventArgs(SelectedColorChangedEvent));
@@ -515,7 +521,11 @@ namespace WPF.AA.CustomControls
 
             currentHsv = hsv;
 
+            skipSettingHue = true;
+
             SelectedColor = hsv.ToMediaColor();
+
+            skipSettingHue = false;
 
             UpdateColorCircle(hsv);
         }
