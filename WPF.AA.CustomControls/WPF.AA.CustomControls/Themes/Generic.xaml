@@ -372,9 +372,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NumericUpDown}">
                     <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}"
-                            SnapsToDevicePixels="True">
+                            BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -384,7 +382,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="PART_NumericDisplay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
+                            <TextBox x:Name="PART_NumericDisplay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Padding="{TemplateBinding Padding}"
                                      Background="{TemplateBinding Background}"
                                      Foreground="{TemplateBinding Foreground}" IsReadOnly="{TemplateBinding IsReadOnly}" />
                             <RepeatButton x:Name="PART_UpIncrement" Grid.Column="1" Grid.Row="0">

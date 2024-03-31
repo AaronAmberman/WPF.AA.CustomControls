@@ -286,8 +286,8 @@
 
         <!--<cc:RoundableToggleButton Content="ABCD" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,27,0,0" CornerRadius="20" Padding="5"/>-->
 
-        <cc:NumericUpDown x:Name="nud" Width="100" ValueType="Integer" Height="30"
-                        Margin="5,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="53" />
+        <cc:NumericUpDown x:Name="nud" Width="100" ValueType="Decimal" ValueFormat="N2" MinValue="0.0" MaxValue="1.0" Step="0.01" 
+                        Margin="5,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="0.87" />
         <cc:NumericUpDown x:Name="nud2" Width="100" ValueType="Decimal" ValueFormat="N2"
                           Margin="5,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding Value}" />
 
