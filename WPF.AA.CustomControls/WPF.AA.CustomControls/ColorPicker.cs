@@ -446,6 +446,8 @@ namespace WPF.AA.CustomControls
                 V = 1
             }.ToMediaColor();
 
+            Debug.WriteLine("Hue corrected color: " +  hueCorrectedColor);
+
             picker.HueColor = hueCorrectedColor;
             picker.isBeingUpdated = false;
             picker.currentHsv = hsv;
@@ -506,7 +508,7 @@ namespace WPF.AA.CustomControls
             float xPercentage = (float)(point.X / colorSquare.ActualWidth);
             float yPercentage = (float)Math.Abs((point.Y / colorSquare.ActualHeight) - 1); // we want to invert the y so take the absolute value - 1
 
-            Debug.WriteLine($"[SetCirclePosition] x% : {xPercentage} | y% : {yPercentage}");
+            //Debug.WriteLine("Hue color: " + HueColor);
 
             HSV hsv = new HSV
             {
