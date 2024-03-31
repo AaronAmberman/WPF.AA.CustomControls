@@ -381,8 +381,8 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <TextBox x:Name="PART_NumericDisplay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
                                      Background="{TemplateBinding Background}"
