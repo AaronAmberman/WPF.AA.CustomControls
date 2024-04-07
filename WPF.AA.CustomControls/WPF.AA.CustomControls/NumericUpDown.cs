@@ -190,11 +190,12 @@ namespace WPF.AA.CustomControls
 
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(object), typeof(NumericUpDown), 
-                new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ValueChanged, CoerceValue));
+                new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ValueChangedCallback, CoerceValue));
 
-        private static void ValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void ValueChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            //NumericUpDown numericUpDown = (NumericUpDown)d;
+            NumericUpDown numericUpDown = (NumericUpDown)d;
+            numericUpDown.RaiseEvent(new RoutedEventArgs(ValueChangedEvent));
         }
 
         private static object CoerceValue(DependencyObject d, object baseValue)
@@ -275,6 +276,20 @@ namespace WPF.AA.CustomControls
 
         public static readonly DependencyProperty ValueTypeProperty =
             DependencyProperty.Register("ValueType", typeof(NumericUpDownType), typeof(NumericUpDown), new PropertyMetadata(NumericUpDownType.Integer));
+
+        #endregion
+
+        #region Events
+
+        public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent(
+            "ValueChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
+
+        /// <summary>Occurs when the value changes.</summary>
+        public event RoutedEventHandler ValueChanged
+        {
+            add { AddHandler(ValueChangedEvent, value); }
+            remove { RemoveHandler(ValueChangedEvent, value); }
+        }
 
         #endregion
 
