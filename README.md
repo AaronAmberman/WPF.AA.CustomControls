@@ -56,7 +56,7 @@ The ValueFormat property is the [StringFormat](https://learn.microsoft.com/en-us
 
 As you can see it is very easy to use. However you can setup a UX that is confusing by not properly utilizing the two aforementioned properties. Meaning, you can set the ValueType to Integer then set the ValueFormat to N2 (or whatever) and get 2 decimal places on your display. As a developer you can set that up but don't. If you are using the N# format then use Decimal or Double. It is also recommended to use Decimal over Double is most situations. The control will not try to add a decimal if one should be there for display, such as in the case of double or decimal data types. The problem is the developers to manage by specifying a ValueFormat.
 
-## NumericUpDownDecimal and NumericUpDownDouble
+### NumericUpDownDecimal and NumericUpDownDouble
 In WPF.AA.CustomControls.DataTemplateControls you will find two variants for the NumericUpDown control. The reason is because of DataTemplate boundaries. Google it if you are unfamiliar. These controls do not alter the behavior in any way, they just change the default ValueType to decimal and double. This is the entirity of the code...
 
 ```
