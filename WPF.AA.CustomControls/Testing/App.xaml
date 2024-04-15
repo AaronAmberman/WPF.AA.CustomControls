@@ -3,8 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Testing"
              xmlns:c="clr-namespace:WPF.AA.CustomControls.Converters;assembly=WPF.AA.CustomControls"
+             xmlns:cc="clr-namespace:WPF.AA.CustomControls;assembly=WPF.AA.CustomControls"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <c:SolidColorBrushConverter x:Key="SolidColorBrushConverter" />
+
+        <Style x:Key="NudOverride" TargetType="cc:NumericUpDown" BasedOn="{StaticResource {x:Type cc:NumericUpDown}}">
+            <Setter Property="ValueType" Value="Double" />
+            <Setter Property="ValueFormat" Value="N2" />
+            <Setter Property="Step" Value="0.01" />
+            <Setter Property="MinValue" Value="0.0" />
+            <Setter Property="MaxValue" Value="1.0" />
+        </Style>
     </Application.Resources>
 </Application>

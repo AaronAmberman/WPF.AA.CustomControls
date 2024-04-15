@@ -21,7 +21,7 @@ namespace Testing
         {
             viewModel = new MainWindowViewModel
             {
-                Value = 81
+                Value = 0.43m
             };
 
             DataContext = viewModel;
