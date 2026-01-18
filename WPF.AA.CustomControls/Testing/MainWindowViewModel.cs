@@ -1,7 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WPF.AA.CustomControls;
+using System.Windows.Media;
 
 namespace Testing
 {
@@ -14,86 +13,32 @@ namespace Testing
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); ;
         }
 
-        private decimal value;
-        public decimal Value
-        {
-            get { return value; }
-            set { this.value = value; OnPropertyChanged(); }
-        }
+        private Color previousColor = Colors.Red;
+        private Color selectedColor = Colors.Blue;
 
-        private ObservableCollection<Atom> atoms = new ObservableCollection<Atom>
+        public Color PreviousColor
         {
-            new Atom
-            {
-                Attraction = 0.87,
-                Radiation = 0.43,
-                Name = "My Atom",
-                NumericUpDownType = NumericUpDownType.Double
-            }
-        };
-
-        public ObservableCollection<Atom> Atoms
-        {
-            get => atoms;
+            get { return previousColor; }
             set
             {
-                atoms = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    public class Atom : INotifyPropertyChanged
-    {
-        private double attraction;
-        private double radiation;
-        private string name;
-        private NumericUpDownType numericUpDownType = NumericUpDownType.Double;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); ;
-        }
-
-        public double Attraction
-        {
-            get => attraction;
-            set
-            {
-                attraction = value;
-                OnPropertyChanged();
+                if (previousColor != value)
+                {
+                    previousColor = value;
+                    OnPropertyChanged(nameof(PreviousColor));
+                }
             }
         }
 
-        public double Radiation
+        public Color SelectedColor
         {
-            get => radiation;
+            get { return selectedColor; }
             set
             {
-                radiation = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string Name
-        {
-            get => name;
-            set
-            {
-                name = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public NumericUpDownType NumericUpDownType
-        {
-            get => numericUpDownType;
-            set
-            {
-                numericUpDownType = value;
-                OnPropertyChanged();
+                if (selectedColor != value)
+                {
+                    selectedColor = value;
+                    OnPropertyChanged(nameof(SelectedColor));
+                }
             }
         }
     }

@@ -296,27 +296,28 @@
         <cc:NumericUpDown Margin="0,25,0,0" ValueType="Decimal" ValueFormat="N2" MinValue="0.0" MaxValue="1.0" Step="0.01" Value="0.25" 
                           VerticalAlignment="Top" HorizontalAlignment="Left"/>-->
 
-        <ListView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,2,0,0" ItemsSource="{Binding Atoms}">
+        <!--<ListView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,2,0,0" ItemsSource="{Binding Atoms}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Atom" Width="120" DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="Radiation">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <!--<cc:NumericUpDown ValueType="Double" ValueFormat="N2" MinValue="0.0" MaxValue="1.0" Step="0.01" Value="{Binding Radiation}" />-->
-                                <!--<cc:NumericUpDown Style="{StaticResource NudOverride}" Value="{Binding Radiation}" />-->
+                                --><!--<cc:NumericUpDown ValueType="Double" ValueFormat="N2" MinValue="0.0" MaxValue="1.0" Step="0.01" Value="{Binding Radiation}" />-->
+                                <!--<cc:NumericUpDown Style="{StaticResource NudOverride}" Value="{Binding Radiation}" />--><!--
                                 <cc2:NumericUpDownDecimal ValueFormat="N2" MinValue="0.0" MaxValue="1.0" Step="0.01" Value="0.65" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
-        </ListView>
+        </ListView>-->
 
         <!--<cc:ShowHidePasswordBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="300" Margin="5,120,0,0" Watermark="testing" Padding="5" />-->
 
         <!--<cc:ColorSlider x:Name="colorSlider" Height="50" SelectedColor="DodgerBlue" Margin="0,0,50,0" />
         <cc:ColorSlider x:Name="colorSlider2" Width="50" SelectedColor="Green" Orientation="Vertical" HorizontalAlignment="Right" />-->
-        <!--<cc:ColorPicker PreviousColor="LightBlue" SelectedColor="LightBlue" />-->
+        <cc:ColorPicker PreviousColor="{Binding PreviousColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        SelectedColor="{Binding SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </Window>

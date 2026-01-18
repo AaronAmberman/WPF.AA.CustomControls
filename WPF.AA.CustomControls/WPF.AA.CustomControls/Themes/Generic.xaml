@@ -489,17 +489,17 @@
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Opacity" TargetName="grid" Value="0.56"/>
                         </Trigger>
-                        <Trigger Property="ShowPassword" Value="True">
+                        <Trigger Property="ShowPassword" Value="True">                            
                             <Setter Property="Visibility" Value="Collapsed" TargetName="PART_PasswordBox" />
                             <Setter Property="Visibility" Value="Visible" TargetName="PART_TextBox" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="PART_ShowTextButton" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="PART_HideTextButton" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="PART_ShowTextButton" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="PART_HideTextButton" />
                         </Trigger>
                         <Trigger Property="ShowPassword" Value="False">
                             <Setter Property="Visibility" Value="Visible" TargetName="PART_PasswordBox" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="PART_TextBox" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="PART_ShowTextButton" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="PART_HideTextButton" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="PART_TextBox" />                            
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="PART_ShowTextButton" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="PART_HideTextButton" />
                         </Trigger>
                         <Trigger Property="Text" Value="">
                             <Setter Property="Visibility" Value="Visible" TargetName="watermark" />

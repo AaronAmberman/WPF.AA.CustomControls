@@ -15,16 +15,17 @@ namespace Testing
         public MainWindow()
         {
             InitializeComponent();
+
+            viewModel = new MainWindowViewModel();
+
+            DataContext = viewModel;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            viewModel = new MainWindowViewModel
-            {
-                Value = 0.43m
-            };
+            //viewModel = new MainWindowViewModel();
 
-            DataContext = viewModel;
+            //DataContext = viewModel;
 
             //HSV hsv = new HSV
             //{

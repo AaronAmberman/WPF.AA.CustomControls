@@ -71,9 +71,10 @@ namespace WPF.AA.CustomControls
 
         private void HideTextClick(object sender, RoutedEventArgs e)
         {
-            ShowPassword = false;
+            ShowPassword = true;
 
-            passwordBox.Focus();
+            textBox.Focus();
+            textBox.Select(Text.Length, 0);
         }
 
         public override void OnApplyTemplate()
@@ -105,10 +106,9 @@ namespace WPF.AA.CustomControls
 
         private void ShowTextClick(object sender, RoutedEventArgs e)
         {
-            ShowPassword = true;
+            ShowPassword = false;
 
-            textBox.Focus();
-            textBox.Select(Text.Length, 0);
+            passwordBox.Focus();
         }
 
         private static void TextChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
