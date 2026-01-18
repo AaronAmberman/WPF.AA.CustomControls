@@ -14,7 +14,7 @@ namespace Testing
         }
 
         private Color previousColor = Colors.Red;
-        private Color selectedColor = Colors.Blue;
+        private Color selectedColor = Colors.Green;
 
         public Color PreviousColor
         {

@@ -553,6 +553,8 @@ namespace WPF.AA.CustomControls
 
         private void UpdateColorCircle(HSV hsv)
         {
+            if (colorSquare == null || canvasInnerCircle == null || canvasOuterCircle == null) return;
+
             float x = ((float)colorSquare.ActualWidth * hsv.S) + 10;
             float y = Math.Abs(((float)colorSquare.ActualHeight * hsv.V) - (float)colorSquare.ActualHeight) + 10;
 
